@@ -6,11 +6,10 @@
     <title>Game Planner Portfolio</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <style>
-        /* --- [CSS] 디자인 및 레이아웃 --- */
         :root {
             --bg: #0a0a0c;
             --card: rgba(255, 255, 255, 0.04);
-            --card-hover: rgba(255, 255, 255, 0.08);
+            --card-hover: rgba(255, 255, 255, 0.1);
             --accent: #3b82f6;
             --text-main: #ffffff;
             --text-sub: #94a3b8;
@@ -44,58 +43,63 @@
         header p { font-size: 1.2rem; color: var(--text-sub); margin-top: 15px; }
         header span { color: var(--accent); }
 
-        /* 프로젝트 그리드: 3열 동일 규격 설정 */
+        /* 프로젝트 그리드 */
         .container {
             max-width: 1200px; margin: 0 auto 100px;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3열 동일 크기 */
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             animation: fadeInUp 1.2s ease-out both;
         }
 
-        /* 개별 카드 스타일 (모두 동일) */
+        /* 개별 카드 스타일: 배경 이미지 적용 */
         .project-card {
-            background: var(--card);
+            background-size: cover;
+            background-position: center;
             border: 1px solid var(--border);
             border-radius: 32px;
-            aspect-ratio: 1 / 1.1; /* 카드의 세로 비율을 일정하게 유지 */
+            aspect-ratio: 1 / 1.1;
             padding: 40px;
             position: relative;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            backdrop-filter: blur(20px);
             transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
             animation: floating 5s ease-in-out infinite;
+            overflow: hidden;
         }
 
-        /* 부유 시간차 조절 */
-        .project-card:nth-child(odd) { animation-delay: 0s; }
-        .project-card:nth-child(even) { animation-delay: 1s; }
+        /* 이미지 가독성을 위한 어두운 그라데이션 오버레이 */
+        .project-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9));
+            z-index: 1;
+        }
 
         .project-card:hover {
             animation-play-state: paused;
             transform: scale(1.03) translateY(-5px);
-            background: var(--card-hover);
             border-color: var(--accent);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
 
-        .project-card h3 { font-size: 1.5rem; margin: 0; font-weight: 700; line-height: 1.3; }
-        .project-card p { font-size: 1rem; color: var(--text-sub); margin: 12px 0 0; line-height: 1.5; }
+        .project-card h3, .project-card p, .project-card .tag { z-index: 2; position: relative; }
+        .project-card h3 { font-size: 1.5rem; margin: 0; font-weight: 700; }
+        .project-card p { font-size: 1rem; color: #ccc; margin: 12px 0 0; }
         .project-card .tag {
             position: absolute; top: 35px; left: 40px;
-            background: rgba(59, 130, 246, 0.1);
+            background: var(--accent);
             padding: 6px 14px; border-radius: 100px;
-            font-size: 0.8rem; font-weight: 600; color: var(--accent);
+            font-size: 0.8rem; font-weight: 600; color: #fff;
         }
 
         /* 팝업 모달 스타일 */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(25px);
             z-index: 1000; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-content {
@@ -105,12 +109,12 @@
         }
         .close-btn {
             position: sticky; top: 30px; left: calc(100% - 70px);
-            font-size: 40px; color: #444; cursor: pointer; z-index: 100;
+            font-size: 40px; color: #fff; cursor: pointer; z-index: 100;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
-        .close-btn:hover { color: var(--accent); }
 
         .modal-body { padding: 60px; }
-        .modal-body h2 { font-size: 2.5rem; color: var(--accent); margin-top: 0; }
+        .modal-body h2 { font-size: 2.5rem; color: var(--accent); margin-top: 20px; }
         .modal-body .desc-text { font-size: 1.2rem; line-height: 1.8; color: var(--text-sub); margin-top: 30px; }
         
         .media-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px; }
@@ -118,56 +122,52 @@
         .video-box { aspect-ratio: 16/9; }
         .pdf-box { height: 600px; }
 
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .modal-body { padding: 40px; }
-        }
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
     <header>
         <h1>안녕하세요, <span>홍길동</span>입니다.</h1>
-        <p>EA Korea 경력과 데이터 역량을 기반으로 이유 있는 재미를 설계합니다.</p>
+        <p>실무 데이터 분석과 게임 개발 경험을 바탕으로 논리적인 재미를 설계합니다.</p>
     </header>
 
     <main class="container">
-        <div class="project-card" onclick="openModal(0)">
-            <span class="tag">Solo Development</span>
+        <div class="project-card" onclick="openModal(0)" style="background-image: url('P1.png');">
+            <span class="tag">Solo Dev</span>
             <h3>1인 리듬 게임 개발</h3>
-            <p>GameMaker 기반 1인 기획/개발 프로젝트</p>
+            <p>GameMaker 기반 핵심 로직 설계</p>
         </div>
 
-        <div class="project-card" onclick="openModal(1)">
+        <div class="project-card" onclick="openModal(1)" style="background-image: url('P2.png');">
             <span class="tag">Team Project</span>
-            <h3>협업 프로젝트: 코코두기</h3>
-            <p>10인 팀, 헥사타일 기반 전략 퍼즐 레벨 디자인</p>
+            <h3>협업: 코코두기</h3>
+            <p>10인 팀, 헥사타일 레벨 디자인</p>
         </div>
 
-        <div class="project-card" onclick="openModal(2)">
+        <div class="project-card" onclick="openModal(2)" style="background-image: url('P3.png');">
             <span class="tag">Live Service</span>
-            <h3>EA Korea: 밸런스 제안</h3>
-            <p>데이터 분석을 통한 실점률 8% 감소 성과</p>
+            <h3>EA: 밸런스 제안</h3>
+            <p>중거리 슛 실점률 8% 감소 성과</p>
         </div>
 
-        <div class="project-card" onclick="openModal(3)">
-            <span class="tag">Content Planning</span>
-            <h3>EA Korea: 신규 컨텐츠</h3>
-            <p>UX 검증 및 사용성 관점의 시스템 개선안</p>
+        <div class="project-card" onclick="openModal(3)" style="background-image: url('P4.png');">
+            <span class="tag">System QA</span>
+            <h3>EA: 신규 컨텐츠</h3>
+            <p>UX 검증 및 시스템 개선안 제시</p>
         </div>
 
-        <div class="project-card" onclick="openModal(4)">
+        <div class="project-card" onclick="openModal(4)" style="background-image: url('P5.png');">
             <span class="tag">Data Analysis</span>
             <h3>야간약국 데이터 분석</h3>
-            <p>공공 데이터 활용 최적 입지 선정 프로세스</p>
+            <p>공공 데이터 입지 최적화 프로세스</p>
         </div>
     </main>
 
     <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modalBody" class="modal-body">
-                </div>
+            <div id="modalBody" class="modal-body"></div>
         </div>
     </div>
 
@@ -175,50 +175,49 @@
         const projects = [
             {
                 title: "1인 기획/개발 리듬 게임",
-                desc: "GameMaker 엔진을 활용하여 음악 비트와 액션의 동기화를 직접 설계했습니다. 게임 제작 파이프라인 전체를 1인 기획/개발로 경험하며 메커니즘 이해도를 확보했습니다.",
+                img: "P1.png",
+                desc: "GameMaker 엔진을 활용하여 음악 비트와 액션의 동기화 로직을 직접 설계했습니다. 전체 제작 파이프라인을 1인 기획/개발로 완수하며 개발 역량을 확보했습니다.",
                 stats: "<li>비트 기반 시스템 설계 및 인게임 연출 담당</li><li>게임메이커 엔진 활용 로직 기획</li>",
-                video: "dQw4w9WgXcQ", 
-                pdf: ""
+                video: "", pdf: ""
             },
             {
                 title: "협업 프로젝트: 코코두기 (Kokodugi)",
-                desc: "기획 4인, 개발 6인 구성의 10인 팀 프로젝트입니다. 유니티 엔진 기반 쿼터뷰 헥사타일 퍼즐 게임의 레벨 디자인을 주도했습니다.",
-                stats: "<li>헥사타일 기반 전략 퍼즐 레벨 디자인 및 밸런싱 수행</li><li>유저 이탈률 감소를 위한 단계적 튜토리얼 및 UX 개선</li>",
-                video: "",
-                pdf: ""
+                img: "P2.png",
+                desc: "기획 4인, 개발 6인의 10인 팀 프로젝트로 유니티 엔진 기반 쿼터뷰 헥사타일 퍼즐 게임입니다. 헥사타일 기반의 전략적 레벨 디자인을 주도했습니다.",
+                stats: "<li>헥사타일 전략 퍼즐 레벨 디자인 및 밸런싱 수행</li><li>단계별 튜토리얼 설계를 통한 초심자 UX 개선</li>",
+                video: "", pdf: ""
             },
             {
                 title: "EA Korea: 데이터 기반 밸런스 제안",
-                desc: "EA Korea QA팀에서 2년간 근무하며 Next Field 프로젝트의 데이터 기반 밸런싱을 수행했습니다. 정량적 분석을 통해 유효한 지표 개선을 이끌어냈습니다.",
-                stats: "<li>중거리 슛 실점률 분석 후 8% 감소 달성</li><li>신규 드리블 시스템 성공률 15% 향상 기여</li>",
-                video: "",
-                pdf: ""
+                img: "P3.png",
+                desc: "EA Korea QA팀에서 2년간 근무하며 Next Field 프로젝트의 데이터 분석을 수행했습니다. 정량적 지표 분석을 통해 게임의 실제 밸런스를 개선했습니다.",
+                stats: "<li>중거리 슛 실점률 분석 후 8% 감소 달성 기여</li><li>신규 드리블 시스템 성공률 15% 향상 기여</li>",
+                video: "", pdf: ""
             },
             {
                 title: "EA Korea: 신규 컨텐츠 QA 및 UX 검증",
-                desc: "새로운 시스템 도입 시 프로토타입 단계부터 재미와 깊이를 검증했습니다. 유저 편의성을 위한 구체적 UI/UX 개선안을 제시했습니다.",
-                stats: "<li>커뮤니티 동향 및 인게임 데이터 모니터링을 통한 이슈 조기 발견</li><li>개발팀 협업을 위한 논리적인 지표 중심 기획 제안</li>",
-                video: "",
-                pdf: ""
+                img: "P4.png",
+                desc: "도입되는 시스템의 프로토타입 단계부터 재미와 기획 의도 부합 여부를 검증했습니다. 유저 사용성 관점에서 구체적인 개선안을 제시했습니다.",
+                stats: "<li>라이브 서버 플레이 데이터를 분석하여 전술 효율성 지표 식별</li><li>유저 불만 사항 조기 발견 및 안정성 확보 기여</li>",
+                video: "", pdf: ""
             },
             {
                 title: "공공 야간약국 입지 데이터 분석",
-                desc: "국가 지원 데이터 교육을 수료하며 정량적 분석 프로세스를 확립했습니다. 공공 데이터를 활용해 입지 최적화 보고서를 작성했습니다.",
-                stats: "<li>인구 밀도 기반 의료 공백 지역 식별 및 입지 최적화 제안</li><li>게임 데이터 분석에도 적용 가능한 데이터 진단 능력 증명</li>",
-                video: "",
-                pdf: ""
+                img: "P5.png",
+                desc: "국가 지원 데이터 교육을 수료하며 쌓은 역량으로 공공 데이터를 분석한 결과물입니다. 정량적 접근으로 사회적 문제의 해결책을 제시했습니다.",
+                stats: "<li>지역별 인구 밀도 기반 최적 입지 선정 프로세스 도출</li><li>정량적 데이터 진단 및 보고서 작성 능력 증명</li>",
+                video: "", pdf: ""
             }
         ];
 
-        const modal = document.getElementById('projectModal');
-        const modalBody = document.getElementById('modalBody');
-
         function openModal(idx) {
             const p = projects[idx];
+            let imgSec = `<img src="${p.img}" style="width:100%; border-radius:24px; margin-bottom:30px; border:1px solid var(--border);">`;
             let vSec = p.video ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${p.video}" frameborder="0" allowfullscreen></iframe></div>` : '';
             let pSec = p.pdf ? `<div class="pdf-box"><iframe src="${p.pdf}"></iframe></div>` : '';
 
-            modalBody.innerHTML = `
+            document.getElementById('modalBody').innerHTML = `
+                ${imgSec}
                 <h2>${p.title}</h2>
                 <p class="desc-text">${p.desc}</p>
                 <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.03); border-radius: 25px;">
@@ -227,14 +226,13 @@
                 </div>
                 <div class="media-grid">${vSec}${pSec}</div>
             `;
-            modal.style.display = 'flex';
+            document.getElementById('projectModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            modal.style.display = 'none';
+            document.getElementById('projectModal').style.display = 'none';
             document.body.style.overflow = 'auto';
-            modalBody.innerHTML = '';
         }
     </script>
 </body>

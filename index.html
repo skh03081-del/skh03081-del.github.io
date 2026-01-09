@@ -8,8 +8,8 @@
     <style>
         :root {
             --bg: #0a0a0c;
-            --card: rgba(255, 255, 255, 0.04);
-            --card-hover: rgba(255, 255, 255, 0.1);
+            --card: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.12);
             --accent: #3b82f6;
             --text-main: #ffffff;
             --text-sub: #94a3b8;
@@ -24,15 +24,9 @@
             overflow-x: hidden;
         }
 
-        /* 등장 및 부유 애니메이션 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        /* 애니메이션 정의 */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
         header {
             max-width: 1200px; margin: 0 auto;
@@ -43,60 +37,71 @@
         header p { font-size: 1.2rem; color: var(--text-sub); margin-top: 15px; }
         header span { color: var(--accent); }
 
-        /* 프로젝트 그리드 */
+        /* 프로젝트 그리드 설정 */
         .container {
             max-width: 1200px; margin: 0 auto 100px;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(3, 1fr); /* 3열 동일 크기 */
+            gap: 30px;
             animation: fadeInUp 1.2s ease-out both;
         }
 
-        /* 개별 카드 스타일: 배경 이미지 적용 */
+        /* [수정됨] 개별 카드 스타일 구조 변경 */
         .project-card {
-            background-size: cover;
-            background-position: center;
+            background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 32px;
-            aspect-ratio: 1 / 1.1;
-            padding: 40px;
-            position: relative;
+            border-radius: 24px;
+            overflow: hidden; /* 자식 요소가 튀어나오지 않게 */
             cursor: pointer;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            animation: floating 5s ease-in-out infinite;
-            overflow: hidden;
-        }
-
-        /* 이미지 가독성을 위한 어두운 그라데이션 오버레이 */
-        .project-card::before {
-            content: '';
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.9));
-            z-index: 1;
+            flex-direction: column; /* 위아래 배치 */
+            transition: all 0.4s ease;
+            animation: floating 6s ease-in-out infinite;
+            height: 100%; /* 그리드 내에서 동일 높이 유지 */
         }
 
         .project-card:hover {
             animation-play-state: paused;
-            transform: scale(1.03) translateY(-5px);
+            transform: translateY(-10px);
             border-color: var(--accent);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            background: var(--card-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .project-card h3, .project-card p, .project-card .tag { z-index: 2; position: relative; }
-        .project-card h3 { font-size: 1.5rem; margin: 0; font-weight: 700; }
-        .project-card p { font-size: 1rem; color: #ccc; margin: 12px 0 0; }
+        /* [신규] 카드 상단 이미지 영역 */
+        .card-image-box {
+            width: 100%;
+            height: 240px; /* 이미지 영역 고정 높이 */
+            background: #000; /* 이미지가 비율이 안 맞을 때 보일 배경색 */
+            display: flex; align-items: center; justify-content: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        /* [핵심] 이미지가 잘리지 않게 설정 */
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 비율 유지하며 영역 안에 다 보여주기 */
+        }
+
+        /* [신규] 카드 하단 텍스트 영역 */
+        .card-text-box {
+            padding: 30px;
+            display: flex; flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-card h3 { font-size: 1.4rem; margin: 15px 0 10px; font-weight: 700; }
+        .project-card p { font-size: 1rem; color: var(--text-sub); margin: 0; line-height: 1.5; }
         .project-card .tag {
-            position: absolute; top: 35px; left: 40px;
-            background: var(--accent);
+            align-self: flex-start; /* 왼쪽 정렬 */
+            background: rgba(59, 130, 246, 0.15);
             padding: 6px 14px; border-radius: 100px;
-            font-size: 0.8rem; font-weight: 600; color: #fff;
+            font-size: 0.8rem; font-weight: 600; color: var(--accent);
         }
 
-        /* 팝업 모달 스타일 */
+        /* 팝업 모달 스타일 (기존 동일) */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(25px);
@@ -110,7 +115,6 @@
         .close-btn {
             position: sticky; top: 30px; left: calc(100% - 70px);
             font-size: 40px; color: #fff; cursor: pointer; z-index: 100;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
         .modal-body { padding: 60px; }
@@ -122,45 +126,70 @@
         .video-box { aspect-ratio: 16/9; }
         .pdf-box { height: 600px; }
 
-        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .card-image-box { height: 200px; } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>안녕하세요, <span>이재영</span>입니다.</h1>
+        <h1>안녕하세요, <span>홍길동</span>입니다.</h1>
         <p>실무 데이터 분석과 게임 개발 경험을 바탕으로 논리적인 재미를 설계합니다.</p>
     </header>
 
     <main class="container">
-        <div class="project-card" onclick="openModal(0)" style="background-image: url('P1.png');">
-            <span class="tag">Solo Dev</span>
-            <h3>1인 리듬 게임 개발</h3>
-            <p>GameMaker 기반 핵심 로직 설계</p>
+        <div class="project-card" onclick="openModal(0)">
+            <div class="card-image-box">
+                <img src="P1.png" alt="리듬 게임 메인 이미지">
+            </div>
+            <div class="card-text-box">
+                <span class="tag">Solo Dev</span>
+                <h3>1인 리듬 게임 개발</h3>
+                <p>GameMaker 기반 핵심 로직 설계</p>
+            </div>
         </div>
 
-        <div class="project-card" onclick="openModal(1)" style="background-image: url('P2.png');">
-            <span class="tag">Team Project</span>
-            <h3>협업: 코코두기</h3>
-            <p>10인 팀, 헥사타일 레벨 디자인</p>
+        <div class="project-card" onclick="openModal(1)">
+            <div class="card-image-box">
+                <img src="P2.png" alt="코코두기 메인 이미지">
+            </div>
+            <div class="card-text-box">
+                <span class="tag">Team Project</span>
+                <h3>협업: 코코두기</h3>
+                <p>10인 팀, 헥사타일 레벨 디자인</p>
+            </div>
         </div>
 
-        <div class="project-card" onclick="openModal(2)" style="background-image: url('P3.png');">
-            <span class="tag">Live Service</span>
-            <h3>EA: 밸런스 제안</h3>
-            <p>중거리 슛 실점률 8% 감소 성과</p>
+        <div class="project-card" onclick="openModal(2)">
+            <div class="card-image-box">
+                <img src="P3.png" alt="EA 밸런스 분석 이미지">
+            </div>
+            <div class="card-text-box">
+                <span class="tag">Live Service</span>
+                <h3>EA: 밸런스 제안</h3>
+                <p>중거리 슛 실점률 8% 감소 성과</p>
+            </div>
         </div>
 
-        <div class="project-card" onclick="openModal(3)" style="background-image: url('P4.png');">
-            <span class="tag">System QA</span>
-            <h3>EA: 신규 컨텐츠</h3>
-            <p>UX 검증 및 시스템 개선안 제시</p>
+        <div class="project-card" onclick="openModal(3)">
+            <div class="card-image-box">
+                <img src="P4.png" alt="EA 신규 컨텐츠 이미지">
+            </div>
+            <div class="card-text-box">
+                <span class="tag">System QA</span>
+                <h3>EA: 신규 컨텐츠</h3>
+                <p>UX 검증 및 시스템 개선안 제시</p>
+            </div>
         </div>
 
-        <div class="project-card" onclick="openModal(4)" style="background-image: url('P5.png');">
-            <span class="tag">Data Analysis</span>
-            <h3>야간약국 데이터 분석</h3>
-            <p>공공 데이터 입지 최적화 프로세스</p>
+        <div class="project-card" onclick="openModal(4)">
+            <div class="card-image-box">
+                <img src="P5.png" alt="야간약국 분석 이미지">
+            </div>
+            <div class="card-text-box">
+                <span class="tag">Data Analysis</span>
+                <h3>야간약국 데이터 분석</h3>
+                <p>공공 데이터 입지 최적화 프로세스</p>
+            </div>
         </div>
     </main>
 
@@ -212,7 +241,10 @@
 
         function openModal(idx) {
             const p = projects[idx];
-            let imgSec = `<img src="${p.img}" style="width:100%; border-radius:24px; margin-bottom:30px; border:1px solid var(--border);">`;
+            // 팝업 내부 이미지도 잘리지 않게 설정
+            let imgSec = `<div style="width:100%; height:400px; background:#000; display:flex; align-items:center; justify-content:center; border-radius:24px; overflow:hidden; margin-bottom:30px; border:1px solid var(--border);">
+                            <img src="${p.img}" style="width:100%; height:100%; object-fit:contain;">
+                          </div>`;
             let vSec = p.video ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${p.video}" frameborder="0" allowfullscreen></iframe></div>` : '';
             let pSec = p.pdf ? `<div class="pdf-box"><iframe src="${p.pdf}"></iframe></div>` : '';
 
@@ -222,7 +254,7 @@
                 <p class="desc-text">${p.desc}</p>
                 <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.03); border-radius: 25px;">
                     <h3 style="color:var(--accent); margin:0 0 15px 0;">핵심 역량 및 성과</h3>
-                    <ul class="desc-text" style="font-size:1.1rem; margin:0;">${p.stats}</ul>
+                    <ul class="desc-text" style="font-size:1.1rem; margin:0; padding-left: 20px;">${p.stats}</ul>
                 </div>
                 <div class="media-grid">${vSec}${pSec}</div>
             `;

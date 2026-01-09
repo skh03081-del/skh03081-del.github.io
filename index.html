@@ -8,119 +8,85 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0d0d0f;
-            --card: #161618;
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #08080a;
+            --card: #121214;
+            --border: rgba(255, 255, 255, 0.06);
             --accent: #3b82f6;
             --text-main: #ffffff;
             --text-sub: #9ca3af;
             --star: #facc15;
         }
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Pretendard', sans-serif;
-            line-height: 1.6;
-        }
+        body { margin: 0; padding: 0; background-color: var(--bg); color: var(--text-main); font-family: 'Pretendard', sans-serif; }
 
-        header {
-            max-width: 1200px; margin: 0 auto;
-            padding: 100px 20px 40px;
-        }
+        header { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; }
         header h1 { font-size: 3.5rem; font-weight: 800; margin: 0; letter-spacing: -2px; }
         header h1 span { color: var(--accent); }
         header p.tagline { font-size: 1.5rem; color: var(--text-sub); margin-top: 20px; font-weight: 300; }
 
-        /* --- [신규] 무한 롤링 배너 스타일 --- */
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            background: rgba(59, 130, 246, 0.03);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 0;
-            margin-bottom: 60px;
-        }
-
-        .marquee-track {
-            display: flex;
-            width: calc(250px * 10); /* 아이템 개수 x 너비 */
-            animation: scroll 20s linear infinite;
-        }
-
-        .marquee-item {
-            flex-shrink: 0;
-            width: 300px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-sub);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        /* 무한 롤링 배너 */
+        .marquee-container { width: 100%; overflow: hidden; background: rgba(59, 130, 246, 0.03); border-y: 1px solid var(--border); padding: 20px 0; margin-bottom: 60px; }
+        .marquee-track { display: flex; width: max-content; animation: scroll 25s linear infinite; }
+        .marquee-item { flex-shrink: 0; width: 320px; font-size: 1.1rem; font-weight: 600; color: var(--text-sub); display: flex; align-items: center; gap: 10px; }
         .marquee-item span { color: var(--accent); font-weight: 800; }
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-300px * 5)); } /* 아이템 절반 세트만큼 이동 */
-        }
-
-        /* 호버 시 멈춤 */
-        .marquee-container:hover .marquee-track { animation-play-state: paused; }
-
-        /* 섹션 타이틀 및 기술/프로젝트 그리드 (기존 스타일 유지) */
-        .section-title {
-            max-width: 1200px; margin: 0 auto 30px; padding: 0 20px;
-            font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px;
-        }
-        .section-title i { color: var(--accent); font-size: 1.4rem; }
-
-        .skills-container {
-            max-width: 1200px; margin: 0 auto 80px;
-            padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-        }
-
-        .skill-item {
-            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 20px; display: flex; flex-direction: column; gap: 10px;
-        }
-
+        /* 보유 기술 */
+        .section-title { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .skills-container { max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .skill-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
         .skill-top { display: flex; justify-content: space-between; align-items: center; }
-        .skill-name { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-        .skill-name i { width: 20px; color: var(--accent); }
+        .skill-name { font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .stars { color: var(--star); font-size: 0.85rem; }
-        .skill-desc { color: var(--text-sub); font-size: 0.9rem; line-height: 1.4; }
+        .skill-desc { color: var(--text-sub); font-size: 0.9rem; margin-top: 10px; }
 
-        .project-container {
-            max-width: 1200px; margin: 0 auto 100px;
-            padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+        /* --- [수정] 역동적인 프로젝트 카드 애니메이션 --- */
+        .project-container { max-width: 1200px; margin: 0 auto 100px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.15) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
         }
 
         .project-card {
-            background: var(--card); border: 1px solid var(--border); border-radius: 24px;
-            overflow: hidden; cursor: pointer; display: flex; flex-direction: column; transition: all 0.4s ease;
+            background: var(--card); border: 1px solid var(--border); border-radius: 28px;
+            overflow: hidden; cursor: pointer; transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
         }
-        .project-card:hover { transform: translateY(-10px); border-color: var(--accent); }
 
-        .card-img-box { width: 100%; height: 220px; background: #000; display: flex; align-items: center; justify-content: center; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: contain; }
-        .card-info-box { padding: 25px; flex-grow: 1; }
-        .project-card h3 { font-size: 1.3rem; margin: 10px 0; }
-        .project-card p { font-size: 0.95rem; color: var(--text-sub); }
-        .tag { background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
-
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        .card-img-box {
+            width: 100%; height: 240px; background: #000; overflow: hidden; position: relative;
         }
+
+        /* 사진이 영상처럼 계속 움직이는 효과 */
+        .card-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            animation: kenBurns 10s ease-in-out infinite; /* 켄 번즈 효과 */
+            opacity: 0.8; transition: all 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px); border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        /* 호버 시 이미지가 선명해지며 움직임 강조 */
+        .project-card:hover .card-img-box img {
+            opacity: 1; transform: scale(1.2); animation-play-state: paused;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        .card-info-box { padding: 30px; position: relative; z-index: 2; background: var(--card); }
+        .project-card h3 { font-size: 1.4rem; margin: 10px 0; font-weight: 700; }
+        .tag { background: rgba(59, 130, 246, 0.12); color: var(--accent); padding: 5px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 800; }
+
+        /* 모달 스타일 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(20px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #111113; width: 100%; max-width: 1000px; height: 90vh; border-radius: 32px; overflow-y: auto; border: 1px solid var(--border); }
-        .modal-body { padding: 50px; }
-        .info-box { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 25px; margin: 25px 0; border-left: 4px solid var(--accent); }
-        iframe { width: 100%; border-radius: 15px; border: 1px solid var(--border); margin-top: 20px; }
-        .pdf-view { height: 700px; }
+        .modal-body { padding: 60px; }
+        .info-box { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 30px; margin: 30px 0; border-left: 4px solid var(--accent); }
+        iframe { width: 100%; border-radius: 20px; border: 1px solid var(--border); margin-top: 20px; height: 700px; }
 
         @media (max-width: 900px) { .skills-container, .project-container { grid-template-columns: 1fr; } }
     </style>
@@ -129,4 +95,95 @@
 
     <header>
         <h1><span>이재영</span> | Game Designer</h1>
-        <p class="tagline">"QA에서 시작한 경험이 기획의 깊이가 된 게임 체인저"</
+        <p class="tagline">"QA에서 시작한 경험이 기획의 깊이가 된 게임 체인저"</p>
+    </header>
+
+    <section class="marquee-container">
+        <div class="marquee-track">
+            <div class="marquee-item"><span>01</span> RHYTHM ELEVEN</div>
+            <div class="marquee-item"><span>02</span> 코코두기 (KOKODUGI)</div>
+            <div class="marquee-item"><span>03</span> 게임 밸런스 개선 제안</div>
+            <div class="marquee-item"><span>04</span> 감독의 전술 노트 기획</div>
+            <div class="marquee-item"><span>05</span> 공공 야간약국 입지 분석</div>
+            <div class="marquee-item"><span>01</span> RHYTHM ELEVEN</div>
+            <div class="marquee-item"><span>02</span> 코코두기 (KOKODUGI)</div>
+            <div class="marquee-item"><span>03</span> 게임 밸런스 개선 제안</div>
+            <div class="marquee-item"><span>04</span> 감독의 전술 노트 기획</div>
+            <div class="marquee-item"><span>05</span> 공공 야간약국 입지 분석</div>
+        </div>
+    </section>
+
+    <h2 class="section-title"><i class="fa-solid fa-bolt"></i> 보유 기술</h2>
+    <div class="skills-container">
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-jira"></i> Jira</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">마일스톤 및 버그 트래킹 관리</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-slack"></i> Slack</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">원활한 커뮤니케이션 및 히스토리 정리</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-file-excel"></i> Excel</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">데이터 분석 및 매크로(VBA) 활용</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-gamepad"></i> Gamemaker</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">1인 기획 및 개발 프로세스 완수</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-unity"></i> Unity</div><div class="stars">★★★☆☆</div></div>
+            <div class="skill-desc">협업 프로젝트 및 엔진 기능 활용</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-robot"></i> Gemini</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">코딩 파트너 및 논리 구조 검증</div>
+        </div>
+    </div>
+
+    <h2 class="section-title"><i class="fa-solid fa-folder-open"></i> 프로젝트</h2>
+    <div class="project-container">
+        <div class="project-card" onclick="openModal(0)">
+            <div class="card-img-box"><img src="P1.png"></div>
+            <div class="card-info-box"><span class="tag">1인 기획 & 개발</span><h3>RHYTHM ELEVEN</h3><p>축구 전략과 리듬 액션의 결합</p></div>
+        </div>
+        <div class="project-card" onclick="openModal(1)">
+            <div class="card-img-box"><img src="P2.png"></div>
+            <div class="card-info-box"><span class="tag">10인 팀 협업</span><h3>코코두기 (KOKODUGI)</h3><p>학습 곡선을 고려한 레벨 디자인</p></div>
+        </div>
+        <div class="project-card" onclick="openModal(2)">
+            <div class="card-img-box"><img src="P3.png"></div>
+            <div class="card-info-box"><span class="tag">EA KOREA 실무</span><h3>밸런스 개선안</h3><p>지표를 통해 증명하는 밸런싱</p></div>
+        </div>
+    </div>
+
+    <div id="projectModal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            { title: "RHYTHM ELEVEN", tag: "1인 기획 & 개발", desc: "유저를 넘어 재미를 설계하는 기획자로 거듭난 기록입니다. 축구의 전략성과 리듬게임의 실력을 융합하였습니다.", stats: "<li>AI를 코딩파트너로 활용하여 로직 효율성 검증</li><li>노트 속도와 HP 기반의 동적 난이도 설계</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "코코두기 (KOKODUGI)", tag: "10인 팀 협업", desc: "실제 상용화 단계를 고려한 제작 과정을 경험했습니다. 유저가 스스로 체득하는 단계적 튜토리얼을 구축했습니다.", stats: "<li>Excel VBA 기반 전용 데이터 입력기 개발</li><li>Figma 기반의 상세 가이드를 통한 편의성 완성</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "게임 밸런스 개선안", tag: "EA KOREA 실무", desc: "라이브 지표 분석을 통해 유저 만족도의 하락 원인을 찾았습니다. 패스 시도 83% 감소 원인을 논리적으로 증명했습니다.", stats: "<li>부정 여론 2,000건을 Excel 객관적 지표로 분석</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
+        ];
+
+        function openModal(i) {
+            const p = projects[i];
+            document.getElementById('modalBody').innerHTML = `
+                <div style="text-align:right;"><span style="cursor:pointer; font-size:30px;" onclick="closeModal()">×</span></div>
+                <img src="${p.img}" style="width:100%; border-radius:20px; margin-bottom:20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <h2>${p.title}</h2><p style="color:var(--accent); font-weight:700;">${p.tag}</p>
+                <p style="font-size:1.2rem; line-height:1.8; color:var(--text-sub);">${p.desc}</p>
+                <div class="info-box"><h4>주요 기여 및 성과</h4><ul>${p.stats}</ul></div>
+                <iframe src="${p.pdf}"></iframe>
+            `;
+            document.getElementById('projectModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+    </script>
+</body>
+</html>

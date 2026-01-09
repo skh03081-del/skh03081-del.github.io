@@ -1,82 +1,252 @@
-<style>
-    /* --- 기존 스타일에서 수정/추가할 부분 --- */
-    :root {
-        --accent: #60a5fa; /* 부드러운 블루 */
-        --glass: rgba(255, 255, 255, 0.05);
-    }
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Planner Portfolio</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <style>
+        /* --- [CSS] 디자인 및 레이아웃 --- */
+        :root {
+            --bg: #0a0a0c;
+            --card: rgba(255, 255, 255, 0.03);
+            --card-hover: rgba(255, 255, 255, 0.08);
+            --accent: #3b82f6;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
 
-    /* 롤링 배너 대신 사용할 세련된 그리드 레이아웃 */
-    .bento-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 200px;
-        gap: 20px;
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 0 20px;
-    }
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Pretendard', sans-serif;
+            overflow-x: hidden;
+        }
 
-    .bento-item {
-        background: var(--glass);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 24px;
-        padding: 30px;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        position: relative;
-        overflow: hidden;
-    }
+        /* 상단 헤더 섹션 */
+        header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+            text-align: left;
+        }
+        header h1 { font-size: 3rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        header p { font-size: 1.25rem; color: var(--text-sub); margin-top: 15px; font-weight: 400; }
+        header span { color: var(--accent); }
 
-    /* 마우스 호버 시 효과: 약간 커지면서 그림자 생성 */
-    .bento-item:hover {
-        transform: scale(1.02);
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--accent);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
+        /* 벤토 그리드 메인 영역 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+            display: grid;
+            /* 4열 그리드 시스템 */
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 220px;
+            gap: 20px;
+        }
 
-    /* 카드 크기 조절 (벤토 스타일) */
-    .item-large { grid-column: span 2; grid-row: span 2; } /* EA 밸런스 */
-    .item-wide { grid-column: span 2; } /* 코코두기 */
-    .item-tall { grid-row: span 2; } /* 야간약국 분석 */
+        /* 개별 카드 공통 스타일 */
+        .bento-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 35px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            background: var(--card-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
 
-    .bento-item h3 { font-size: 1.5rem; margin-bottom: 8px; }
-    .bento-item p { color: #888; font-size: 0.9rem; }
-    .bento-item .tag { 
-        position: absolute; top: 20px; left: 20px; 
-        background: var(--accent); color: #000;
-        padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold;
-    }
-</style>
+        /* 벤토 아이템 크기 설정 */
+        .large { grid-column: span 2; grid-row: span 2; } /* EA 밸런스 */
+        .wide { grid-column: span 2; } /* 코코두기 */
+        .tall { grid-row: span 2; } /* 야간약국 분석 */
+        .standard { grid-column: span 1; } /* 리듬게임, 신규컨텐츠 */
 
-<section class="bento-grid">
-    <div class="bento-item item-large" onclick="openM(2)">
-        <span class="tag">MAIN EXPERIENCE</span>
-        <h3>EA Korea: 밸런스 제안</h3>
-        <p>데이터 분석을 통한 실점률 8% 개선</p>
+        .bento-item h3 { font-size: 1.6rem; margin: 0; font-weight: 700; z-index: 2; }
+        .bento-item p { font-size: 1rem; color: var(--text-sub); margin: 10px 0 0; z-index: 2; }
+        .bento-item .tag {
+            position: absolute; top: 30px; left: 35px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent);
+            padding: 6px 14px; border-radius: 100px;
+            font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+        }
+
+        /* 모달 팝업 스타일 */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
+            z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            background: #161618; width: 100%; max-width: 1100px; height: 90vh;
+            border-radius: 40px; position: relative; overflow-y: auto;
+            border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+        .close-btn {
+            position: sticky; top: 30px; left: calc(100% - 70px);
+            font-size: 40px; color: #555; cursor: pointer; transition: 0.3s; z-index: 100;
+        }
+        .close-btn:hover { color: var(--accent); }
+
+        .modal-body { padding: 60px; }
+        .modal-body h2 { font-size: 2.5rem; margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .modal-body .desc { font-size: 1.2rem; line-height: 1.8; color: var(--text-sub); }
+        .modal-body h4 { font-size: 1.4rem; color: var(--accent); margin-top: 40px; }
+        
+        /* 팝업 내부 미디어 레이아웃 */
+        .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+        iframe { width: 100%; border-radius: 20px; border: 1px solid var(--border); background: #000; }
+        .video-box { aspect-ratio: 16/9; }
+        .pdf-box { height: 600px; grid-column: span 2; }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: repeat(2, 1fr); }
+            .media-grid { grid-template-columns: 1fr; }
+            .pdf-box { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>안녕하세요, <span>홍길동</span>입니다.</h1>
+        <p>EA Korea 2년 경력의 데이터 분석가이자, 즐거움을 수치로 설계하는 게임 기획자입니다.</p>
+    </header>
+
+    <main class="container">
+        <div class="bento-item large" onclick="openModal(2)">
+            <span class="tag">Main Experience</span>
+            <h3>EA Korea: 밸런스 분석</h3>
+            <p>Next Field 프로젝트 참여 <br>데이터 기반 실점률 8% 감소 달성</p>
+        </div>
+
+        <div class="bento-item wide" onclick="openModal(1)">
+            <span class="tag">Team Project</span>
+            <h3>협업: 코코두기</h3>
+            <p>10인 팀 프로젝트, 헥사타일 레벨 디자인 및 UX 개선</p>
+        </div>
+
+        <div class="bento-item standard" onclick="openModal(0)">
+            <span class="tag">Solo Dev</span>
+            <h3>리듬 게임 개발</h3>
+            <p>GameMaker 기반 <br>핵심 메커니즘 설계</p>
+        </div>
+
+        <div class="bento-item standard" onclick="openModal(3)">
+            <span class="tag">System Design</span>
+            <h3>신규 컨텐츠 제안</h3>
+            <p>UX 검증 및 라이브 <br>서비스 안정성 확보</p>
+        </div>
+
+        <div class="bento-item tall" onclick="openModal(4)">
+            <span class="tag">Data Analysis</span>
+            <h3>공공 데이터 분석</h3>
+            <p>야간약국 입지 최적화 <br>문제 해결 프로세스 도출</p>
+        </div>
+    </main>
+
+    <div id="projectModal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modalBody" class="modal-body">
+                </div>
+        </div>
     </div>
 
-    <div class="bento-item item-wide" onclick="openM(1)">
-        <h3>협업: 코코두기</h3>
-        <p>10인 팀 프로젝트 및 레벨 디자인</p>
-    </div>
+    <script>
+        /* --- [JS] 데이터 관리 및 팝업 동작 --- */
 
-    <div class="bento-item" onclick="openM(0)">
-        <h3>1인 리듬 게임</h3>
-        <p>GameMaker 기반 개발</p>
-    </div>
+        // 프로젝트 데이터 객체
+        const projects = [
+            {
+                title: "1인 기획/개발 리듬 게임",
+                desc: "GameMaker 엔진을 활용하여 음악 비트와 게임 액션의 동기화 로직을 직접 설계한 1인 개발 프로젝트입니다. 게임 제작의 전체 파이프라인을 경험하며 기술적 이해도를 높였습니다.",
+                stats: "<li>음악 비트 기반 시스템 설계 및 인게임 연출 담당</li><li>게임 메이커를 활용한 1인 기획/개발 수행</li>",
+                video: "dQw4w9WgXcQ", // 유튜브 ID 예시
+                pdf: ""
+            },
+            {
+                title: "협업 프로젝트: 코코두기 (Kokodugi)",
+                desc: "기획 4명, 개발 6명으로 구성된 10인 팀 프로젝트로 유니티 엔진 기반의 쿼터뷰 헥사타일 퍼즐 게임입니다. 헥사타일 레벨 디자인과 사용자 이탈 방지를 위한 튜토리얼 설계를 주도했습니다.",
+                stats: "<li>헥사타일 기반 전략 퍼즐 레벨 디자인 및 전체 밸런싱 수행</li><li>초심자 테스터 피드백을 반영한 직관적 UI/UX 개선안 도출</li>",
+                video: "",
+                pdf: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" // PDF 경로 예시
+            },
+            {
+                title: "EA Korea: 데이터 기반 밸런스 제안",
+                desc: "EA Korea QA팀에서 2년간 근무하며 Next Field 프로젝트의 밸런싱 작업에 참여했습니다. 플레이 데이터를 정량적으로 분석하여 실제 지표를 개선하는 성과를 냈습니다.",
+                stats: "<li>중거리 슛 실점률 데이터 분석 후 수치 조정안 제안 → 실점률 8% 감소 달성</li><li>신규 드리블 시스템의 조작 편의성 개선 → 드리블 성공률 15% 향상 기여</li>",
+                video: "",
+                pdf: ""
+            },
+            {
+                title: "EA Korea: 신규 컨텐츠 QA 및 UX 검증",
+                desc: "새로운 시스템의 프로토타입 단계부터 재미와 깊이를 검증하고, 유저 관점에서의 불편함을 최소화하기 위한 구체적인 개선안을 제시했습니다.",
+                stats: "<li>라이브 서버 플레이 데이터를 분석하여 특정 전술의 과도한 효율성 식별 및 개선</li><li>업데이트 이후 실시간 모니터링을 통한 라이브 서비스 안정성 확보</li>",
+                video: "",
+                pdf: ""
+            },
+            {
+                title: "공공 야간약국 입지 데이터 분석",
+                desc: "국가 지원 데이터 교육 과정을 수료하며 쌓은 역량을 바탕으로 공공 데이터를 활용해 사회적 문제를 해결한 프로젝트입니다.",
+                stats: "<li>지역별 인구 밀도와 기존 인프라 데이터를 정량적으로 분석</li><li>통계적 접근 방식을 통해 최적의 야간약국 입지 제안 보고서 작성</li>",
+                video: "",
+                pdf: ""
+            }
+        ];
 
-    <div class="bento-item" onclick="openM(3)">
-        <h3>신규 컨텐츠 제안</h3>
-        <p>UX 검증 및 시스템 기획</p>
-    </div>
+        const modal = document.getElementById('projectModal');
+        const modalBody = document.getElementById('modalBody');
 
-    <div class="bento-item item-tall" onclick="openM(4)">
-        <span class="tag">DATA</span>
-        <h3>야간약국 데이터 분석</h3>
-        <p>입지 최적화 모델 도출</p>
-    </div>
-</section>
+        function openModal(idx) {
+            const p = projects[idx];
+            
+            let videoSection = p.video ? `
+                <div class="video-box">
+                    <iframe src="https://www.youtube.com/embed/${p.video}" frameborder="0" allowfullscreen></iframe>
+                </div>` : '';
+            
+            let pdfSection = p.pdf ? `
+                <div class="pdf-box">
+                    <iframe src="${p.pdf}"></iframe>
+                </div>` : '';
+
+            modalBody.innerHTML = `
+                <h2>${p.title}</h2>
+                <p class="desc">${p.desc}</p>
+                <h4>핵심 성과 및 역량</h4>
+                <ul class="desc">${p.stats}</ul>
+                <div class="media-grid">
+                    ${videoSection}
+                    ${pdfSection}
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            modalBody.innerHTML = ''; // 영상 소리 방지를 위해 초기화
+        }
+    </script>
+</body>
+</html>

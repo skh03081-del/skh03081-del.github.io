@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Designer Portfolio | LEE JAE YOUNG</title>
+    <title>이재영 | Game Designer Portfolio</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0a0a0c;
-            --card: rgba(255, 255, 255, 0.05);
-            --card-hover: rgba(255, 255, 255, 0.12);
+            --bg: #0d0d0f;
+            --card: #161618;
+            --border: rgba(255, 255, 255, 0.08);
             --accent: #3b82f6;
             --text-main: #ffffff;
-            --text-sub: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
+            --text-sub: #9ca3af;
+            --star: #facc15; /* 별점 색상 */
         }
 
         body {
@@ -21,276 +22,208 @@
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Pretendard', sans-serif;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
+        /* 1. 헤더 섹션 */
         header {
             max-width: 1200px; margin: 0 auto;
-            padding: 80px 20px 20px;
-            animation: fadeInUp 1s ease-out;
+            padding: 100px 20px 60px;
+            text-align: left;
         }
-        header h1 { font-size: 3rem; font-weight: 800; margin: 0; }
-        header p { font-size: 1.2rem; color: var(--text-sub); margin-top: 15px; line-height: 1.6; }
-        header span { color: var(--accent); }
+        header h1 { font-size: 3.5rem; font-weight: 800; margin: 0; letter-spacing: -2px; }
+        header h1 span { color: var(--accent); }
+        header p.tagline { font-size: 1.5rem; color: var(--text-sub); margin-top: 20px; font-weight: 300; }
 
-        .skills-summary {
-            max-width: 1200px; margin: 0 auto 40px; padding: 0 20px;
-            display: flex; gap: 10px; flex-wrap: wrap;
+        /* 2. 보유 기술 섹션 (image_e56605.png 스타일 반영) */
+        .section-title {
+            max-width: 1200px; margin: 0 auto 30px; padding: 0 20px;
+            font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px;
         }
-        .skill-tag {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            padding: 5px 15px; border-radius: 50px; font-size: 0.9rem; color: var(--text-sub);
+        .section-title i { color: var(--accent); font-size: 1.4rem; }
+
+        .skills-container {
+            max-width: 1200px; margin: 0 auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3열 배치 */
+            gap: 15px;
         }
 
-        .container {
+        .skill-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+        .skill-item:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+        .skill-top { display: flex; justify-content: space-between; align-items: center; }
+        .skill-name { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .skill-name i { width: 20px; color: var(--accent); }
+        .stars { color: var(--star); font-size: 0.85rem; }
+        .skill-desc { color: var(--text-sub); font-size: 0.9rem; line-height: 1.4; }
+
+        /* 3. 프로젝트 그리드 (이미지 잘림 방지형) */
+        .project-container {
             max-width: 1200px; margin: 0 auto 100px;
             padding: 0 20px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            animation: fadeInUp 1.2s ease-out both;
         }
 
         .project-card {
-            background: var(--card); border: 1px solid var(--border); border-radius: 24px;
-            overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
-            transition: all 0.4s ease; animation: floating 6s ease-in-out infinite; height: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
         }
-        .project-card:hover {
-            animation-play-state: paused; transform: translateY(-10px);
-            border-color: var(--accent); background: var(--card-hover);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
+        .project-card:hover { transform: translateY(-10px); border-color: var(--accent); }
 
-        .card-image-box {
+        .card-img-box {
             width: 100%; height: 220px; background: #000;
             display: flex; align-items: center; justify-content: center;
-            border-bottom: 1px solid var(--border);
         }
-        .card-image-box img { width: 100%; height: 100%; object-fit: contain; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: contain; }
 
-        .card-text-box { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
-        .project-card h3 { font-size: 1.3rem; margin: 15px 0 10px; font-weight: 700; }
-        .project-card p { font-size: 0.95rem; color: var(--text-sub); margin: 0; line-height: 1.5; }
+        .card-info-box { padding: 25px; flex-grow: 1; }
+        .project-card h3 { font-size: 1.3rem; margin: 10px 0; }
+        .project-card p { font-size: 0.95rem; color: var(--text-sub); }
         .project-card .tag {
-            align-self: flex-start; background: rgba(59, 130, 246, 0.15);
-            padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; color: var(--accent);
+            background: rgba(59, 130, 246, 0.1); color: var(--accent);
+            padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
         }
 
+        /* 4. 모달 및 임베드 */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(25px);
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
             z-index: 1000; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-content {
-            background: #111113; width: 100%; max-width: 1100px; height: 90vh;
-            border-radius: 40px; position: relative; overflow-y: auto; border: 1px solid var(--border);
+            background: #111113; width: 100%; max-width: 1000px; height: 90vh;
+            border-radius: 32px; overflow-y: auto; border: 1px solid var(--border);
         }
-        .close-btn {
-            position: sticky; top: 30px; left: calc(100% - 70px);
-            font-size: 40px; color: #fff; cursor: pointer; z-index: 100;
-        }
-
-        .modal-body { padding: 60px; }
-        .modal-body h2 { font-size: 2.5rem; color: var(--accent); margin-top: 10px; }
-        .modal-body .subtitle { font-size: 1.2rem; color: var(--text-sub); margin-bottom: 30px; }
-        .modal-body .desc-text { font-size: 1.1rem; line-height: 1.8; color: #ddd; }
+        .modal-body { padding: 50px; }
+        .info-box { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 25px; margin: 25px 0; border-left: 4px solid var(--accent); }
         
-        .info-box {
-            background: rgba(255,255,255,0.03); border-radius: 25px; padding: 30px; margin: 30px 0;
-            border-left: 5px solid var(--accent);
+        iframe { width: 100%; border-radius: 15px; border: 1px solid var(--border); margin-top: 20px; }
+        .pdf-view { height: 700px; }
+
+        @media (max-width: 900px) {
+            .skills-container, .project-container { grid-template-columns: 1fr; }
         }
-        .info-box h4 { margin: 0 0 15px 0; color: var(--accent); font-size: 1.3rem; }
-        .info-box ul { padding-left: 20px; margin: 0; }
-        .info-box li { margin-bottom: 10px; }
-
-        .media-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
-        iframe { width: 100%; border-radius: 20px; border: 1px solid var(--border); background: #000; }
-        .pdf-box { height: 700px; }
-
-        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .modal-body { padding: 30px; } }
     </style>
 </head>
 <body>
 
     <header>
         <h1><span>이재영</span> | Game Designer</h1>
-        <p><strong>"끈기 있는 데이터 기반의 게임 체인저"</strong> [cite: 9]<br>
-        EA Korea Gameplay 밸런스 QA 실무를 거쳐, 사용자의 주관적 체감을 객관적 지표로 분석하는 기획자입니다. [cite: 26, 352, 353]</p>
+        <p class="tagline">"QA에서 시작한 경험이 기획의 깊이가 된 게임 체인저" [cite: 9, 70]</p>
     </header>
 
-    <div class="skills-summary">
-        <div class="skill-tag">Jira/Slack/Confluence</div>
-        <div class="skill-tag">Figma/Excel VBA</div>
-        <div class="skill-tag">GameMaker/Unity</div>
-        <div class="skill-tag">Gemini/AI 협업</div>
+    <h2 class="section-title"><i class="fa-solid fa-bolt"></i> 보유 기술</h2>
+    <div class="skills-container">
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-jira"></i> Jira</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">마일스톤 관리, 버그 및 이슈 트래킹, 일정 관리</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-slack"></i> Slack</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">원활한 커뮤니케이션, 히스토리 및 문서 정리</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-file-lines"></i> Confluence</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">프로젝트 관리 및 문서화, 협업 워크스페이스 구축</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-file-excel"></i> Excel</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">데이터 필터링 및 정렬, 지표 시각화, 매크로(VBA) 활용</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-figma"></i> Figma</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">UI/UX 디자인, 프로토타입 제작, 협업 프로젝트 관리</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-gamepad"></i> Gamemaker</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">축구 + 리듬 게임 기획 및 1인 개발 경험</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-brands fa-unity"></i> Unity</div><div class="stars">★★★☆☆</div></div>
+            <div class="skill-desc">팀 프로젝트 기반 협업, 기본적인 엔진 기능 활용</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-robot"></i> Gemini</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">코딩 파트너, 자료 정리 및 시각화 활용</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name"><i class="fa-solid fa-note-sticky"></i> Notion</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">대시보드 관리, 문서 아카이빙 및 히스토리 정리</div>
+        </div>
     </div>
 
-    <main class="container">
+    <h2 class="section-title"><i class="fa-solid fa-folder-open"></i> 프로젝트</h2>
+    <div class="project-container">
         <div class="project-card" onclick="openModal(0)">
-            <div class="card-image-box"><img src="P1.png"></div>
-            <div class="card-text-box">
-                <span class="tag">1인 기획 & 개발</span>
-                <h3>RHYTHM ELEVEN</h3>
-                <p>축구의 전략성과 리듬 게임의 피지컬 입력을 결합한 독창적 하이브리드 장르 기획 [cite: 122, 152]</p>
-            </div>
+            <div class="card-img-box"><img src="P1.png"></div>
+            <div class="card-info-box"><span class="tag">1인 기획 & 개발</span><h3>RHYTHM ELEVEN</h3><p>축구 전략과 리듬 액션의 결합 [cite: 92, 108]</p></div>
         </div>
-
         <div class="project-card" onclick="openModal(1)">
-            <div class="card-image-box"><img src="P2.png"></div>
-            <div class="card-text-box">
-                <span class="tag">10인 협업 프로젝트</span>
-                <h3>코코두기 (Kokodugi)</h3>
-                <p>유니티 기반 쿼터뷰 퍼즐 게임의 레벨 디자인 및 기업 연계 실무 프로세스 경험 [cite: 254, 260]</p>
-            </div>
+            <div class="card-img-box"><img src="P2.png"></div>
+            <div class="card-info-box"><span class="tag">10인 팀 협업</span><h3>코코두기 (Kokodugi)</h3><p>학습 곡선을 고려한 레벨 디자인 [cite: 93, 285]</p></div>
         </div>
-
         <div class="project-card" onclick="openModal(2)">
-            <div class="card-image-box"><img src="P3.png"></div>
-            <div class="card-text-box">
-                <span class="tag">EA KOREA 실무</span>
-                <h3>게임 밸런스 개선 제안</h3>
-                <p>로빙 스루 패스 지표 분석을 통해 유저 부정 여론을 수치로 증명하고 대안 제시 [cite: 319, 342, 349]</p>
-            </div>
+            <div class="card-img-box"><img src="P3.png"></div>
+            <div class="card-info-box"><span class="tag">EA KOREA 실무</span><h3>밸런스 개선안</h3><p>지표를 통해 증명하는 밸런싱 [cite: 313, 330]</p></div>
         </div>
-
         <div class="project-card" onclick="openModal(3)">
-            <div class="card-image-box"><img src="P4.png"></div>
-            <div class="card-text-box">
-                <span class="tag">FC ONLINE 제안서</span>
-                <h3>감독의 전술 노트</h3>
-                <p>고착화된 메타 해결을 위한 감독 카드 수집 및 시너지 성장 시스템 설계 [cite: 417, 437, 438]</p>
-            </div>
+            <div class="card-info-box"><img src="P4.png" style="width:100%; height:220px; object-fit:contain;"></div>
+            <div class="card-info-box"><span class="tag">시스템 제안</span><h3>감독의 전술 노트</h3><p>전술적 갈증을 성장의 재미로 전환 [cite: 417, 428]</p></div>
         </div>
-
         <div class="project-card" onclick="openModal(4)">
-            <div class="card-image-box"><img src="P5.png"></div>
-            <div class="card-text-box">
-                <span class="tag">공공 데이터 분석</span>
-                <h3>공공 야간약국 최적지 선정</h3>
-                <p>데이터 모델링을 통해 의료 사각지대를 발굴하고 정량적 입지 전략 수립 [cite: 610, 611, 612]</p>
-            </div>
+            <div class="card-info-box"><img src="P5.png" style="width:100%; height:220px; object-fit:contain;"></div>
+            <div class="card-info-box"><span class="tag">데이터 분석</span><h3>공공 야간약국 선정</h3><p>의료 공백 해소를 위한 최적 입지 [cite: 604, 617]</p></div>
         </div>
-    </main>
+    </div>
 
     <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
             <div id="modalBody" class="modal-body"></div>
         </div>
     </div>
 
     <script>
         const projects = [
-            {
-                title: "RHYTHM ELEVEN",
-                subtitle: "축구 전략 + 리듬 입력 하이브리드 (1인 기획 & 개발)",
-                desc: "유저를 넘어 재미를 설계하는 기획자로 거듭난 첫 기록입니다. 축구의 전략성과 리듬 게임의 집중력을 동시에 요구하는 새로운 시장을 목표로 제작되었습니다. [cite: 105, 122, 124, 130]",
-                content: `
-                    <div class="info-box">
-                        <h4>핵심 기획 요소 [cite: 100, 216]</h4>
-                        <ul>
-                            <li><strong>동적 난이도 시스템:</strong> 선수의 포지션과 행동이 리듬 게임의 노트 속도 및 HP 데미지에 직결되는 구조 설계 [cite: 217, 245]</li>
-                            <li><strong>AI 협업 개발:</strong> Gemini를 코딩 파트너로 활용하여 게임메이커 로직 효율성 검증 및 한계 극복 [cite: 62, 194]</li>
-                            <li><strong>시스템 설계:</strong> 패스/슛 행동 단계와 리듬 판정을 유기적으로 결합한 핵심 루프 구현 [cite: 189, 190]</li>
-                        </ul>
-                    </div>
-                `,
-                img: "P1.png", video: "", pdf: ""
-            },
-            {
-                title: "코코두기 (Kokodugi)",
-                subtitle: "유니티 기반 쿼터뷰 퍼즐 (10인 기업 연계 협업)",
-                desc: "10인 체제의 팀워크로 상용화 단계를 고려한 제작 과정을 경험했습니다. 기획자에게 익숙한 것이 유저에게는 불친절할 수 있음을 깨닫고 학습 곡선을 정교화했습니다. [cite: 260, 263, 268, 269]",
-                content: `
-                    <div class="info-box">
-                        <h4>기획 기여도 [cite: 254-259]</h4>
-                        <ul>
-                            <li><strong>최적의 학습 곡선:</strong> 유저 플레이 데이터를 분석하여 단계적 튜토리얼 및 직관적 환경 구축 [cite: 284, 288, 290]</li>
-                            <li><strong>Figma 상세 가이드:</strong> 기획과 개발의 간극을 줄이는 UI/UX 설계 및 상세 가이드 주도 [cite: 292, 300]</li>
-                            <li><strong>데이터 자동화:</strong> Excel VBA 기반의 데이터 매니저 툴을 자체 개발하여 휴먼 에러 차단 [cite: 305, 307, 308]</li>
-                        </ul>
-                    </div>
-                `,
-                img: "P2.png", video: "", pdf: ""
-            },
-            {
-                title: "게임 밸런스 개선안",
-                subtitle: "FC ONLINE 로빙 스루 패스 지표 분석 및 개선 제안",
-                desc: "EA Korea 실무 당시 진행한 분석으로, 유저들의 주관적인 불만을 정량적 지표로 변환하여 밸런싱의 명확한 근거를 스스로 증명했습니다. [cite: 314, 335, 336, 352]",
-                content: `
-                    <div class="info-box">
-                        <h4>분석 및 해결 과정 [cite: 321-326]</h4>
-                        <ul>
-                            <li><strong>부정 여론 정량화:</strong> 커뮤니티 모니터링을 통해 2,000여 건의 불만 사항을 수집하고 하락 원인 분석 [cite: 349, 350]</li>
-                            <li><strong>논리적 증명:</strong> 패스 시도 감소 원인이 수비 AI 개선에 따른 간접적 너프임을 지표로 확인 [cite: 371]</li>
-                            <li><strong>기술적 검증:</strong> 자체 엔진 툴 시뮬레이션을 통해 수비 마킹 강화 및 후퇴 속도 최적화 수치 도출 [cite: 403, 404, 412]</li>
-                        </ul>
-                    </div>
-                `,
-                img: "P3.png", video: "", pdf: ""
-            },
-            {
-                title: "감독의 전술 노트",
-                subtitle: "FC ONLINE 신규 시스템 제안서",
-                desc: "전술적 갈증을 성장의 재미로 전환하는 '감독 카드 수집 시스템'을 설계했습니다. 매출 다각화와 유저 성장을 동시에 고려한 기획입니다. [cite: 417, 428, 521, 525]",
-                content: `
-                    <div class="info-box">
-                        <h4>시스템 구조 및 BM [cite: 457, 459, 487]</h4>
-                        <ul>
-                            <li><strong>코어 루프:</strong> 수집-조합-시너지-성장으로 이어지는 유기적 선순환 구조 설계 [cite: 482, 483]</li>
-                            <li><strong>유료화 전략:</strong> 라이트 유저용 시즌 패스와 헤비 유저용 감독 추천 패키지 이원화 설계 [cite: 565, 566]</li>
-                            <li><strong>잔존율 제고:</strong> 엔드 게임 컨텐츠 확장으로 고레벨 유저들에게 새로운 플레이 동기 부여 [cite: 579, 591, 592]</li>
-                        </ul>
-                    </div>
-                `,
-                img: "P4.png", video: "", pdf: ""
-            },
-            {
-                title: "공공 야간약국 최적 입지 선정",
-                subtitle: "공공 데이터 기반 최적 입지 선정 프로젝트 (Python/QGIS)",
-                desc: "불편함의 원인을 논리적으로 증명하고, 검증된 수치를 바탕으로 실질적인 변화를 만드는 의료 서비스 최적화 전략을 제안했습니다. [cite: 608, 614, 619, 620]",
-                content: `
-                    <div class="info-box">
-                        <h4>데이터 모델링 및 결과 [cite: 611, 612, 651]</h4>
-                        <ul>
-                            <li><strong>서비스 불균형 포착:</strong> 자치구별 약국 수 불균형(0개~3개) 문제를 의료 사각지대 해소 목표로 구체화 [cite: 641, 645, 648]</li>
-                            <li><strong>다각도 지표 설계:</strong> 총인구, 응급실 거리, 경찰서 위치 등 복합 지표 기반 가중치 로직 적용 [cite: 670, 678]</li>
-                            <li><strong>최적지 도출:</strong> QGIS 시각화를 통해 공공 야간약국이 없는 양천구를 1순위 최적지로 선정 [cite: 673, 676]</li>
-                        </ul>
-                    </div>
-                `,
-                img: "P5.png", video: "", pdf: ""
-            }
+            { title: "RHYTHM ELEVEN", tag: "1인 기획 & 개발", desc: "유저를 넘어 재미를 설계하는 기획자로 거듭난 기록입니다[cite: 105]. 축구의 전략성과 리듬게임의 실력을 융합하였습니다 [cite: 122].", stats: "<li>AI를 코딩파트너로 활용하여 로직 효율성 검증 [cite: 194]</li><li>노트 속도와 HP 기반의 동적 난이도 설계 [cite: 245]</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "코코두기 (Kokodugi)", tag: "10인 팀 협업", desc: "실제 상용화 단계를 고려한 제작 과정을 경험했습니다[cite: 263]. 유저가 스스로 체득하는 단계적 튜토리얼을 구축했습니다 [cite: 288].", stats: "<li>Excel VBA 기반 전용 데이터 입력기 개발 [cite: 259, 308]</li><li>Figma 기반의 상세 가이드를 통한 편의성 완성 [cite: 292]</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "게임 밸런스 개선안", tag: "EA KOREA 실무", desc: "라이브 지표 분석을 통해 유저 만족도의 하락 원인을 찾았습니다[cite: 350]. 1년 전 대비 패스 시도 83% 감소 원인을 논리적으로 증명했습니다 [cite: 371, 374].", stats: "<li>부정 여론 2,000건을 Excel 객관적 지표로 분석 [cite: 349, 353]</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증 [cite: 371]</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "감독의 전술 노트", tag: "신규 시스템 제안", desc: "기존의 제한적인 팀 컬러 문제를 해결하기 위한 수집/시너지 시스템입니다[cite: 438, 451]. 수집-조합-시너지-성장의 선순환 구조를 설계했습니다 [cite: 483].", stats: "<li>감독-클럽 조합을 통한 능력치 보너스 시너지 설계 [cite: 463]</li><li>유저 성향별 맞춤형 BM(시즌 패스/감독팩) 기획 [cite: 487]</li>", img: "P4.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "공공 야간약국 최적지 선정", tag: "데이터 분석", desc: "서비스 불균형 포착을 위해 자치구별 정량 데이터를 모델링했습니다[cite: 647, 651]. 양천구를 최적 입지 1순위로 선정했습니다 [cite: 676].", stats: "<li>총인구, 응급실 거리 등 복합 가중치 로직 설계 [cite: 678]</li><li>Python과 QGIS를 활용한 데이터 근거 기반 전략 수립 [cite: 679]</li>", img: "P5.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
         ];
 
-        function openModal(idx) {
-            const p = projects[idx];
-            let media = "";
-            if(p.video) media += `<div class="video-box"><iframe src="https://www.youtube.com/embed/${p.video}" frameborder="0" allowfullscreen></iframe></div>`;
-            if(p.pdf) media += `<div class="pdf-box"><iframe src="${p.pdf}"></iframe></div>`;
-
+        function openModal(i) {
+            const p = projects[i];
             document.getElementById('modalBody').innerHTML = `
-                <div style="width:100%; height:300px; background:#000; display:flex; align-items:center; justify-content:center; border-radius:32px; overflow:hidden; border:1px solid var(--border);">
-                    <img src="${p.img}" style="width:100%; height:100%; object-fit:contain;">
-                </div>
-                <h2>${p.title}</h2>
-                <p class="subtitle">${p.subtitle}</p>
+                <div style="text-align:right;"><span style="cursor:pointer; font-size:30px;" onclick="closeModal()">×</span></div>
+                <img src="${p.img}" style="width:100%; border-radius:20px; margin-bottom:20px;">
+                <h2>${p.title}</h2><p style="color:var(--accent); font-weight:700;">${p.tag}</p>
                 <p class="desc-text">${p.desc}</p>
-                ${p.content}
-                <div class="media-grid">${media}</div>
+                <div class="info-box"><h4>주요 기여 및 성과</h4><ul>${p.stats}</ul></div>
+                <iframe src="${p.pdf}" class="pdf-view"></iframe>
             `;
             document.getElementById('projectModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
-
-        function closeModal() {
-            document.getElementById('projectModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
     </script>
 </body>
 </html>

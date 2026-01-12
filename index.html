@@ -82,22 +82,28 @@
         .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 10px; display: inline-block; background: var(--accent-dark); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-glow); }
         .project-card h3 { font-size: 1.1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. [중요] 게임 스타일 프로젝트 모달 --- */
+        /* --- 5. 게임 스타일 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(15px); }
+        
+        /* [수정] 모달 크기 확대 */
         .modal-content { 
-            background: var(--bg); border: 2px solid var(--accent); width: 95%; max-width: 1200px; height: 92vh; 
+            background: var(--bg); border: 2px solid var(--accent); 
+            width: 98%; max-width: 1400px; /* 너비 확대 */
+            height: 95vh; /* 높이 확대 */
             overflow: hidden; position: relative; box-shadow: 0 0 60px rgba(0,0,0,1); display: flex; flex-direction: column;
         }
         
-        /* [요청 반영] 상단 프로젝트 헤더 (Blur 이미지 배경) */
         .project-header-top {
             width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0;
             border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 40px;
         }
+        
+        /* [수정] 배경 이미지 선명하게 */
         .header-bg-blur {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            filter: blur(25px) brightness(0.3); opacity: 0.8; transform: scale(1.2);
+            filter: blur(8px) brightness(0.7); opacity: 1; /* 블러 감소, 밝기 증가 */
+            transform: scale(1.1);
             z-index: 1;
         }
         .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; gap: 20px; width: 100%; justify-content: space-between; }
@@ -105,29 +111,28 @@
         .header-title-box .header-tag { font-size: 0.7rem; color: var(--accent); margin-bottom: 8px; display: block; letter-spacing: 1px; }
         .header-title-box h2 { font-size: 1.6rem; color: #fff; margin: 0; text-shadow: 0 0 10px var(--accent-glow); }
 
+        /* [수정] 나가기 버튼 잘림 방지 */
         .close-system-btn { 
             background: rgba(13, 17, 23, 0.8); color: var(--accent); border: 1px solid var(--accent); 
             padding: 10px 20px; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
             box-shadow: 0 0 10px var(--accent-dark);
+            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+            flex-shrink: 0; /* 버튼 크기 축소 방지 */
         }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
-        /* [수정] 모달 바디 스크롤 영역 */
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 40px 60px; }
 
-        /* 프로젝트 요약 패널 */
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 30px; margin-bottom: 40px; text-align: left; }
         .game-desc-panel p { font-size: 1.15rem; line-height: 1.8; color: #e0e6ed; margin: 0; }
 
-        /* 성과 미션 로그 */
         .mission-log { border: 2px solid var(--border); padding: 30px; margin-bottom: 40px; background: rgba(255,255,255,0.02); text-align: left; }
         .mission-log h4 { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; display: flex; align-items: center; }
         .mission-log h4::before { content: "●"; margin-right: 12px; font-size: 0.8rem; }
         .mission-log li { margin-bottom: 15px; color: #d1d5db; position: relative; padding-left: 25px; list-style: none; line-height: 1.6; }
         .mission-log li::before { content: "►"; position: absolute; left: 0; color: var(--accent); }
         
-        /* [수정] 탭 가림 현상 해결: Sticky 관리 */
         .asset-selector { 
             display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; 
             z-index: 1000; background: var(--bg); padding: 20px 0; 
@@ -136,18 +141,18 @@
         .asset-btn { padding: 12px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.3s; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 20px var(--accent); }
 
-        /* 뷰어 영역 */
+        /* [수정] 뷰어 영역 높이 확대 */
         .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0; border-top: 2px solid var(--accent-dark); }
-        .asset-viewer { width: 94%; height: 700px; display: none; margin: 0 auto; border: none; }
+        .asset-viewer { width: 94%; height: 800px; /* 높이 확대 */ display: none; margin: 0 auto; border: none; }
         .asset-viewer.active { display: block; }
 
-        /* 엑셀 통합 뷰어 */
         .excel-combined-ui { display: none; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
         .excel-combined-ui.active { display: flex; }
         .excel-download-card { width: 80%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; box-shadow: inset 0 0 30px var(--accent-dark); }
 
-        .video-player-frame { width: 100%; height: 700px; display: flex; align-items: center; justify-content: center; }
-        .video-player-frame iframe { width: 85%; height: 85%; border: 3px solid var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
+        /* [수정] 비디오 프레임 높이 확대 */
+        .video-player-frame { width: 100%; height: 800px; /* 높이 확대 */ display: flex; align-items: center; justify-content: center; }
+        .video-player-frame iframe { width: 90%; height: 90%; border: 3px solid var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
 
         @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .modal-inner-content { padding: 30px 20px; } .project-header-top { padding: 0 20px; height: 100px; } .asset-viewer, .video-player-frame { height: 450px; } }
     </style>
@@ -201,130 +206,4 @@
         </div>
     </div>
 
-    <h2 class="section-title">SELECT STAGE(프로젝트)</h2>
-    <div class="project-container">
-        <div class="project-card" onclick="openModal(0)"><div class="card-img-box"><img src="P1.png"></div><div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div></div>
-        <div class="project-card" onclick="openModal(1)"><div class="card-img-box"><img src="P2.png"></div><div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI (코코두기)</h3></div></div>
-        <div class="project-card" onclick="openModal(2)"><div class="card-img-box"><img src="P3.png"></div><div class="card-info-box"><span class="tag">PLAYER-DRIVEN PROPOSAL</span><h3>밸런스 개선 제안</h3></div></div>
-        <div class="project-card" onclick="openModal(3)"><div class="card-img-box"><img src="P4.png"></div><div class="card-info-box"><span class="tag">SYSTEM DESIGN</span><h3>감독의 전술 노트</h3></div></div>
-        <div class="project-card" onclick="openModal(4)"><div class="card-img-box"><img src="P5.png"></div><div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>공공 야간약국 선정</h3></div></div>
-    </div>
-
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
-            <div class="project-header-top">
-                <div id="headerBlur" class="header-bg-blur"></div>
-                <div class="header-info-content">
-                    <div class="header-title-box">
-                        <span id="modalTag" class="header-tag">PROJECT MISSION</span>
-                        <h2 id="modalTitle">PROJECT TITLE</h2>
-                    </div>
-                    <button class="close-system-btn" onclick="closeModal()">[X] EXIT SYSTEM</button>
-                </div>
-            </div>
-            
-            <div id="modalBodyScroll" class="modal-body-scroll">
-                <div class="modal-inner-content">
-                    <div class="game-desc-panel">
-                        <p id="modalDesc">Project description text goes here.</p>
-                    </div>
-                    
-                    <div class="mission-log">
-                        <h4>핵심 성과 (MISSION ACHIEVEMENTS)</h4>
-                        <ul id="modalAchievements"></ul>
-                    </div>
-
-                    <div id="assetTabs" class="asset-selector"></div>
-
-                    <div id="viewerContainer" class="viewer-container"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function startGame() {
-            const overlay = document.getElementById('intro-overlay');
-            if(overlay) { overlay.style.transition = '0.8s'; overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; }, 800); }
-        }
-
-        const projects = [
-            { 
-                title: "RHYTHM ELEVEN", tag: "SOLO QUEST", 
-                desc: "축구 전략성과 리듬 입력을 융합한 게임입니다. AI 협업을 통해 로직 효율성을 검증했습니다.", 
-                achievements: "<li>동적 난이도 시스템 설계</li><li>코드 기반 유연한 비주얼 연출 구현</li>", img: "P1.png",
-                assets: [
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" },
-                    { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" },
-                    { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" },
-                    { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }
-                ]
-            },
-            { 
-                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
-                desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
-                achievements: "<li>VBA 기반 데이터 매니저 제작</li><li>15종 이상의 기획 문서 아카이빙</li>", img: "P2.png", 
-                assets: [
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
-                    { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
-                    { 
-                        type: "excel-combined", 
-                        title: "데이터 입력기", 
-                        videoUrl: "https://www.youtube.com/embed/KfmdTe9rUjM?enablejsapi=1",
-                        downloadUrl: "KOKO_Data_Manager.xlsm" 
-                    },
-                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
-                ] 
-            },
-            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
-            { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
-            { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
-        ];
-
-        function openModal(i) {
-            const p = projects[i];
-            const modal = document.getElementById('projectModal');
-            const modalBody = document.getElementById('modalBodyScroll');
-            
-            // 데이터 매핑
-            document.getElementById('headerBlur').style.backgroundImage = `url(${p.img})`;
-            document.getElementById('modalTag').innerText = `[ ${p.tag} ]`;
-            document.getElementById('modalTitle').innerText = p.title;
-            document.getElementById('modalDesc').innerText = p.desc;
-            document.getElementById('modalAchievements').innerHTML = p.achievements;
-
-            // 탭 및 뷰어 생성
-            let viewersHtml = p.assets.map((as, idx) => {
-                if(as.type === 'video') {
-                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="video-player-frame"><iframe src="${as.url}" allowfullscreen></iframe></div></div>`;
-                } else if(as.type === 'link') {
-                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-ui active"><i class="fas fa-link" style="font-size:3.5rem; color:var(--accent); margin-bottom:20px;"></i><p style="color:var(--accent); margin-bottom:25px;">상세 기획 명세서를 외부 링크에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션(Notion) 열기</a></div></div>`;
-                } else if(as.type === 'excel-combined') {
-                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-ui active"><div class="video-player-frame" style="height:550px;"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div><div class="excel-download-card"><i class="fas fa-file-excel" style="font-size:2.5rem; color:#217346; margin-bottom:15px;"></i><p style="color:var(--accent); margin-bottom:15px; font-weight:bold;">VBA 데이터 매니저 (자동화 도구)</p><a href="${as.downloadUrl}" download class="btn-pixel" style="font-size:0.9rem;">💾 파일 다운로드 (.xlsm)</a></div></div></div>`;
-                } else {
-                    return `<iframe class="asset-viewer ${idx===0?'active':''}" id="view-${idx}" src="${as.url}#toolbar=0"></iframe>`;
-                }
-            }).join('');
-
-            let buttonsHtml = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, ${idx})">${as.title}</button>`).join('');
-
-            document.getElementById('assetTabs').innerHTML = buttonsHtml;
-            document.getElementById('viewerContainer').innerHTML = viewersHtml;
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            modalBody.scrollTop = 0;
-        }
-
-        function switchTab(btn, idx) {
-            document.querySelectorAll('.video-player-frame iframe').forEach(ifr => { ifr.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); });
-            document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.asset-viewer').forEach(v => v.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(`view-${idx}`).classList.add('active');
-        }
-
-        function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
-    </script>
-</body>
-</html>
+    <h2 class

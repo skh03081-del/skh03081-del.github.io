@@ -85,11 +85,11 @@
         /* --- 5. 게임 스타일 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(15px); }
         
-        /* [수정] 모달 크기 확대 */
+        /* 모달 크기 유지 */
         .modal-content { 
             background: var(--bg); border: 2px solid var(--accent); 
-            width: 98%; max-width: 1400px; /* 너비 확대 */
-            height: 95vh; /* 높이 확대 */
+            width: 98%; max-width: 1400px;
+            height: 95vh;
             overflow: hidden; position: relative; box-shadow: 0 0 60px rgba(0,0,0,1); display: flex; flex-direction: column;
         }
         
@@ -98,11 +98,11 @@
             border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 40px;
         }
         
-        /* [수정] 배경 이미지 선명하게 */
+        /* 배경 이미지 선명하게 유지 */
         .header-bg-blur {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            filter: blur(8px) brightness(0.7); opacity: 1; /* 블러 감소, 밝기 증가 */
+            filter: blur(8px) brightness(0.7); opacity: 1;
             transform: scale(1.1);
             z-index: 1;
         }
@@ -111,13 +111,14 @@
         .header-title-box .header-tag { font-size: 0.7rem; color: var(--accent); margin-bottom: 8px; display: block; letter-spacing: 1px; }
         .header-title-box h2 { font-size: 1.6rem; color: #fff; margin: 0; text-shadow: 0 0 10px var(--accent-glow); }
 
-        /* [수정] 나가기 버튼 잘림 방지 */
+        /* [수정] 나가기 버튼 텍스트 단축 및 잘림 방지 */
         .close-system-btn { 
             background: rgba(13, 17, 23, 0.8); color: var(--accent); border: 1px solid var(--accent); 
-            padding: 10px 20px; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
+            padding: 10px 25px; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
             box-shadow: 0 0 10px var(--accent-dark);
             white-space: nowrap; /* 텍스트 줄바꿈 방지 */
             flex-shrink: 0; /* 버튼 크기 축소 방지 */
+            font-weight: bold;
         }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
@@ -141,20 +142,26 @@
         .asset-btn { padding: 12px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.3s; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 20px var(--accent); }
 
-        /* [수정] 뷰어 영역 높이 확대 */
+        /* [수정] 뷰어 영역 높이 축소 (한눈에 보기 좋게) */
         .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0; border-top: 2px solid var(--accent-dark); }
-        .asset-viewer { width: 94%; height: 800px; /* 높이 확대 */ display: none; margin: 0 auto; border: none; }
+        .asset-viewer { width: 94%; height: 550px; /* 800px -> 550px로 축소 */ display: none; margin: 0 auto; border: none; }
         .asset-viewer.active { display: block; }
 
         .excel-combined-ui { display: none; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
         .excel-combined-ui.active { display: flex; }
         .excel-download-card { width: 80%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; box-shadow: inset 0 0 30px var(--accent-dark); }
 
-        /* [수정] 비디오 프레임 높이 확대 */
-        .video-player-frame { width: 100%; height: 800px; /* 높이 확대 */ display: flex; align-items: center; justify-content: center; }
+        /* [수정] 비디오 프레임 높이 축소 */
+        .video-player-frame { width: 100%; height: 550px; /* 800px -> 550px로 축소 */ display: flex; align-items: center; justify-content: center; }
         .video-player-frame iframe { width: 90%; height: 90%; border: 3px solid var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .modal-inner-content { padding: 30px 20px; } .project-header-top { padding: 0 20px; height: 100px; } .asset-viewer, .video-player-frame { height: 450px; } }
+        @media (max-width: 950px) { 
+            .skills-wrapper, .project-container { grid-template-columns: 1fr; } 
+            .modal-inner-content { padding: 30px 20px; } 
+            .project-header-top { padding: 0 20px; height: 100px; } 
+            .asset-viewer, .video-player-frame { height: 400px; } /* 모바일에서도 적절히 축소 */
+            .header-title-box h2 { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
@@ -224,7 +231,7 @@
                         <span id="modalTag" class="header-tag">PROJECT MISSION</span>
                         <h2 id="modalTitle">PROJECT TITLE</h2>
                     </div>
-                    <button class="close-system-btn" onclick="closeModal()">[X] EXIT SYSTEM</button>
+                    <button class="close-system-btn" onclick="closeModal()">[X] EXIT</button>
                 </div>
             </div>
             

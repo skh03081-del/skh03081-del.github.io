@@ -10,8 +10,6 @@
     <meta property="og:title" content="LEE JAE YOUNG | 게임 기획자 포트폴리오">
     <meta property="og:description" content="데이터 기반의 논리와 게임적 감각을 갖춘 기획자, 이재영입니다.">
     <meta property="og:image" content="https://skh03081-del.github.io/S.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -59,7 +57,7 @@
             transition: 0.2s; font-size: 1.1rem; text-decoration: none; display: inline-block;
         }
         .btn-blink { animation: btn-blink 1s infinite; }
-        @keyframes btn-blink { 0%, 100% { opacity: 1; box-shadow: 0 0 15px var(--accent-glow); } 50% { opacity: 0.7; box-shadow: 0 0 0px transparent; } }
+        @keyframes btn-blink { 0%, 100% { opacity: 1; box-shadow: 0 0 15px var(--accent-glow); } 50% { opacity: 0.7; } }
 
         /* --- 2. 히어로 섹션 --- */
         .hero {
@@ -76,7 +74,14 @@
         .hero-content { position: relative; z-index: 2; text-align: center; }
         .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; min-height: 3rem; display: flex; justify-content: center; align-items: center; }
         
-        .cursor { display: inline-block; font-family: 'Press Start 2P'; color: var(--accent); margin-left: 5px; animation: cursor-blink 0.8s infinite; }
+        /* [수정] 커서 스타일: 막대기에서 실제 언더바 문자로 변경 */
+        .cursor { 
+            display: inline-block; 
+            font-family: 'Press Start 2P', cursive; /* 폰트 통일 */
+            color: var(--accent); 
+            margin-left: 5px; 
+            animation: cursor-blink 0.8s infinite; 
+        }
         @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .hero-content p { 
@@ -89,20 +94,23 @@
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. 보유 기술 & 프로젝트 그리드 --- */
+        /* --- 3. 보유 기술 (PLAYER ABILITIES) --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { background: var(--card); border: 2px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; }
-        .skill-group::after { content: "READY"; position: absolute; top: 12px; right: 18px; font-family: 'Press Start 2P'; font-size: 1.2rem; color: var(--accent-glow); text-shadow: 0 0 8px var(--accent); }
+        .skill-group::after { content: "READY"; position: absolute; top: 12px; right: 18px; font-family: 'Press Start 2P'; font-size: 1.1rem; color: var(--accent-glow); text-shadow: 0 0 8px var(--accent); }
         .skill-group-title { font-size: 0.9rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 10px; margin-bottom: 5px; }
-        .skill-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
+        
+        .skill-item { display: flex; flex-direction: column; margin-bottom: 5px; }
+        .skill-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; width: 100%; }
         .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
-        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--lv5-color); }
+        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--lv5-color); text-align: right; }
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; margin-top: 5px; }
 
+        /* --- 4. 프로젝트 그리드 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
         .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
@@ -110,16 +118,19 @@
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
         .card-info-box { padding: 20px; text-align: left; }
         .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 10px; display: inline-block; background: var(--accent-dark); padding: 4px 8px; border: 1px solid var(--accent-glow); }
+        .project-card h3 { font-size: 1.1rem; margin: 0; color: #fff; }
 
-        /* --- 4. 프로젝트 모달 --- */
+        /* --- 5. 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
         .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
-        .project-header-top { width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 220px 0 40px; }
+        
+        .project-header-top { width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 150px 0 40px; }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.7); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; justify-content: space-between; }
         .header-title-box h2 { font-size: 1.8rem; color: #fff; margin: 0; text-shadow: 0 0 15px var(--accent-glow); }
-        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 10px 30px; font-size: 1rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 120px; }
+        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 10px 30px; font-size: 1rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 80px; }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent); }
+
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 40px 60px 20px; }
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 30px; margin-bottom: 40px; text-align: left; }
@@ -132,7 +143,6 @@
 
         .viewer-container { width: 100%; background: #0a0e14; padding: 60px 0; border-top: 2px solid var(--accent-dark); text-align: center; }
         .pdf-viewer { width: 75%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); box-shadow: 0 0 40px rgba(0,0,0,0.5); }
-        /* [수정] 영향 분석서 35% 폭 적용 */
         .pdf-viewer.narrow { width: 35% !important; }
         .pdf-viewer.active { display: block; }
 
@@ -140,9 +150,12 @@
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
+        /* 데이터 입력기 통합 뷰어 스타일 */
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 75%; margin: 0 auto; gap: 30px; }
-        .excel-combined-container.active { display: flex; }
-        .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; box-shadow: inset 0 0 30px var(--accent-dark); }
+        .excel-combined-container.active { display: flex !important; }
+        .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin-bottom: 20px; }
+        .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
+        .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
 
         @media (max-width: 950px) { .pdf-viewer, .video-container, .excel-combined-container { width: 95% !important; } .close-system-btn { right: 20px; } }
     </style>
@@ -150,7 +163,7 @@
 <body onclick="closeModal(event)">
 
     <div id="intro-overlay">
-        <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO<span class="cursor-blink">_</span></span></h1>
+        <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO<span class="cursor">_</span></span></h1>
         <button class="btn-pixel btn-blink" onclick="startLoadingSequence(event)">START ADVENTURE</button>
     </div>
 
@@ -180,8 +193,8 @@
     </header>
 
     <div class="reveal-section">
-        <h2 class="section-title" onclick="event.stopPropagation()">PLAYER ABILITIES</h2>
-        <div class="skills-wrapper" onclick="event.stopPropagation()">
+        <h2 class="section-title">PLAYER ABILITIES</h2>
+        <div class="skills-wrapper">
             <div class="skill-group">
                 <div class="skill-group-title">협업 & 관리</div>
                 <div class="skill-item"><div class="skill-header"><span class="skill-name">Jira</span><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div><div class="skill-desc">마일스톤 관리 및 이슈 트래킹</div></div>
@@ -207,8 +220,8 @@
     </div>
 
     <div class="reveal-section">
-        <h2 class="section-title" onclick="event.stopPropagation()">SELECT STAGE</h2>
-        <div class="project-container" onclick="event.stopPropagation()">
+        <h2 class="section-title">SELECT STAGE</h2>
+        <div class="project-container">
             <div class="project-card" onclick="openModal(0, event)"><div class="card-img-box"><img src="P1.png"></div><div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div></div>
             <div class="project-card" onclick="openModal(1, event)"><div class="card-img-box"><img src="P2.png"></div><div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI (코코두기)</h3></div></div>
             <div class="project-card" onclick="openModal(2, event)"><div class="card-img-box"><img src="P3.png"></div><div class="card-info-box"><span class="tag">PLAYER-DRIVEN PROPOSAL</span><h3>밸런스 개선 제안</h3></div></div>
@@ -240,38 +253,30 @@
     <script>
         function startLoadingSequence(e) {
             if(e) e.stopPropagation();
-            const intro = document.getElementById('intro-overlay');
             const loading = document.getElementById('loading-screen');
-            const fill = document.getElementById('loader-fill');
-            const percent = document.getElementById('loader-percent');
-            const text = document.getElementById('loader-text');
-            intro.style.display = 'none';
+            document.getElementById('intro-overlay').style.display = 'none';
             loading.style.display = 'flex';
             let width = 0;
-            let loadingInterval = setInterval(() => {
+            let itv = setInterval(() => {
                 if (width >= 100) {
-                    clearInterval(loadingInterval);
-                    text.innerText = "LOADING COMPLETE";
+                    clearInterval(itv);
                     setTimeout(() => {
                         loading.style.transition = '0.5s';
                         loading.style.opacity = '0';
                         setTimeout(() => { loading.style.display = 'none'; typeWriterEffect(); }, 500);
                     }, 400);
                 } else {
-                    width += Math.floor(Math.random() * 15) + 3; 
+                    width += Math.floor(Math.random() * 20) + 5; 
                     if(width > 100) width = 100;
-                    fill.style.width = width + '%';
-                    percent.innerText = width + '%';
-                    if(width > 30) text.innerText = "FETCHING ASSETS...";
-                    if(width > 70) text.innerText = "COMPILING DATA...";
+                    document.getElementById('loader-fill').style.width = width + '%';
+                    document.getElementById('loader-percent').innerText = width + '%';
                 }
-            }, 45);
+            }, 60);
         }
 
         function typeWriterEffect() {
             const nameTarget = document.getElementById('typing-text');
             const sloganTarget = document.getElementById('main-slogan');
-            const sections = document.querySelectorAll('.reveal-section');
             const nameText = "LEE JAE YOUNG";
             let i = 0;
             function type() {
@@ -282,8 +287,8 @@
                 } else {
                     sloganTarget.style.opacity = '1';
                     setTimeout(() => {
-                        sections.forEach((sec, index) => {
-                            setTimeout(() => sec.classList.add('active'), index * 300);
+                        document.querySelectorAll('.reveal-section').forEach((sec, idx) => {
+                            setTimeout(() => sec.classList.add('active'), idx * 300);
                         });
                     }, 600);
                 }
@@ -293,30 +298,42 @@
         }
 
         const projects = [
-            { title: "RHYTHM ELEVEN", tag: "SOLO QUEST", desc: "Strategical football rhythm project.", achievements: "<li>동적 난이도 시스템 설계</li><li>코드 기반 연출 구현</li>", img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }] },
             { 
-                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", desc: "User-oriented learning curve design.", 
-                achievements: "<li>VBA 기반 데이터 매니저 제작</li><li>15종 이상의 문서 아카이빙</li>", img: "P2.png", 
+                title: "RHYTHM ELEVEN", tag: "SOLO QUEST", 
+                desc: "Strategy Football Rhythm Game.", 
+                achievements: "<li>동적 난이도 시스템 설계</li><li>코드 기반 연출 구현</li>", img: "P1.png",
                 assets: [
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" },
+                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" },
+                    { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" },
+                    { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" },
+                    { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }
+                ]
+            },
+            { 
+                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", desc: "User-oriented project.", 
+                achievements: "<li>VBA 자동화 도구 제작</li>", img: "P2.png", 
+                assets: [
+                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
                     { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
                     { 
                         type: "excel-combined", 
                         title: "데이터 입력기", 
-                        videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", // 해결됨
+                        videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", 
                         downloadUrl: "KOKO_Data_Manager.xlsm" 
                     },
-                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/..." }
+                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" }
                 ] 
             },
             { 
-                title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "Live service balance proposal.", 
-                achievements: "<li>로빙 스루 패스 지표 분석</li>", img: "P3.png", 
-                assets: [ 
-                    { type: "pdf", title: "밸런스 개선안", url: "P3_1.pdf" }, 
-                    { type: "pdf", title: "영향 분석서", url: "P3_2.pdf", isNarrow: true } 
+                title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "Balance analysis.", 
+                achievements: "<li>지표 분석</li>", img: "P3.png", 
+                assets: [
+                    { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, 
+                    { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }
                 ] 
-            }
+            },
+            { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
+            { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>가중치 분석 모델 설계</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i, e) {
@@ -328,30 +345,38 @@
             document.getElementById('modalTitle').innerText = p.title;
             document.getElementById('modalDesc').innerText = p.desc;
             document.getElementById('modalAchievements').innerHTML = p.achievements;
+
             let viewersHtml = p.assets.map((as, idx) => {
                 const isActive = idx === 0 ? 'active' : '';
                 if(as.type === 'video') return `<div class="video-container ${isActive}" id="view-${idx}"><iframe src="${as.url}" allowfullscreen></iframe></div>`;
-                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idx}"><div class="excel-download-card"><p>상세 기획 명세서를 외부 노션 링크에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션 열기</a></div></div>`;
+                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idx}"><div class="excel-download-card"><p>상세 기획 문서를 노션에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션 열기</a></div></div>`;
                 if(as.type === 'excel-combined') {
                     return `<div class="excel-combined-container ${isActive}" id="view-${idx}">
-                                <div class="video-container active" style="width:100%; margin-bottom:30px;"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div>
-                                <div class="excel-download-card"><p style="color:var(--accent); margin-bottom:15px; font-weight:bold;">VBA 데이터 매니저 (자동화 도구)</p><a href="${as.downloadUrl}" download class="btn-pixel" style="font-size:0.9rem;">💾 파일 다운로드 (.xlsm)</a></div>
+                                <div class="combined-video-frame"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div>
+                                <div class="excel-download-card"><p style="color:var(--accent); margin-bottom:15px; font-weight:bold;">VBA 데이터 매니저 (자동화 도구)</p><a href="${as.downloadUrl}" download class="btn-pixel">💾 파일 다운로드 (.xlsm)</a></div>
                             </div>`;
                 }
                 return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idx}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
             }).join('');
+
             document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, ${idx}, event)">${as.title}</button>`).join('');
             document.getElementById('viewerContainer').innerHTML = viewersHtml;
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            document.getElementById('modalBodyScroll').scrollTop = 0;
         }
 
         function switchTab(btn, idx, e) {
             if(e) e.stopPropagation();
             document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.pdf-viewer, .video-container, .custom-viewer-ui, .excel-combined-container').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.pdf-viewer, .video-container, .excel-combined-container').forEach(v => {
+                v.classList.remove('active');
+                if(v.classList.contains('excel-combined-container')) v.style.display = 'none';
+            });
             btn.classList.add('active');
-            document.getElementById(`view-${idx}`).classList.add('active');
+            const target = document.getElementById(`view-${idx}`);
+            target.classList.add('active');
+            if(target.classList.contains('excel-combined-container')) target.style.display = 'flex';
         }
 
         function closeModal(e) {

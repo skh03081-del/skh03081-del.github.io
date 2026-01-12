@@ -30,32 +30,41 @@
         }
 
         /* --- 1. 인트로 & 로딩 시스템 --- */
-        #intro-overlay, #loading-screen {
+        #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10000; display: flex; flex-direction: column;
+            background: #000; z-index: 10001; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
         }
 
-        #loading-screen { z-index: 9999; display: none; } /* 처음엔 숨김 */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10002; /* 가장 높은 우선순위 */
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+        }
 
         #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
+        
+        /* 커서 깜빡임 애니메이션 */
         .cursor-blink { animation: cursor-blink 0.8s infinite; }
         @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* 로딩바 디자인 */
-        .loader-container { width: 300px; margin-top: 20px; }
-        .loader-text { font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--accent); margin-bottom: 15px; }
-        .loader-bar-bg { width: 100%; height: 20px; border: 2px solid var(--accent); padding: 3px; }
-        .loader-bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        .loader-container { width: 400px; text-align: center; }
+        .loader-text { font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--accent); margin-bottom: 20px; letter-spacing: 2px; }
+        .loader-bar-bg { width: 100%; height: 24px; border: 2px solid var(--accent); padding: 3px; background: #000; }
+        .loader-bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+        .loader-percent { margin-top: 15px; font-family: 'Press Start 2P'; font-size: 1rem; color: var(--accent); }
 
+        /* [수정] 버튼이 깜빡거리도록 변경 */
         .btn-pixel {
             padding: 15px 35px; background: var(--accent); color: #0d1117;
             border: 2px solid #fff; cursor: pointer; font-weight: bold;
             box-shadow: 0 0 15px var(--accent-glow);
             transition: 0.2s; font-size: 1.1rem; text-decoration: none; display: inline-block;
         }
-        .blink { animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .btn-blink { animation: btn-blink 1s infinite; }
+        @keyframes btn-blink { 0%, 100% { opacity: 1; box-shadow: 0 0 15px var(--accent-glow); } 50% { opacity: 0.7; box-shadow: 0 0 0px transparent; } }
 
         /* --- 2. 히어로 섹션 --- */
         .hero {
@@ -71,27 +80,36 @@
         
         .hero-content { position: relative; z-index: 2; text-align: center; }
         .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
+        
+        /* 슬로건 검은색 배경 강조 */
         .hero-content p { 
             font-size: 1.1rem; color: #fff; margin-top: 25px; background: #000; 
             display: inline-block; padding: 10px 25px; border: 1px solid var(--accent); 
+            box-shadow: 0 0 20px rgba(0,0,0,1);
         }
 
         /* --- 3. 보유 기술 (PLAYER ABILITIES) --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
+        
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { background: var(--card); border: 2px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; }
-        .skill-group::after { content: "READY"; position: absolute; top: 12px; right: 18px; font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--accent-glow); }
+        
+        /* [수정] READY 표시 크게 */
+        .skill-group::after { content: "READY"; position: absolute; top: 12px; right: 18px; font-family: 'Press Start 2P'; font-size: 1rem; color: var(--accent-glow); text-shadow: 0 0 8px var(--accent); }
         .skill-group-title { font-size: 0.9rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 10px; margin-bottom: 5px; }
+        
         .skill-item { display: flex; flex-direction: column; margin-bottom: 5px; }
         .skill-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
         .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
-        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--lv5-color); }
+        /* [수정] 등급 텍스트 삭제, 레벨만 유지 */
+        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--lv5-color); }
+        
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
-        .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1s; }
+        .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; margin-top: 5px; }
 
-        /* --- 4. 프로젝트 리스트 --- */
+        /* --- 4. 프로젝트 그리드 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
         .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
@@ -107,27 +125,53 @@
             background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; 
             height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; 
         }
-        .project-header-top { width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 40px; }
-        .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.7); opacity: 1; transform: scale(1.1); z-index: 1; }
+        
+        .project-header-top {
+            width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0;
+            border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 40px;
+        }
+        .header-bg-blur {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            filter: blur(4px) brightness(0.7); opacity: 1; transform: scale(1.1); z-index: 1;
+        }
         .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; justify-content: space-between; }
         .header-title-box h2 { font-size: 1.8rem; color: #fff; margin: 0; text-shadow: 0 0 15px var(--accent-glow); }
-        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 10px 30px; font-size: 1rem; cursor: pointer; transition: 0.3s; font-weight: bold; white-space: nowrap; flex-shrink: 0; position: absolute; right: 120px; }
+
+        /* EXIT 버튼 왼쪽으로 120px 이동 유지 */
+        .close-system-btn { 
+            background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); 
+            padding: 10px 30px; font-size: 1rem; cursor: pointer; transition: 0.3s;
+            font-weight: bold; white-space: nowrap; flex-shrink: 0;
+            position: absolute; right: 120px;
+        }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent); }
+
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 40px 60px 20px; }
+
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 30px; margin-bottom: 40px; text-align: left; }
         .mission-log { border: 2px solid var(--border); padding: 30px; margin-bottom: 40px; background: rgba(255,255,255,0.02); text-align: left; }
         .mission-log li { margin-bottom: 12px; color: #d1d5db; position: relative; padding-left: 25px; list-style: none; }
         .mission-log li::before { content: "►"; position: absolute; left: 0; color: var(--accent); }
-        .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 20px 0; border-bottom: 3px solid var(--accent); }
+        
+        .asset-selector { 
+            display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; 
+            z-index: 1000; background: var(--bg); padding: 20px 0; border-bottom: 3px solid var(--accent);
+        }
         .asset-btn { padding: 12px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 20px var(--accent); }
-        .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0 60px; border-top: 2px solid var(--accent-dark); text-align: center; }
+
+        /* [수정] 뷰어 창 높이 850px 유지 */
+        .viewer-container { width: 100%; background: #0a0e14; padding: 60px 0 60px; border-top: 2px solid var(--accent-dark); text-align: center; }
+        
         .pdf-viewer { width: 75%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); box-shadow: 0 0 40px rgba(0,0,0,0.5); }
         .pdf-viewer.active { display: block; }
+
         .video-container { width: 75%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 3px solid var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
+
         .custom-viewer-ui { display: none; flex-direction: column; align-items: center; width: 75%; margin: 0 auto; gap: 30px; }
         .custom-viewer-ui.active { display: flex; }
         .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
@@ -135,11 +179,11 @@
         @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .custom-viewer-ui { width: 95%; } .close-system-btn { right: 20px; } }
     </style>
 </head>
-<body onclick="closeModal()">
+<body onclick="closeModal(event)">
 
     <div id="intro-overlay">
-        <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span class="cursor-blink">PORTFOLIO_</span></h1>
-        <button class="btn-pixel blink" onclick="startLoading()">START ADVENTURE</button>
+        <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO<span class="cursor-blink">_</span></span></h1>
+        <button class="btn-pixel btn-blink" onclick="startLoadingSequence(event)">START ADVENTURE</button>
     </div>
 
     <div id="loading-screen">
@@ -148,7 +192,7 @@
             <div class="loader-bar-bg">
                 <div id="loader-fill" class="loader-bar-fill"></div>
             </div>
-            <div id="loader-percent" style="margin-top:10px; font-family:'Press Start 2P'; font-size:0.8rem; color:var(--accent);">0%</div>
+            <div id="loader-percent" class="loader-percent">0%</div>
         </div>
     </div>
 
@@ -173,24 +217,72 @@
     <div class="skills-wrapper" onclick="event.stopPropagation()">
         <div class="skill-group">
             <div class="skill-group-title">협업 & 관리</div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">Jira</span><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div><div class="skill-desc">마일스톤 관리 및 이슈 트래킹</div></div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">Slack</span><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div><div class="skill-desc">원활한 팀 커뮤니케이션</div></div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">Confluence</span><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div><div class="skill-desc">문서화 및 아카이빙</div></div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">Notion</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div><div class="skill-desc">대시보드 및 일정 관리</div></div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Jira</span><span class="skill-lv">LV.5</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div>
+                <div class="skill-desc">마일스톤 관리 및 이슈 트래킹</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Slack</span><span class="skill-lv">LV.5</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div>
+                <div class="skill-desc">원활한 팀 커뮤니케이션</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Confluence</span><span class="skill-lv">LV.5</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div>
+                <div class="skill-desc">문서화 및 아카이빙</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Notion</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
+                <div class="skill-desc">대시보드 및 일정 관리</div>
+            </div>
         </div>
         <div class="skill-group">
             <div class="skill-group-title">기획 & 분석</div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">Excel</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div><div class="skill-desc">데이터 분석 및 VBA 자동화</div></div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">Figma</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div><div class="skill-desc">UI/UX 설계 및 프로토타입</div></div>
-            <div class="skill-item"><div class="skill-header"><span class="skill-name">PowerPoint</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div><div class="skill-desc">제안서 및 비주얼 기획</div></div>
-            <div class="skill-item"><div class="skill-name">Word</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div><div class="skill-desc">표준 문서 관리 및 명세서</div></div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Excel</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div>
+                <div class="skill-desc">데이터 분석 및 VBA 자동화</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Figma</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
+                <div class="skill-desc">UI/UX 설계 및 프로토타입</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">PowerPoint</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div>
+                <div class="skill-desc">제안서 및 비주얼 기획</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Word</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
+                <div class="skill-desc">표준 문서 관리 및 명세서</div>
+            </div>
         </div>
         <div class="skill-group">
             <div class="skill-group-title">개발 & 엔진</div>
-            <div class="skill-item"><div class="skill-name">Gamemaker</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div><div class="skill-desc">축구+리듬 하이브리드 기획</div></div>
-            <div class="skill-item"><div class="skill-name">Unity</span><span class="skill-lv">LV.3</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 65%;"></div></div><div class="skill-desc">엔진 기반 협업 및 기능 활용</div></div>
-            <div class="skill-item"><div class="skill-name">Gemini</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div><div class="skill-desc">AI 협업 및 데이터 시각화</div></div>
-            <div class="skill-item"><div class="skill-name">NotebookLM</span><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div><div class="skill-desc">방대한 설정 분석 및 검증</div></div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Gamemaker</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div>
+                <div class="skill-desc">축구+리듬 하이브리드 기획</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Unity</span><span class="skill-lv">LV.3</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 65%;"></div></div>
+                <div class="skill-desc">엔진 기반 협업 및 기능 활용</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">Gemini</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
+                <div class="skill-desc">AI 협업 및 데이터 시각화</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header"><span class="skill-name">NotebookLM</span><span class="skill-lv">LV.4</span></div>
+                <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
+                <div class="skill-desc">방대한 설정 분석 및 검증</div>
+            </div>
         </div>
     </div>
 
@@ -203,13 +295,13 @@
         <div class="project-card" onclick="openModal(4, event)"><div class="card-img-box"><img src="P5.png"></div><div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>공공 야간약국 선정</h3></div></div>
     </div>
 
-    <div id="projectModal" class="modal" onclick="closeModal()">
+    <div id="projectModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="project-header-top">
                 <div id="headerBlur" class="header-bg-blur"></div>
                 <div class="header-info-content">
                     <div class="header-title-box"><span id="modalTag" style="font-size:0.75rem; color:var(--accent); letter-spacing:2px; display:block; margin-bottom:8px;">PROJECT MISSION</span><h2 id="modalTitle">TITLE</h2></div>
-                    <button class="close-system-btn" onclick="closeModal()">[X] EXIT</button>
+                    <button class="close-system-btn" onclick="closeModal(event)">[X] EXIT</button>
                 </div>
             </div>
             <div id="modalBodyScroll" class="modal-body-scroll">
@@ -224,48 +316,64 @@
     </div>
 
     <script>
-        // 로딩 시퀀스 함수
-        function startLoading() {
+        // [수정] 강력한 로딩 시퀀스 (깜빡임 방지 및 속도 향상)
+        function startLoadingSequence(e) {
+            if(e) e.stopPropagation();
             const intro = document.getElementById('intro-overlay');
             const loading = document.getElementById('loading-screen');
             const fill = document.getElementById('loader-fill');
             const percent = document.getElementById('loader-percent');
             const text = document.getElementById('loader-text');
 
-            intro.style.transition = '0.5s';
-            intro.style.opacity = '0';
+            // 로딩창 먼저 보이고 인트로 제거
+            loading.style.display = 'flex';
+            intro.style.display = 'none';
             
-            setTimeout(() => {
-                intro.style.display = 'none';
-                loading.style.display = 'flex';
-                
-                let width = 0;
-                let loadingInterval = setInterval(() => {
-                    if (width >= 100) {
-                        clearInterval(loadingInterval);
-                        text.innerText = "LOADING COMPLETE";
-                        setTimeout(() => {
-                            loading.style.transition = '0.8s';
-                            loading.style.opacity = '0';
-                            setTimeout(() => { loading.style.display = 'none'; }, 800);
+            let width = 0;
+            let loadingInterval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(loadingInterval);
+                    text.innerText = "LOADING COMPLETE";
+                    setTimeout(() => {
+                        loading.style.transition = '0.5s';
+                        loading.style.opacity = '0';
+                        setTimeout(() => { 
+                            loading.style.display = 'none'; 
                         }, 500);
-                    } else {
-                        width += Math.floor(Math.random() * 5) + 1;
-                        if(width > 100) width = 100;
-                        fill.style.width = width + '%';
-                        percent.innerText = width + '%';
-                        
-                        if(width > 30) text.innerText = "FETCHING ASSETS...";
-                        if(width > 60) text.innerText = "COMPILING DATA...";
-                        if(width > 85) text.innerText = "READY FOR ADVENTURE";
-                    }
-                }, 50);
-            }, 500);
+                    }, 400);
+                } else {
+                    // [수정] 로딩 속도 상향
+                    width += Math.floor(Math.random() * 12) + 2; 
+                    if(width > 100) width = 100;
+                    fill.style.width = width + '%';
+                    percent.innerText = width + '%';
+                    
+                    if(width > 20) text.innerText = "FETCHING ASSETS...";
+                    if(width > 50) text.innerText = "COMPILING GAME DATA...";
+                    if(width > 80) text.innerText = "READY FOR ADVENTURE";
+                }
+            }, 45); // 간격 단축
         }
 
         const projects = [
             { title: "RHYTHM ELEVEN", tag: "SOLO QUEST", desc: "축구 전략성과 리듬 입력을 융합한 게임입니다.", achievements: "<li>동적 난이도 시스템 설계</li><li>코드 기반 유연한 비주얼 연출 구현</li>", img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] },
-            { title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", achievements: "<li>VBA 기반 데이터 매니저 제작</li><li>15종 이상의 기획 문서 아카이빙</li>", img: "P2.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" }, { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" }, { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/KfmdTe9rUjM?enablejsapi=1", downloadUrl: "KOKO_Data_Manager.xlsm" }, { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }] },
+            { 
+                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
+                desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
+                achievements: "<li>VBA 기반 데이터 매니저 제작</li><li>15종 이상의 기획 문서 아카이빙</li>", img: "P2.png", 
+                assets: [
+                    // [수정] 탭 명칭 변경 및 데이터 입력기 구성 최적화
+                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
+                    { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
+                    { 
+                        type: "excel-combined", 
+                        title: "데이터 입력기", 
+                        videoUrl: "https://www.youtube.com/embed/KfmdTe9rUjM?enablejsapi=1",
+                        downloadUrl: "KOKO_Data_Manager.xlsm" 
+                    },
+                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
+                ] 
+            },
             { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
             { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
             { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
@@ -307,7 +415,8 @@
         }
 
         function closeModal(e) {
-            if (e && e.target !== document.getElementById('projectModal') && e.target.className !== 'close-system-btn') return;
+            // [X] 버튼이나 배경 클릭 시에만 닫히도록 설정
+            if (e && e.target !== document.getElementById('projectModal') && !e.target.classList.contains('close-system-btn')) return;
             document.getElementById('projectModal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }

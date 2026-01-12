@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이재영 | Game Designer Portfolio (Pixel Ver.)</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg: #000000;
-            --card: #1a1a1a;
-            --pixel-border: #ffffff;
-            --accent: #97c1e7; /* 클래식 게임 그린 */
+            --card: #151515;
+            --pixel-white: #ffffff;
+            --accent: #97c1e7; 
             --accent-pink: #ff00ff;
             --text-main: #ffffff;
             --text-sub: #aaaaaa;
         }
 
-        /* 폰트 설정 */
-        h1, h2, h3, .pixel-font, .tag { font-family: 'Press Start 2P', cursive; text-transform: uppercase; }
-        body { background-color: var(--bg); color: var(--text-main); font-family: 'Pretendard', sans-serif; margin: 0; padding: 0; cursor: url('https://cur.cursors-4u.net/games/gam-4/gam382.cur'), auto; }
+        /* 폰트 설정: 한글은 Galmuri(둥근모꼴), 영문 포인트는 Press Start 2P */
+        body, button, .korean-font { font-family: 'Galmuri9', sans-serif; }
+        h1, h2, h3, .pixel-font, .tag { font-family: 'Press Start 2P', 'Galmuri9', cursive; }
+
+        body { background-color: var(--bg); color: var(--text-main); margin: 0; padding: 0; cursor: url('https://cur.cursors-4u.net/games/gam-4/gam382.cur'), auto; line-height: 1.5; }
 
         /* --- 1. 인트로 오버레이 --- */
         #intro-overlay {
@@ -28,83 +30,87 @@
             background: #000; z-index: 9999; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
         }
-        #intro-overlay h1 { font-size: 2rem; color: var(--accent); margin-bottom: 50px; line-height: 1.5; }
+        #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* 픽셀 스타일 버튼 */
         .btn-pixel {
-            padding: 20px 40px; background: var(--pixel-border); color: #000;
-            font-family: 'Press Start 2P', cursive; border: none; cursor: pointer;
-            box-shadow: -5px 0 0 0 #000, 5px 0 0 0 #000, 0 -5px 0 0 #000, 0 5px 0 0 #000;
-            transition: 0.1s;
+            padding: 15px 30px; background: var(--pixel-white); color: #000;
+            border: none; cursor: pointer;
+            box-shadow: -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000;
+            transition: 0.1s; font-size: 1rem;
         }
         .btn-pixel:hover { background: var(--accent); }
-        .btn-pixel:active { transform: translateY(5px); box-shadow: none; }
 
-        /* --- 2. 배경 스캔라인 효과 (고전 TV 느낌) --- */
+        /* --- 2. 배경 스캔라인 효과 --- */
         body::before {
             content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
             z-index: 2000; background-size: 100% 4px, 3px 100%; pointer-events: none;
         }
 
         /* --- 3. 헤더 섹션 --- */
-        header { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; position: relative; z-index: 10; }
-        header h1 { font-size: 2rem; color: var(--accent); }
+        header { max-width: 1100px; margin: 0 auto; padding: 80px 20px 40px; position: relative; z-index: 10; }
+        header h1 { font-size: 1.5rem; color: var(--accent); margin: 0; }
         header h1 span { color: var(--accent-pink); }
-        header p.tagline { font-size: 1.1rem; color: var(--text-sub); margin-top: 30px; letter-spacing: 1px; }
+        header p.tagline { font-size: 1.1rem; color: var(--text-sub); margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 15px; }
 
-        /* --- 4. 무한 배경 롤링 (픽셀 창 스타일) --- */
-        .background-marquee {
-            position: absolute; top: 0; left: 0; width: 100%; height: 500px;
-            overflow: hidden; z-index: -1; opacity: 0.2; filter: grayscale(1);
+        /* --- 4. 보유 기술 (카테고리 그룹화로 가독성 향상) --- */
+        .section-title { max-width: 1100px; margin: 0 auto 30px; padding: 0 20px; font-size: 1.2rem; color: var(--accent); border-bottom: 2px solid #333; padding-bottom: 10px; }
+        
+        .skills-wrapper {
+            max-width: 1100px; margin: 0 auto 80px; padding: 0 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
-        .marquee-track { display: flex; width: max-content; animation: scroll-right 20s linear infinite; padding-top: 50px; }
-        .window-item { 
-            width: 250px; height: 180px; background: #333; margin-right: 40px; 
-            border: 4px solid #fff; box-shadow: 8px 8px 0 #000;
-        }
-        @keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-        /* --- 5. 보유 기술 (스탯 창 스타일) --- */
-        .section-title { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; font-size: 1.2rem; color: var(--accent); }
-        .skills-container { 
-            max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; 
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; 
+        .skill-group {
+            background: #111; border: 2px solid #333; padding: 15px;
         }
-        .skill-item {
-            background: #000; border: 4px solid #fff; padding: 20px;
-            transition: 0.2s; position: relative;
+        .skill-group-title {
+            font-size: 0.9rem; color: var(--accent-pink); margin-bottom: 15px; text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px;
         }
-        .skill-item:hover { border-color: var(--accent); transform: scale(1.05); }
-        .skill-name { font-size: 0.8rem; margin-bottom: 10px; color: var(--accent); }
+
+        .skill-item { margin-bottom: 15px; }
+        .skill-name-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .skill-name { font-size: 0.85rem; color: var(--pixel-white); font-weight: bold; }
         .stars { color: #ffff00; font-size: 0.7rem; }
-        .skill-desc { color: #fff; font-size: 0.85rem; margin-top: 10px; line-height: 1.4; }
+        .skill-desc { color: var(--text-sub); font-size: 0.75rem; line-height: 1.4; }
 
-        /* --- 6. 프로젝트 (게임 팩 스타일) --- */
-        .project-container { max-width: 1200px; margin: 0 auto 100px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        .project-card {
-            background: #111; border: 4px solid #fff; border-radius: 0; /* 픽셀은 직각 */
-            cursor: pointer; position: relative; transition: 0.2s;
+        /* --- 5. 스테이지 선택 (레이아웃 고정) --- */
+        .project-container { 
+            max-width: 1100px; margin: 0 auto 100px; padding: 0 20px; 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; 
         }
-        .project-card:hover { transform: translateY(-10px); border-color: var(--accent-pink); box-shadow: 10px 10px 0 var(--accent-pink); }
-        .card-img-box { width: 100%; height: 200px; background: #000; display: flex; align-items: center; justify-content: center; border-bottom: 4px solid #fff; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: contain; }
-        .card-info-box { padding: 20px; text-align: center; }
-        .tag { font-size: 0.5rem; color: var(--accent); display: block; margin-bottom: 10px; }
-        .project-card h3 { font-size: 0.8rem; margin: 0; line-height: 1.5; }
+        .project-card {
+            background: var(--card); border: 4px solid #333; cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        
+        .card-img-box { width: 100%; height: 160px; background: #000; border-bottom: 2px solid #333; overflow: hidden; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .project-card:hover .card-img-box img { transform: scale(1.1); }
 
-        /* --- 7. 모달 (게임 정보창 스타일) --- */
+        .card-info-box { padding: 15px; text-align: center; }
+        .tag { font-size: 0.6rem; color: var(--accent); margin-bottom: 8px; display: block; }
+        .project-card h3 { font-size: 0.9rem; margin: 0; color: #fff; word-break: keep-all; }
+
+        /* --- 6. 모달 스타일 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #000; border: 8px solid #fff; width: 100%; max-width: 1000px; height: 90vh; overflow-y: auto; padding: 40px; box-sizing: border-box; }
-        .close-pixel { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2rem; cursor: pointer; }
-        .info-box { border: 4px dashed var(--accent); padding: 20px; margin: 20px 0; }
-        .info-box h4 { color: var(--accent); font-size: 0.7rem; margin-top: 0; }
-        iframe { width: 100%; height: 600px; border: 4px solid #fff; margin-top: 20px; }
+        .modal-content { background: #000; border: 4px solid var(--pixel-white); width: 100%; max-width: 900px; height: 90vh; overflow-y: auto; padding: 30px; box-sizing: border-box; position: relative; }
+        .close-pixel { position: absolute; top: 15px; right: 15px; color: var(--accent-pink); font-size: 1.2rem; cursor: pointer; }
+        
+        .info-box { border: 2px dashed var(--accent); padding: 20px; margin: 20px 0; background: rgba(151, 193, 231, 0.05); }
+        .info-box h4 { color: var(--accent); font-size: 0.9rem; margin-top: 0; margin-bottom: 10px; }
+        .info-box ul { padding-left: 20px; margin: 0; }
+        .info-box li { font-size: 0.9rem; margin-bottom: 5px; color: #ddd; }
+        
+        iframe { width: 100%; height: 600px; border: 2px solid #333; margin-top: 20px; background: #fff; }
 
-        @media (max-width: 900px) { .skills-container, .project-container { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) {
+            .skills-wrapper, .project-container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -112,112 +118,109 @@
     <div id="intro-overlay">
         <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO</span></h1>
         <button class="btn-pixel blink" onclick="startGame()">PRESS START</button>
-        <p style="margin-top: 30px; font-size: 0.6rem; color: #555;">© 1997-2026 JAE YOUNG PIXEL INC.</p>
-    </div>
-
-    <div class="background-marquee">
-        <div class="marquee-track">
-            <div class="window-item"><img src="P1.png" style="width:100%; height:100%; object-fit:cover;"></div>
-            <div class="window-item"><img src="P2.png" style="width:100%; height:100%; object-fit:cover;"></div>
-            <div class="window-item"><img src="P3.png" style="width:100%; height:100%; object-fit:cover;"></div>
-            <div class="window-item"><img src="P4.png" style="width:100%; height:100%; object-fit:cover;"></div>
-            <div class="window-item"><img src="P5.png" style="width:100%; height:100%; object-fit:cover;"></div>
-            <div class="window-item"><img src="P1.png" style="width:100%; height:100%; object-fit:cover;"></div>
-            <div class="window-item"><img src="P2.png" style="width:100%; height:100%; object-fit:cover;"></div>
-        </div>
+        <p style="margin-top: 30px; font-size: 0.7rem; color: #555;">© 1997-2026 이재영. ALL RIGHTS RESERVED.</p>
     </div>
 
     <header>
         <h1>LEE JAE YOUNG<span>_</span></h1>
-        <p class="tagline">> DATA-DRIVEN GAME CHANGER LOADING...</p>
+        <p class="tagline">"끈기 있는 데이터 기반의 게임 체인저" [cite: 9]</p>
     </header>
 
-<h2 class="section-title">> 보유 기술 (PLAYER ABILITIES)</h2>
-    <div class="skills-container">
-        <div class="skill-item">
-            <div class="skill-name">Jira</div><div class="stars">★★★★★</div>
-            <div class="skill-desc">마일스톤 관리, 버그 및 이슈 트래킹, 일정 관리</div>
+    <h2 class="section-title">> PLAYER ABILITIES</h2>
+    <div class="skills-wrapper">
+        <div class="skill-group">
+            <div class="skill-group-title">COLLABORATION</div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Jira</span><span class="stars">★★★★★</span></div>
+                <div class="skill-desc">마일스톤 관리, 이슈 트래킹, 일정 관리 [cite: 30, 34, 36, 39]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Slack</span><span class="stars">★★★★★</span></div>
+                <div class="skill-desc">원활한 커뮤니케이션, 히스토리 및 문서 정리 [cite: 31, 35, 37]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Confluence</span><span class="stars">★★★★★</span></div>
+                <div class="skill-desc">프로젝트 관리 및 문서화, 협업 워크스페이스 구축 [cite: 32, 38]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Notion</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">대시보드 관리, 문서 아카이빙 및 히스토리 정리 [cite: 40, 41]</div>
+            </div>
         </div>
-        <div class="skill-item">
-            <div class="skill-name">Slack</div><div class="stars">★★★★★</div>
-            <div class="skill-desc">원활한 커뮤니케이션, 히스토리 및 문서 정리</div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">DESIGN & DATA</div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Excel</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">지표 시각화, 매크로(VBA) 활용 [cite: 44, 53]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Figma</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">UI/UX 디자인, 프로토타입 제작 [cite: 42, 49, 51]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">PowerPoint</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">프레젠테이션 디자인, 비즈니스 문서 작성 [cite: 43, 50, 52]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Word</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">제안서 문서화 및 표준 문서 관리 [cite: 45, 54, 55]</div>
+            </div>
         </div>
-        <div class="skill-item">
-            <div class="skill-name">Confluence</div><div class="stars">★★★★★</div>
-            <div class="skill-desc">프로젝트 관리 및 문서화, 협업 워크스페이스 구축</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Excel</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">데이터 필터링 및 정렬, 지표 시각화, 매크로(VBA) 기초 활용</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Figma</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">UI/UX 디자인, 프로토타입 제작, 협업 프로젝트 관리</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Gamemaker</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">축구 + 리듬 게임 기획 및 1인 개발 경험</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Unity</div><div class="stars">★★★☆☆</div>
-            <div class="skill-desc">팀 프로젝트 기반 협업, 기본적인 엔진 기능 활용</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Gemini</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">코딩 파트너, 자료 정리 및 시각화 활용</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Notion</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">대시보드 관리, 문서 아카이빙 및 히스토리 정리</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">PowerPoint</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">프레젠테이션 및 비즈니스 문서 작성, 시각적 커뮤니케이션</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">Word</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">제안서 문서화 및 표준 문서 관리</div>
-        </div>
-        <div class="skill-item">
-            <div class="skill-name">NotebookLM</div><div class="stars">★★★★☆</div>
-            <div class="skill-desc">방대한 설정 및 자료 분석, 기획 논리 구조 검증</div>
+
+        <div class="skill-group">
+            <div class="skill-group-title">DEV & ENGINE</div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Gamemaker</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">축구+리듬 하이브리드 게임 기획 및 1인 개발 [cite: 57, 58, 59]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Unity</span><span class="stars">★★★☆☆</span></div>
+                <div class="skill-desc">팀 프로젝트 기반 협업 및 엔진 기능 활용 [cite: 64, 66, 68]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">Gemini</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">코딩 파트너, 자료 정리 및 시각화 활용 [cite: 61, 62, 63]</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name-row"><span class="skill-name">NotebookLM</span><span class="stars">★★★★☆</span></div>
+                <div class="skill-desc">방대한 설정 분석, 기획 논리 구조 검증 [cite: 65, 67, 69]</div>
+            </div>
         </div>
     </div>
 
-<h2 class="section-title">> 스테이지 선택 (SELECT STAGE)</h2>
+    <h2 class="section-title">> SELECT STAGE</h2>
     <div class="project-container">
-<div class="project-container">
         <div class="project-card" onclick="openModal(0)">
-            <div class="card-img-box"><img src="P1.png"></div>
-            <div class="card-info-box"><span class="tag">1인 개발</span><h3>RHYTHM ELEVEN</h3></div>
+            <div class="card-img-box"><img src="P1.png" alt="Rhythm Eleven"></div>
+            <div class="card-info-box"><span class="tag">1인 기획 & 개발</span><h3>RHYTHM ELEVEN [cite: 92]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(1)">
-            <div class="card-img-box"><img src="P2.png"></div>
-            <div class="card-info-box"><span class="tag">10인 팀 협업</span><h3>코코두기 (KOKODUGI)</h3></div>
+            <div class="card-img-box"><img src="P2.png" alt="Kokodugi"></div>
+            <div class="card-info-box"><span class="tag">10인 협업</span><h3>코코두기 (KOKODUGI) [cite: 93]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(2)">
-            <div class="card-img-box"><img src="P3.png"></div>
-            <div class="card-info-box"><span class="tag">실무 프로젝트</span><h3>밸런스 개선안</h3></div>
+            <div class="card-img-box"><img src="P3.png" alt="EA Balance Fix"></div>
+            <div class="card-info-box"><span class="tag">EA KOREA 실무</span><h3>밸런스 개선안 [cite: 313]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(3)">
-            <div class="card-img-box"><img src="P4.png"></div>
-            <div class="card-info-box"><span class="tag">시스템 기획</span><h3>감독의 전술 노트</h3></div>
+            <div class="card-img-box"><img src="P4.png" alt="Tactics Note"></div>
+            <div class="card-info-box"><span class="tag">신규 시스템 제안</span><h3>감독의 전술 노트 [cite: 417]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(4)">
-            <div class="card-img-box"><img src="P5.png"></div>
-            <div class="card-info-box"><span class="tag">데이터 분석</span><h3>공공 야간약국</h3></div>
+            <div class="card-img-box"><img src="P5.png" alt="Pharmacy Data Analysis"></div>
+            <div class="card-info-box"><span class="tag">데이터 분석</span><h3>공공 야간약국 최적지 [cite: 604]</h3></div>
         </div>
     </div>
 
     <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-pixel" onclick="closeModal()">[X]</span>
-            <div id="modalBody" class="modal-body"></div>
+            <span class="close-pixel" onclick="closeModal()">[X] CLOSE</span>
+            <div id="modalBody"></div>
         </div>
     </div>
 
     <script>
-        // 인트로 종료 함수
         function startGame() {
             const overlay = document.getElementById('intro-overlay');
             overlay.style.transition = '0.5s';
@@ -226,29 +229,68 @@
         }
 
         const projects = [
-            { title: "RHYTHM ELEVEN", tag: "SOLO DEV", desc: "축구 전략성과 리듬 실력 기반 입력을 융합한 게임입니다.", stats: "<li>AI 코딩파트너를 통한 효율성 검증</li><li>동적 난이도 설계</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "KOKODUGI", tag: "10P TEAM", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", stats: "<li>Excel VBA 데이터 매니저 개발</li><li>단계적 튜토리얼 구축</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "BALANCE FIX", tag: "EA KOREA", desc: "로빙 스루 패스 지표 분석을 통해 밸런싱의 근거를 증명했습니다.", stats: "<li>부정 여론 2,000건 정량 분석</li><li>수비 AI 개선안 제시</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "TACTICS NOTE", tag: "SYSTEM", desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템입니다.", stats: "<li>시너지 성장 모델 설계</li><li>다각도 BM 기획</li>", img: "P4.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "PHARMACY MAP", tag: "DATA", desc: "의료 사각지대 해소를 위한 정량적 입지 전략입니다.", stats: "<li>복합 가중치 로직 설계</li><li>QGIS 시각화 분석</li>", img: "P5.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
+            { 
+                title: "RHYTHM ELEVEN", 
+                tag: "1인 기획 & 개발", 
+                desc: "축구 전략성과 리듬 실력 기반 입력을 융합한 게임입니다[cite: 108]. AI 파트너와 협업하며 1인 개발의 한계를 극복한 프로젝트입니다[cite: 105].", 
+                stats: "<li>동적 난이도 시스템 설계 [cite: 216]</li><li>코드 기반 유연한 비주얼 구현 [cite: 226]</li>", 
+                img: "P1.png", 
+                pdf: "데브켓_포트폴리오_이재영.pdf" 
+            },
+            { 
+                title: "코코두기 (KOKODUGI)", 
+                tag: "10인 팀 협업", 
+                desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다[cite: 260, 269]. 10인 팀워크로 실제 상용화 단계를 고려한 제작 과정을 경험했습니다[cite: 262, 263].", 
+                stats: "<li>VBA 기반 데이터 매니저 개발 [cite: 259, 308]</li><li>단계적 튜토리얼 구축 [cite: 288]</li>", 
+                img: "P2.png", 
+                pdf: "데브켓_포트폴리오_이재영.pdf" 
+            },
+            { 
+                title: "밸런스 개선안 (EA KOREA)", 
+                tag: "EA KOREA 실무", 
+                desc: "로빙 스루 패스 지표 분석을 통해 밸런싱의 근거를 정량적으로 증명한 실무 사례입니다[cite: 313, 319, 335, 336].", 
+                stats: "<li>부정 여론 2,000건 정량 분석 [cite: 349, 350]</li><li>패스 시도 83% 감소 원인 증명 [cite: 371, 374]</li>", 
+                img: "P3.png", 
+                pdf: "데브켓_포트폴리오_이재영.pdf" 
+            },
+            { 
+                title: "감독의 전술 노트", 
+                tag: "시스템 기획", 
+                desc: "FC ONLINE 신규 시스템 제안서로, 전술적 갈증을 성장의 재미로 전환하는 수집 시스템입니다[cite: 417, 428].", 
+                stats: "<li>감독 카드 수집/조합/시너지 설계 [cite: 433, 434]</li><li>유료화(BM) 및 경제 구조 구축 [cite: 422, 487]</li>", 
+                img: "P4.png", 
+                pdf: "데브켓_포트폴리오_이재영.pdf" 
+            },
+            { 
+                title: "공공 야간약국 최적지 선정", 
+                tag: "데이터 분석", 
+                desc: "의료 사각지대 해소를 위한 정량적 입지 전략 프로젝트입니다[cite: 604, 608]. 데이터로 서비스 공백과 유저 니즈를 포착했습니다[cite: 610].", 
+                stats: "<li>복합 가중치 로직 설계 [cite: 651, 678]</li><li>QGIS 시각화 분석 [cite: 673, 679]</li>", 
+                img: "P5.png", 
+                pdf: "데브켓_포트폴리오_이재영.pdf" 
+            }
         ];
 
         function openModal(i) {
             const p = projects[i];
             document.getElementById('modalBody').innerHTML = `
-                <img src="${p.img}" style="width:100%; border:4px solid #fff; margin-bottom:20px;">
-                <h2 style="color:var(--accent);">${p.title}</h2>
-                <p class="pixel-font" style="font-size:0.7rem; color:var(--accent-pink);">${p.tag}</p>
-                <p style="font-size:1rem; line-height:1.6;">${p.desc}</p>
-                <div class="info-box">
-                    <h4>[ MISSION LOG ]</h4>
-                    <ul style="font-size:0.8rem; line-height:1.8;">${p.stats}</ul>
+                <div style="text-align:center;">
+                    <img src="${p.img}" style="max-width:100%; border:4px solid #fff; margin-bottom:20px; box-shadow: 10px 10px 0 #333;">
                 </div>
-                <iframe src="${p.pdf}"></iframe>
+                <h2 style="color:var(--accent); font-size:1.5rem; margin-bottom:10px;">${p.title}</h2>
+                <p style="font-weight:bold; color:var(--accent-pink); margin-bottom:20px;">[ ${p.tag} ]</p>
+                <p style="font-size:1rem; line-height:1.6; color:#eee;">${p.desc}</p>
+                <div class="info-box">
+                    <h4>MISSION LOG (주요 성과)</h4>
+                    <ul>${p.stats}</ul>
+                </div>
+                <p style="font-size:0.8rem; color:var(--accent); text-align:center;">▼ 상세 기획서 (PDF) 미리보기 ▼</p>
+                <iframe src="${p.pdf}#toolbar=0"></iframe>
             `;
             document.getElementById('projectModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
+
         function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
     </script>
 </body>

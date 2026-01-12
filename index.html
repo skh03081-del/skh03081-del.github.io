@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 1. 인트로 --- */
+        /* --- 1. 인트로 애니메이션 --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10000; display: flex; flex-direction: column;
@@ -39,12 +39,6 @@
         #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .btn-pixel {
-            padding: 15px 35px; background: var(--accent); color: #0d1117;
-            border: none; cursor: pointer; font-weight: bold;
-            box-shadow: -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000;
-            transition: 0.1s; font-size: 1.1rem;
-        }
 
         /* --- 2. 히어로 섹션 --- */
         .hero {
@@ -60,9 +54,9 @@
         .hero-content { position: relative; z-index: 2; text-align: center; }
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
 
-        /* --- 3. 프로젝트 그리드 --- */
+        /* --- 3. 프로젝트 카드 격자 --- */
         .project-container { max-width: 1100px; margin: 60px auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
+        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -71,19 +65,24 @@
         .tag { font-size: 0.6rem; color: var(--accent); margin-bottom: 8px; display: block; }
         .project-card h3 { font-size: 0.9rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 4. 모달 시스템 (디자인 업데이트) --- */
+        /* --- 4. 모달 디자인 --- */
         .modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center; 
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
         }
-        @keyframes modalShow { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        @keyframes modalShow {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
         .modal-content { 
             background: var(--bg); border: 2px solid var(--accent); 
             width: 95%; max-width: 1100px; height: 90vh; 
             overflow-y: auto; position: relative;
-            animation: modalShow 0.3s ease-out;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            animation: modalShow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 50px rgba(0,0,0,1), 0 0 20px var(--accent-glow);
         }
         
         .close-pixel { 
@@ -92,58 +91,82 @@
             z-index: 2000; background: #000; padding: 10px 20px; 
             border: 2px solid var(--accent); margin: 20px 20px 0 0;
             box-shadow: 4px 4px 0 var(--accent);
+            transition: 0.2s;
         }
-        .close-pixel:hover { background: var(--accent); color: #000; }
+        .close-pixel:hover { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--accent); background: var(--accent); color: #0d1117; }
 
         .modal-inner-padding { padding: 50px; clear: both; }
 
-        /* [수정] 사진 크기 축소 및 통일 */
+        /* [수정] 불필요한 검은 배경을 제거한 세련된 네온 프레임 */
         .premium-img-frame {
-            width: 100%; height: 320px; /* 높이를 450px -> 320px로 축소 */
-            background: radial-gradient(circle, #1c2128 0%, #0d1117 100%);
-            border: 1px solid var(--border);
+            width: 100%; height: auto;
+            min-height: 200px;
             margin-bottom: 40px;
             display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            position: relative;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.02); /* 아주 은은한 배경색만 유지 */
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .premium-img-frame::before { content: ""; position: absolute; top: 10px; left: 10px; width: 20px; height: 20px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-        .premium-img-frame::after { content: ""; position: absolute; bottom: 10px; right: 10px; width: 20px; height: 20px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-        .modal-img { max-width: 85%; max-height: 85%; object-fit: contain; z-index: 5; }
+        /* 네온 코너 장식 유지 */
+        .premium-img-frame::before {
+            content: ""; position: absolute; top: -2px; left: -2px; width: 20px; height: 20px;
+            border-top: 3px solid var(--accent); border-left: 3px solid var(--accent);
+        }
+        .premium-img-frame::after {
+            content: ""; position: absolute; bottom: -2px; right: -2px; width: 20px; height: 20px;
+            border-bottom: 3px solid var(--accent); border-right: 3px solid var(--accent);
+        }
+        .modal-img {
+            max-width: 100%; max-height: 400px;
+            object-fit: contain; /* 사진 잘림 방지 */
+            z-index: 5;
+            transition: 0.5s ease;
+        }
 
         .project-header-info { border-left: 4px solid var(--accent); padding-left: 25px; margin-bottom: 40px; text-align: left; }
-        .project-header-info h2 { font-size: 1.8rem; color: var(--accent); margin: 0 0 10px 0; }
+        .project-header-info h2 { font-size: 1.8rem; color: var(--accent); margin: 0 0 10px 0; text-shadow: 2px 2px 0 #000; }
+        .project-header-info .p-tag { color: var(--text-sub); font-weight: bold; font-size: 1rem; margin-bottom: 15px; display: block; }
         
-        /* 탭 디자인 강화 */
+        /* [수정] 탭 시인성 극대화 */
         .asset-selector { 
-            display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;
+            display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-start;
             position: sticky; top: 0; z-index: 1000;
             background: #161b22; padding: 25px 50px;
-            border-bottom: 3px solid var(--accent);
+            border-bottom: 4px solid var(--accent); /* 하단 라인 더 두껍게 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         .asset-btn { 
-            padding: 12px 24px; background: #0d1117; border: 2px solid var(--border); 
-            color: var(--text-main); cursor: pointer; font-size: 0.9rem; transition: 0.2s;
+            padding: 14px 28px; background: #0d1117; border: 2px solid var(--border); 
+            color: var(--text-main); cursor: pointer; font-size: 0.9rem; transition: 0.3s;
             font-weight: bold;
         }
-        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 15px var(--accent-glow); }
+        .asset-btn:hover { border-color: var(--accent); color: var(--accent); }
+        /* 활성화된 탭은 검은 배경 대신 밝은 색으로 꽉 채워 눈에 띄게 수정 */
+        .asset-btn.active { 
+            background: var(--accent); 
+            color: #0d1117; 
+            border-color: #fff;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
 
-        /* 뷰어 영역 */
-        .viewer-container { width: 100%; min-height: 700px; background: #000; padding: 30px 0; }
-        .asset-viewer { width: 94%; height: 700px; border: none; display: none; margin: 0 auto; }
+        .viewer-container { width: 100%; min-height: 750px; background: #000; padding: 30px 0; }
+        .asset-viewer { width: 94%; height: 750px; border: 1px solid var(--border); display: none; margin: 0 auto; }
         .asset-viewer.active { display: block; }
         
-        .video-wrapper { width: 100%; height: 700px; display: flex; align-items: center; justify-content: center; }
-        .video-wrapper iframe { width: 83%; height: 83%; border: 1px solid var(--accent); }
-
-        /* 외부 링크 버튼 스타일 */
-        .external-link-container { width: 94%; height: 500px; margin: 0 auto; display: none; flex-direction: column; align-items: center; justify-content: center; background: #161b22; border: 2px dashed var(--accent); }
-        .external-link-container.active { display: flex; }
+        .video-wrapper { width: 100%; height: 750px; display: flex; align-items: center; justify-content: center; }
+        .video-wrapper iframe { width: 83%; height: 83%; border: 2px solid var(--accent); }
 
         .info-box { border: 1px solid var(--border); padding: 30px; margin: 30px 0; background: rgba(255,255,255,0.02); text-align: left; }
         .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 20px 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .info-box li { margin-bottom: 12px; color: #d1d5db; }
 
-        @media (max-width: 950px) { .project-container { grid-template-columns: 1fr; } .premium-img-frame { height: 240px; } .asset-selector { padding: 15px 20px; } .asset-viewer, .video-wrapper { height: 450px; } }
+        @media (max-width: 950px) { 
+            .project-container { grid-template-columns: 1fr; } 
+            .premium-img-frame { height: auto; }
+            .asset-viewer, .video-wrapper { height: 450px; }
+            .asset-selector { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -171,11 +194,26 @@
     </header>
 
     <div class="project-container">
-        <div class="project-card" onclick="openModal(0)"><div class="card-img-box"><img src="P1.png"></div><div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div></div>
-        <div class="project-card" onclick="openModal(1)"><div class="card-img-box"><img src="P2.png"></div><div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI (코코두기)</h3></div></div>
-        <div class="project-card" onclick="openModal(2)"><div class="card-img-box"><img src="P3.png"></div><div class="card-info-box"><span class="tag">PLAYER-DRIVEN PROPOSAL</span><h3>BALANCE PROPOSAL</h3></div></div>
-        <div class="project-card" onclick="openModal(3)"><div class="card-img-box"><img src="P4.png"></div><div class="card-info-box"><span class="tag">SYSTEM DESIGN</span><h3>STRATEGY NOTE</h3></div></div>
-        <div class="project-card" onclick="openModal(4)"><div class="card-img-box"><img src="P5.png"></div><div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>PHARMACY DATA</h3></div></div>
+        <div class="project-card" onclick="openModal(0)">
+            <div class="card-img-box"><img src="P1.png"></div>
+            <div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(1)">
+            <div class="card-img-box"><img src="P2.png"></div>
+            <div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI (코코두기)</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(2)">
+            <div class="card-img-box"><img src="P3.png"></div>
+            <div class="card-info-box"><span class="tag">PLAYER-DRIVEN PROPOSAL</span><h3>밸런스 개선 제안</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(3)">
+            <div class="card-img-box"><img src="P4.png"></div>
+            <div class="card-info-box"><span class="tag">SYSTEM DESIGN</span><h3>감독의 전술 노트</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(4)">
+            <div class="card-img-box"><img src="P5.png"></div>
+            <div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>공공 야간약국 선정</h3></div>
+        </div>
     </div>
 
     <div id="projectModal" class="modal" onclick="closeModal()">
@@ -188,14 +226,18 @@
     <script>
         function startGame() {
             const overlay = document.getElementById('intro-overlay');
-            if(overlay) { overlay.style.transition = '0.8s'; overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; }, 800); }
+            if(overlay) { 
+                overlay.style.transition = '0.8s cubic-bezier(0.16, 1, 0.3, 1)'; 
+                overlay.style.opacity = '0'; 
+                setTimeout(() => { overlay.style.display = 'none'; }, 800); 
+            }
         }
 
         const projects = [
             { 
                 title: "RHYTHM ELEVEN", tag: "SOLO QUEST", 
-                desc: "축구 전략성과 리듬 입력을 융합한 하이브리드 게임입니다.", 
-                achievements: "<li>동적 난이도 곡선 설계 및 데이터 자동화</li><li>GML 기반 유연한 연출 시스템 구현</li>", img: "P1.png",
+                desc: "축구 전략성과 리듬 입력을 융합한 독창적인 하이브리드 게임입니다. AI 협업을 통해 로직 효율성을 극대화했습니다.", 
+                achievements: "<li>동적 난이도 곡선 설계 및 데이터 자동화</li><li>GML 기반 유연한 연출 시스템 구현</li><li>사용자 시선의 UX 개선 및 플레이 타임 최적화</li>", img: "P1.png",
                 assets: [
                     { type: "video", title: "PLAY VIDEO", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" },
                     { type: "pdf", title: "CONCEPT PLAN", url: "P1_2.pdf" },
@@ -203,57 +245,83 @@
                     { type: "pdf", title: "POST-MORTEM", url: "P1_4.pdf" }
                 ]
             },
-            { 
-                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
-                desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
-                achievements: "<li>15종 이상의 기획 문서 노션 아카이빙</li><li>사용자 경험 중심의 단계적 튜토리얼 설계</li>", img: "P2.png", 
+            { title: "KOKODUGI", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", achievements: "<li>노션 기반 방대한 기획 데이터 관리</li><li>단계적 튜토리얼 및 레벨 밸런싱</li>", img: "P2.png", 
                 assets: [
                     { type: "pdf", title: "PROJECT REPORT", url: "P2_1.pdf" },
                     { type: "link", title: "NOTION DOCS", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
                 ] 
             },
-            { title: "BALANCE PROPOSAL", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "IMPROVEMENT", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "ANALYSIS", url: "P3_2_게임분석서.pdf" } ] },
-            { title: "STRATEGY NOTE", tag: "SYSTEM DESIGN", desc: "수집 시스템 신규 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "NEW SYSTEM", url: "P4_1_신규 시스템 제안서.pdf" }] },
-            { title: "PHARMACY DATA", tag: "DATA ANALYSIS", desc: "정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "DATA ANALYSIS", url: "P5_데이터분석.pdf" }] }
+            { title: "BALANCE PROPOSAL", tag: "PLAYER-DRIVEN PROPOSAL", desc: "지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "IMPROVEMENT", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "ANALYSIS", url: "P3_2_게임분석서.pdf" } ] },
+            { title: "STRATEGY NOTE", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "NEW SYSTEM", url: "P4_1_신규 시스템 제안서.pdf" }] },
+            { title: "PHARMACY DATA", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "DATA ANALYSIS", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i) {
             const p = projects[i];
             const modalContent = document.querySelector('.modal-content');
+            
+            // [스크롤 초기화] 모달 열 때 위치 상단 고정
             modalContent.scrollTop = 0;
 
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {
                     return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="video-wrapper"><iframe src="${as.url}" allowfullscreen></iframe></div></div>`;
                 } else if(as.type === 'link') {
-                    return `<div class="external-link-container ${idx===0?'active':''}" id="view-${idx}"><p style="margin-bottom:20px; font-size:1rem; color:#97c1e7;">전체 기획 문서를 노션에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel" style="text-decoration:none;">OPEN NOTION LINK</a></div>`;
+                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}" style="display:none; flex-direction:column; align-items:center; justify-content:center; background:#161b22; height:500px; border:2px dashed var(--accent);">
+                                <p style="margin-bottom:20px; font-size:1.1rem; color:var(--accent);">방대한 기획 명세서를 노션에서 직접 확인하세요.</p>
+                                <a href="${as.url}" target="_blank" class="btn-pixel" style="text-decoration:none; padding:15px 30px;">GO TO NOTION [EXTERNAL]</a>
+                            </div>`;
                 } else {
                     return `<iframe class="asset-viewer ${idx===0?'active':''}" id="view-${idx}" src="${as.url}#toolbar=0"></iframe>`;
                 }
             }).join('');
 
-            let buttonsHtml = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, ${idx})">${as.title}</button>`).join('');
+            let buttonsHtml = p.assets.map((as, idx) => 
+                `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, ${idx})">${as.title}</button>`
+            ).join('');
 
             document.getElementById('modalBody').innerHTML = `
                 <div class="modal-inner-padding">
-                    <div class="premium-img-frame"><img src="${p.img}" class="modal-img"></div>
-                    <div class="project-header-info"><span style="color:#8b949e; font-weight:bold; font-size:0.9rem; display:block; margin-bottom:10px;">[ ${p.tag} ]</span><h2>${p.title}</h2><p style="font-size:1.1rem; color:#eee; max-width:800px;">${p.desc}</p></div>
-                    <div class="info-box"><h4>주요 성과</h4><ul>${p.achievements}</ul></div>
+                    <div class="premium-img-frame">
+                        <img src="${p.img}" class="modal-img">
+                    </div>
+
+                    <div class="project-header-info">
+                        <span class="p-tag">[ ${p.tag} ]</span>
+                        <h2>${p.title}</h2>
+                        <p style="font-size:1.1rem; line-height:1.8; color:#eee; max-width:800px;">${p.desc}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>MISSION ACHIEVEMENTS (주요 성과)</h4>
+                        <ul>${p.achievements}</ul>
+                    </div>
                 </div>
+                
                 <div class="asset-selector">${buttonsHtml}</div>
                 <div class="viewer-container">${viewersHtml}</div>
             `;
             document.getElementById('projectModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            
+            // 렌더링 후 한 번 더 스크롤 보정
             setTimeout(() => { modalContent.scrollTop = 0; }, 10);
         }
 
         function switchTab(btn, idx) {
-            document.querySelectorAll('.video-wrapper iframe').forEach(ifr => { ifr.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); });
+            document.querySelectorAll('.video-wrapper iframe').forEach(ifr => {
+                ifr.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            });
             document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.asset-viewer, .external-link-container').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.asset-viewer').forEach(v => {
+                v.classList.remove('active');
+                if(v.tagName !== 'IFRAME') v.style.display = 'none'; // 링크 뷰어 숨김 처리
+            });
+            
             btn.classList.add('active');
-            document.getElementById(`view-${idx}`).classList.add('active');
+            const target = document.getElementById(`view-${idx}`);
+            target.classList.add('active');
+            if(target.tagName !== 'IFRAME') target.style.display = 'flex'; // 링크 뷰어 표시 처리
         }
 
         function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }

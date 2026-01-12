@@ -71,7 +71,7 @@
         .stars { color: #ffff00; font-size: 0.7rem; }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
 
-        /* --- 4. 프로젝트 --- */
+        /* --- 4. 프로젝트 격자 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
         .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-dim); }
@@ -81,11 +81,10 @@
         .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 8px; display: block; }
         .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. 모달 및 개선된 스티키 시스템 --- */
+        /* --- 5. 모달 및 시스템 개선 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--bg); border: 4px solid var(--accent); width: 100%; max-width: 1100px; height: 90vh; overflow-y: auto; padding: 0; position: relative; }
         
-        /* EXIT 버튼 우측 상단 고정 */
         .close-pixel { 
             position: sticky; top: 20px; right: 20px; 
             float: right; color: var(--accent); font-size: 1.1rem; cursor: pointer; 
@@ -93,29 +92,43 @@
             border: 3px solid var(--accent); margin: 20px 20px 0 0;
             box-shadow: 4px 4px 0 #000;
         }
-        .close-pixel:hover { background: var(--accent); color: #0d1117; }
 
         .modal-inner-padding { padding: 40px; clear: both; }
         
-        /* [수정] 메인 이미지 안 짤리게 + 크기 축소 */
+        /* [수정] 세련된 이미지 효과 (디지털 액자 느낌) */
         .modal-img-container {
             width: 100%;
-            height: 320px; /* 높이 축소 */
+            height: 380px;
             background: #000;
-            border: 3px solid var(--border);
-            margin-bottom: 30px;
+            border: 2px solid var(--accent);
+            margin-bottom: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px var(--accent-dim), inset 0 0 50px rgba(0,0,0,1);
+        }
+        /* 스캔라인 애니메이션 오버레이 */
+        .modal-img-container::after {
+            content: "";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 2;
         }
         .modal-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* 사진 안 짤리게 설정 */
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px var(--accent)); /* 이미지 글로우 */
+            transition: 0.5s ease;
         }
+        .modal-img-container:hover .modal-img { transform: scale(1.02); }
 
-        /* [수정] 탭 가독성 강화 스타일 */
+        /* 탭 가독성 강화 */
         .asset-selector { 
             display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;
             position: sticky; top: 0; z-index: 1000;
@@ -128,26 +141,23 @@
             color: var(--text-sub); cursor: pointer; font-size: 0.9rem; transition: 0.2s;
             font-weight: bold;
         }
-        .asset-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .asset-btn.active { 
-            background: var(--accent); 
-            color: #0d1117; 
-            border-color: #fff;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
-        }
+        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); }
 
-        /* [수정] PDF/영상 뷰어 크기 살짝 축소 */
+        /* 뷰어 영역 */
         .viewer-container { width: 100%; min-height: 680px; background: #000; position: relative; padding: 20px 0; }
         .asset-viewer { width: 96%; height: 680px; border: 2px solid var(--border); display: none; margin: 0 auto; }
         .asset-viewer.active { display: block; }
-
         .video-wrapper { width: 100%; height: 680px; display: flex; align-items: center; justify-content: center; }
         .video-wrapper iframe { width: 83%; height: 83%; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
 
         .info-box { border: 2px dashed var(--accent); padding: 25px; margin: 25px 0; background: var(--accent-dim); text-align: left; }
         .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 15px 0; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .viewer-container { min-height: 400px; } .asset-viewer, .video-wrapper { height: 400px; } .asset-selector { padding: 15px 20px; } .modal-img-container { height: 200px; } }
+        @media (max-width: 950px) { 
+            .skills-wrapper, .project-container { grid-template-columns: 1fr; } 
+            .modal-img-container { height: 220px; }
+            .asset-viewer, .video-wrapper { height: 400px; }
+        }
     </style>
 </head>
 <body>
@@ -249,38 +259,19 @@
                     { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }
                 ]
             },
-            { 
-                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
-                desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
-                achievements: "<li>VBA 기반 전용 데이터 매니저 구축</li><li>단계적 튜토리얼 및 레벨 밸런싱</li>", img: "P2.png", 
-                assets: [{ type: "pdf", title: "기획서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] 
-            },
-            { 
-                title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", 
-                desc: "라이브 지표 분석을 통해 유저 만족도 하락 원인을 분석하고 개선안을 도출했습니다.", 
-                achievements: "<li>로빙 스루 패스 지표 83% 감소 원인 규명</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증</li>", img: "P3.png", 
-                assets: [
-                    { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" },
-                    { type: "pdf", title: "업데이트 이후 영향 분석서", url: "P3_2_게임분석서.pdf" }
-                ] 
-            },
-            { 
-                title: "감독의 전술 노트", tag: "SYSTEM DESIGN", 
-                desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템 제안서입니다.", 
-                achievements: "<li>수집-조합-시너지-성장 코어 루프 설계</li><li>시즌 패스 및 감독팩 유료화 모델링</li>", img: "P4.png", 
-                assets: [{ type: "pdf", title: "신규 시스템 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
-            },
-            { 
-                title: "공공 야간약국 최적지", tag: "DATA ANALYSIS", 
-                desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", 
-                achievements: "<li>자치구별 복합 가중치 분석 모델 설계</li><li>QGIS 시각화를 통한 최적지 산출</li>", img: "P5.png", 
-                assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
-            }
+            { title: "KOKODUGI", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", achievements: "<li>VBA 기반 데이터 매니저 구축</li><li>단계적 튜토리얼 및 밸런싱</li>", img: "P2.png", assets: [{ type: "pdf", title: "기획서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] },
+            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
+            { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
+            { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i) {
             const p = projects[i];
             
+            // [수정] 모달을 열 때마다 스크롤 위치를 최상단(0)으로 강제 초기화
+            const modalContent = document.querySelector('.modal-content');
+            if (modalContent) modalContent.scrollTop = 0;
+
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {
                     return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="video-wrapper"><iframe src="${as.url}" allowfullscreen></iframe></div></div>`;

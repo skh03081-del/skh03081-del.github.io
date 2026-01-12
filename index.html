@@ -12,14 +12,16 @@
             --bg: #0d1117; 
             --card: #161b22;
             --accent: #97c1e7;
-            --accent-glow: rgba(151, 193, 231, 0.4);
+            --accent-glow: rgba(151, 193, 231, 0.6); /* 빛 효과 강화 */
+            --accent-dark: rgba(151, 193, 231, 0.15);
             --text-main: #f0f6fc;
             --text-sub: #8b949e;
             --border: #30363d;
+            --cyber-panel-bg: rgba(13, 17, 23, 0.85);
         }
 
         body, button { font-family: 'Galmuri9', sans-serif; }
-        h1, h2, h3, .pixel-font, .tag { font-family: 'Press Start 2P', 'Galmuri9', cursive; }
+        h1, h2, h3, .pixel-font, .tag, .game-header { font-family: 'Press Start 2P', 'Galmuri9', cursive; }
 
         body { 
             background-color: var(--bg); 
@@ -28,129 +30,219 @@
             cursor: url('https://cur.cursors-4u.net/games/gam-4/gam382.cur'), auto; 
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(151, 193, 231, 0.05) 2px, rgba(151, 193, 231, 0.05) 4px); /* 전체적인 스캔라인 배경 */
+            background-size: cover, 100% 4px;
         }
 
-        /* --- 1. 인트로 오버레이 --- */
+        /* --- 1. 인트로 --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10000; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
         }
-        #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
+        #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; text-shadow: 0 0 20px var(--accent-glow); }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .btn-pixel {
             padding: 15px 35px; background: var(--accent); color: #0d1117;
-            border: none; cursor: pointer; font-weight: bold;
-            box-shadow: -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000;
-            transition: 0.1s; font-size: 1.1rem; text-decoration: none; display: inline-block;
+            border: 2px solid #fff; cursor: pointer; font-weight: bold;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: 0.2s; font-size: 1.1rem; text-decoration: none; display: inline-block;
         }
+        .btn-pixel:hover { background: #fff; color: var(--accent); box-shadow: 0 0 30px var(--accent); }
 
-        /* --- 2. 히어로 섹션 (롤링 배경) --- */
+        /* --- 2. 히어로 섹션 --- */
         .hero {
             position: relative; width: 100%; height: 320px;
             display: flex; align-items: center; justify-content: center;
-            overflow: hidden; border-bottom: 3px solid var(--border);
+            overflow: hidden; border-bottom: 3px solid var(--accent);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
-        .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(12px) brightness(0.3); }
+        .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.6; }
+        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(8px) brightness(0.5); }
         .marquee-item { width: 500px; height: 320px; flex-shrink: 0; }
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .hero-content { position: relative; z-index: 2; text-align: center; }
-        .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
-        .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
+        .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000, 0 0 20px var(--accent-glow); letter-spacing: 2px; }
+        .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 20px; background: rgba(0,0,0,0.7); display: inline-block; padding: 8px 20px; border: 1px solid var(--accent); }
 
-        /* --- 3. 보유 기술 (PLAYER ABILITIES) --- */
-        .section-title { max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left; }
-        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .skill-group { background: var(--card); border: 2px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .skill-group-title { font-size: 0.95rem; color: var(--accent); text-align: left; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
-        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 4px 0; }
-        .skill-name { font-size: 0.9rem; color: var(--text-main); font-weight: bold; }
-        .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
+        /* --- 3. 공통 섹션 스타일 --- */
+        .section-title { 
+            max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; 
+            font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left;
+            display: flex; align-items: center;
+        }
+        .section-title::before { content: "►"; margin-right: 15px; color: #fff; animation: blink 1.5s infinite; }
 
-        /* --- 4. 프로젝트 리스트 --- */
-        .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
-        .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-        .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .project-card:hover .card-img-box img { transform: scale(1.1); }
-        .card-info-box { padding: 18px; text-align: left; }
-        .tag { font-size: 0.6rem; color: var(--accent); margin-bottom: 8px; display: block; }
-        .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
+        /* --- 4. 보유 기술 --- */
+        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .skill-group { 
+            background: linear-gradient(135deg, var(--card) 0%, rgba(22, 27, 34, 0.6) 100%);
+            border: 2px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 12px;
+            position: relative; overflow: hidden;
+        }
+        /* 스킬 카드 장식 */
+        .skill-group::after { content: ""; position: absolute; top: 0; right: 0; width: 30px; height: 30px; background: linear-gradient(to bottom left, var(--accent) 50%, transparent 50%); opacity: 0.3; }
+        .skill-group-title { font-size: 1rem; color: var(--accent); text-align: left; border-bottom: 2px solid var(--accent-dark); padding-bottom: 10px; margin-bottom: 15px; letter-spacing: 1px; }
+        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 5px 0; }
+        .skill-name { font-size: 0.95rem; color: #fff; font-weight: bold; margin-bottom: 3px; }
+        .skill-desc { color: var(--text-sub); font-size: 0.85rem; line-height: 1.4; }
 
-        /* --- 5. 모달 시스템 및 상세 디자인 --- */
+        /* --- 5. 프로젝트 리스트 --- */
+        .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .project-card { 
+            background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: all 0.3s ease; 
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
+        }
+        .project-card:hover { 
+            transform: translateY(-10px) scale(1.02); border-color: var(--accent); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow); z-index: 10;
+        }
+        .card-img-box { width: 100%; height: 200px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; opacity: 0.8; }
+        .project-card:hover .card-img-box img { transform: scale(1.1); opacity: 1; }
+        .card-img-box::after { /* 이미지 위 스캔라인 효과 */
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px);
+            pointer-events: none;
+        }
+        .card-info-box { padding: 20px; text-align: left; background: linear-gradient(to bottom, var(--card), #0a0e14); }
+        .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 10px; display: inline-block; background: var(--accent-dark); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-glow); }
+        .project-card h3 { font-size: 1.1rem; margin: 0; color: #fff; line-height: 1.4; }
+
+        /* --- 6. [핵심 변경] 게임 스타일 모달 --- */
         .modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center; 
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; 
+            backdrop-filter: blur(15px);
         }
-        .modal-content { 
-            background: var(--bg); border: 2px solid var(--accent); 
-            width: 95%; max-width: 1100px; height: 90vh; 
-            overflow-y: auto; position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        
+        /* 모달 등장 애니메이션 */
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.8); }
+            70% { transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1); }
         }
-        .close-pixel { 
-            position: sticky; top: 20px; right: 20px; 
-            float: right; color: var(--accent); font-size: 1rem; cursor: pointer; 
-            z-index: 2000; background: #000; padding: 10px 20px; 
-            border: 2px solid var(--accent); margin: 20px 20px 0 0;
-            box-shadow: 4px 4px 0 var(--accent);
-        }
-        .close-pixel:hover { background: var(--accent); color: #000; }
-        .modal-inner-padding { padding: 50px; clear: both; }
 
-        /* 사진 크기 통일 및 안 잘리게 */
-        .modal-img-container {
-            width: 100%; height: 350px;
+        .modal-content { 
+            background: var(--bg); 
+            /* 사이버네틱 육각형 패턴 배경 */
+            background-image: 
+                linear-gradient(var(--cyber-panel-bg), var(--cyber-panel-bg)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M20 0L40 10V30L20 40L0 30V10L20 0Z" fill="none" stroke="rgba(151, 193, 231, 0.1)" stroke-width="1"/></svg>');
+            border: 2px solid var(--accent); 
+            width: 95%; max-width: 1150px; height: 92vh; 
+            overflow-y: auto; position: relative;
+            box-shadow: 0 0 60px rgba(0,0,0,1), inset 0 0 30px var(--accent-dark);
+            animation: modalPop 0.4s ease-out;
+        }
+        
+        /* 닫기 버튼 - 홀로그램 스타일 */
+        .close-pixel { 
+            position: sticky; top: 25px; right: 25px; 
+            float: right; color: var(--accent); font-size: 1rem; cursor: pointer; 
+            z-index: 2000; background: rgba(13, 17, 23, 0.8); padding: 10px 25px; 
+            border: 2px solid var(--accent); margin: 25px 25px 0 0;
+            box-shadow: 0 0 15px var(--accent-glow); text-transform: uppercase; letter-spacing: 1px;
+            backdrop-filter: blur(5px); transition: 0.3s;
+        }
+        .close-pixel:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent); }
+
+        .modal-inner-padding { padding: 40px 50px; clear: both; }
+
+        /* [중요] 사진 크기 축소 및 게임 모니터 프레임 */
+        .cyber-img-frame {
+            width: 100%; 
+            height: 240px; /* 높이를 대폭 줄임 (내용 묻힘 방지) */
             background: #000; margin-bottom: 35px;
             display: flex; align-items: center; justify-content: center;
-            overflow: hidden; border: 2px solid var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
+            overflow: hidden; position: relative;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 25px var(--accent-glow), inset 0 0 50px rgba(0,0,0,0.8);
         }
-        .modal-img { max-width: 100%; height: 100%; object-fit: contain; }
+        /* 모니터 장식 요소 */
+        .cyber-img-frame::before { content: "DATA VISUALIZER // V.1.0"; position: absolute; top: 5px; left: 10px; font-size: 0.6rem; color: var(--accent); opacity: 0.7; z-index: 2; font-family: 'Press Start 2P'; }
+        .cyber-img-frame::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--accent); box-shadow: 0 0 10px var(--accent); z-index: 2; animation: scanmove 2s linear infinite; }
+        @keyframes scanmove { 0% { bottom: 100%; opacity: 0; } 50% { opacity: 1; } 100% { bottom: 0%; opacity: 0; } }
 
-        .project-info-header { border-left: 4px solid var(--accent); padding-left: 25px; margin-bottom: 40px; text-align: left; }
-        .project-info-header h2 { font-size: 1.8rem; color: var(--accent); margin-bottom: 10px; }
+        .modal-img { max-width: 100%; height: 100%; object-fit: contain; z-index: 1; }
+
+        /* 게임 데이터 패널 스타일 */
+        .game-data-panel {
+            background: rgba(20, 25, 35, 0.7); border-left: 6px solid var(--accent);
+            padding: 30px; margin-bottom: 40px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px); border-radius: 0 10px 10px 0;
+        }
+        .game-header { font-size: 1.8rem; color: var(--accent); margin: 10px 0 15px 0; text-shadow: 0 0 10px var(--accent-glow); }
+        .game-header-tag { color: #fff; font-weight: bold; font-size: 0.9rem; display: inline-block; background: var(--accent); color:#000; padding: 4px 12px; border-radius: 4px; margin-bottom: 10px; box-shadow: 0 0 10px var(--accent-glow); }
+        .game-desc { font-size: 1.1rem; line-height: 1.8; color: #e0e6ed; }
+
+        /* 성과 박스 -> 미션 로그 스타일 */
+        .mission-log-box { 
+            border: 2px solid var(--border); padding: 25px; margin: 30px 0; 
+            background: rgba(255,255,255,0.03); text-align: left; position: relative;
+        }
+        .mission-log-box h4 { 
+            color: var(--accent); font-size: 1.1rem; margin: 0 0 20px 0; 
+            border-bottom: 2px solid var(--border); padding-bottom: 10px; display: flex; align-items: center;
+        }
+        .mission-log-box h4::before { content: "■"; margin-right: 10px; font-size: 0.8rem; color: var(--accent); }
+        .mission-log-box ul { list-style: none; padding-left: 10px; }
+        .mission-log-box li { margin-bottom: 12px; color: #d1d5db; position: relative; padding-left: 20px; }
+        .mission-log-box li::before { content: "S"; position: absolute; left: 0; color: var(--accent); font-family: 'Press Start 2P'; font-size: 0.7rem; top: 3px; }
         
-        /* 탭 버튼 시각적 강화 */
+        /* 탭 버튼 - 사이버 버튼 스타일 */
         .asset-selector { 
-            display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;
+            display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-start;
             position: sticky; top: 0; z-index: 1000;
-            background: #161b22; padding: 25px 40px;
-            border-bottom: 4px solid var(--accent);
+            background: rgba(22, 27, 34, 0.9); padding: 20px 50px;
+            border-bottom: 3px solid var(--accent);
+            backdrop-filter: blur(10px);
         }
         .asset-btn { 
-            padding: 12px 24px; background: #21262d; border: 2px solid var(--border); 
-            color: var(--text-main); cursor: pointer; font-size: 0.95rem; transition: 0.2s;
-            font-weight: bold;
+            padding: 12px 25px; background: rgba(13, 17, 23, 0.8); border: 2px solid var(--border); 
+            color: var(--text-sub); cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;
+            font-weight: bold; position: relative; overflow: hidden;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 10px var(--accent); }
+        .asset-btn:hover { border-color: var(--accent); color: #fff; background: var(--accent-dark); box-shadow: 0 0 15px var(--accent-glow); }
+        .asset-btn.active { 
+            background: var(--accent); color: #0d1117; border-color: #fff; 
+            box-shadow: 0 0 25px var(--accent), inset 0 0 10px rgba(255,255,255,0.5);
+            font-weight: 900;
+        }
+        .asset-btn.active::after { /* 활성 탭 하단 빛 효과 */
+            content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: #fff; box-shadow: 0 0 10px #fff;
+        }
 
-        /* 컨텐츠 뷰어 영역 */
-        .viewer-container { width: 100%; min-height: 700px; background: #000; padding: 30px 0; }
-        .asset-viewer { width: 96%; height: 700px; border: none; display: none; margin: 0 auto; }
+        /* 뷰어 컨테이너 */
+        .viewer-container { width: 100%; min-height: 700px; background: #0a0e14; padding: 40px 0; border-top: 2px solid var(--accent-dark); }
+        .asset-viewer { width: 94%; height: 700px; border: none; display: none; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.7); }
         .asset-viewer.active { display: block; }
 
-        /* 외부 링크 및 다운로드 박스 스타일 */
-        .custom-viewer-container {
+        /* 커스텀 뷰어 박스 (링크/다운로드) */
+        .custom-viewer-box {
             display: none; flex-direction: column; align-items: center; justify-content: center;
-            width: 96%; height: 450px; margin: 0 auto; background: #161b22; 
-            border: 2px dashed var(--accent); text-align: center;
+            width: 94%; height: 450px; margin: 0 auto; background: rgba(22, 27, 34, 0.8); 
+            border: 2px solid var(--accent); text-align: center;
+            box-shadow: inset 0 0 50px var(--accent-dark);
         }
-        .custom-viewer-container.active { display: flex; }
-        .file-icon { font-size: 3.5rem; color: #217346; margin-bottom: 20px; }
+        .custom-viewer-box.active { display: flex; }
+        .file-icon { font-size: 4rem; color: var(--accent); margin-bottom: 25px; text-shadow: 0 0 20px var(--accent-glow); }
 
         .video-wrapper { width: 100%; height: 700px; display: flex; align-items: center; justify-content: center; }
-        .video-wrapper iframe { width: 83%; height: 83%; border: 1px solid var(--accent); }
+        .video-wrapper iframe { width: 85%; height: 85%; border: 3px solid var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
 
-        .info-box { border: 1px solid var(--border); padding: 30px; margin: 30px 0; background: rgba(255,255,255,0.02); text-align: left; }
-        .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 15px 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .asset-selector { padding: 15px 20px; } .modal-img-container { height: 250px; } .asset-viewer, .video-wrapper { height: 450px; } }
+        @media (max-width: 950px) { 
+            .skills-wrapper, .project-container { grid-template-columns: 1fr; } 
+            .asset-selector { padding: 15px 20px; } 
+            .cyber-img-frame { height: 180px; } /* 모바일에서 더 축소 */
+            .asset-viewer, .video-wrapper { height: 450px; } 
+            .modal-inner-padding { padding: 30px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -177,7 +269,7 @@
         </div>
     </header>
 
-    <h2 class="section-title">> PLAYER ABILITIES(보유 기술)</h2>
+    <h2 class="section-title">PLAYER ABILITIES(보유 기술)</h2>
     <div class="skills-wrapper">
         <div class="skill-group">
             <div class="skill-group-title">협업 & 관리</div>
@@ -202,7 +294,7 @@
         </div>
     </div>
 
-    <h2 class="section-title">> SELECT STAGE(프로젝트)</h2>
+    <h2 class="section-title">SELECT STAGE(프로젝트)</h2>
     <div class="project-container">
         <div class="project-card" onclick="openModal(0)"><div class="card-img-box"><img src="P1.png"></div><div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div></div>
         <div class="project-card" onclick="openModal(1)"><div class="card-img-box"><img src="P2.png"></div><div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI (코코두기)</h3></div></div>
@@ -213,7 +305,7 @@
 
     <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-pixel" onclick="closeModal()">[X] EXIT</span>
+            <span class="close-pixel" onclick="closeModal()">[X] EXIT SYSTEM</span>
             <div id="modalBody"></div>
         </div>
     </div>
@@ -248,23 +340,24 @@
                     { type: "link", title: "상세 기획 (노션)", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
                 ] 
             },
-            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "업데이트 이후 영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
+            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
             { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
             { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i) {
             const p = projects[i];
-            const modalContent = document.querySelector('.modal-content');
-            modalContent.scrollTop = 0;
+            const modal = document.getElementById('projectModal');
+            const modalContent = modal.querySelector('.modal-content');
+            if (modalContent) modalContent.scrollTop = 0;
 
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {
                     return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="video-wrapper"><iframe src="${as.url}" allowfullscreen></iframe></div></div>`;
                 } else if(as.type === 'link') {
-                    return `<div class="custom-viewer-container ${idx===0?'active':''}" id="view-${idx}"><p style="margin-bottom:20px; font-size:1.1rem; color:var(--accent);">전체 기획 문서를 노션에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">OPEN NOTION LINK</a></div>`;
+                    return `<div class="custom-viewer-box ${idx===0?'active':''}" id="view-${idx}"><i class="fas fa-link file-icon"></i><p style="margin-bottom:20px; font-size:1.1rem; color:var(--accent);">방대한 기획 명세서를 노션에서 직접 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션(Notion) 열기</a></div>`;
                 } else if(as.type === 'download') {
-                    return `<div class="custom-viewer-container ${idx===0?'active':''}" id="view-${idx}"><i class="fas fa-file-excel file-icon"></i><p style="margin-bottom:10px; font-size:1.1rem; color:var(--accent);">VBA 데이터 매니저 (실제 파일)</p><p style="margin-bottom:25px; font-size:0.85rem; color:var(--text-sub);">* 매크로가 포함된 작업 원본 파일을 다운로드합니다.</p><a href="${as.url}" download class="btn-pixel">💾 파일 다운로드 (.xlsm)</a></div>`;
+                    return `<div class="custom-viewer-box ${idx===0?'active':''}" id="view-${idx}"><i class="fas fa-file-excel file-icon" style="color:#217346;"></i><p style="margin-bottom:10px; font-size:1.1rem; color:var(--accent);">VBA 데이터 매니저 (실제 파일)</p><p style="margin-bottom:25px; font-size:0.85rem; color:var(--text-sub);">* 매크로가 포함된 작업 원본 파일을 다운로드합니다.</p><a href="${as.url}" download class="btn-pixel">💾 파일 다운로드 (.xlsm)</a></div>`;
                 } else {
                     return `<iframe class="asset-viewer ${idx===0?'active':''}" id="view-${idx}" src="${as.url}#toolbar=0"></iframe>`;
                 }
@@ -274,14 +367,18 @@
 
             document.getElementById('modalBody').innerHTML = `
                 <div class="modal-inner-padding">
-                    <div class="modal-img-container"><img src="${p.img}" class="modal-img"></div>
-                    <div class="project-info-header"><span style="color:#8b949e; font-weight:bold; font-size:0.9rem; display:block; margin-bottom:10px;">[ ${p.tag} ]</span><h2>${p.title}</h2><p style="font-size:1.1rem; color:#eee; max-width:800px;">${p.desc}</p></div>
-                    <div class="info-box"><h4>주요 성과</h4><ul>${p.achievements}</ul></div>
+                    <div class="cyber-img-frame"><img src="${p.img}" class="modal-img"></div>
+                    <div class="game-data-panel">
+                        <span class="game-header-tag">${p.tag}</span>
+                        <h2 class="game-header">${p.title}</h2>
+                        <p class="game-desc">${p.desc}</p>
+                    </div>
+                    <div class="mission-log-box"><h4>핵심 성과 (Mission Log)</h4><ul>${p.achievements}</ul></div>
                 </div>
                 <div class="asset-selector">${buttonsHtml}</div>
                 <div class="viewer-container">${viewersHtml}</div>
             `;
-            document.getElementById('projectModal').style.display = 'flex';
+            modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             setTimeout(() => { modalContent.scrollTop = 0; }, 10);
         }
@@ -289,7 +386,7 @@
         function switchTab(btn, idx) {
             document.querySelectorAll('.video-wrapper iframe').forEach(ifr => { ifr.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); });
             document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.asset-viewer, .custom-viewer-container').forEach(v => {
+            document.querySelectorAll('.asset-viewer, .custom-viewer-box').forEach(v => {
                 v.classList.remove('active');
                 if(!v.tagName.includes('IFRAME')) v.style.display = 'none';
             });

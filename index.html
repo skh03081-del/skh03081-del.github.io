@@ -11,14 +11,14 @@
         :root {
             --bg: #0d1117; 
             --card: #161b22;
-            --accent: #97c1e7; /* 메인 테마 색상 */
+            --accent: #97c1e7; /* 요청하신 메인 색상 */
             --accent-dim: rgba(151, 193, 231, 0.1);
             --text-main: #f0f6fc;
             --text-sub: #8b949e;
             --border: #30363d;
         }
 
-        /* 폰트 설정: 한글 Galmuri9, 영문 포인트 Press Start 2P */
+        /* 폰트 설정 */
         body, button { font-family: 'Galmuri9', sans-serif; }
         h1, h2, h3, .pixel-font, .tag { font-family: 'Press Start 2P', 'Galmuri9', cursive; }
 
@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 1. 인트로 오버레이 (화면 전환 기능 포함) --- */
+        /* --- 1. 인트로 오버레이 --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10000; display: flex; flex-direction: column;
@@ -40,6 +40,7 @@
         #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
         .btn-pixel {
             padding: 15px 35px; background: var(--accent); color: #0d1117;
             border: none; cursor: pointer; font-weight: bold;
@@ -50,8 +51,7 @@
 
         /* --- 2. 히어로 섹션: 이름 뒤 흐릿한 롤링 배너 --- */
         .hero {
-            position: relative;
-            width: 100%; height: 320px;
+            position: relative; width: 100%; height: 320px;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden; border-bottom: 3px solid var(--border);
         }
@@ -61,61 +61,51 @@
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .hero-content { position: relative; z-index: 2; text-align: center; }
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 1100px; padding: 0 20px; }
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
         .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
 
-        /* --- 3. 보유 기술(PLAYER ABILITIES) : 좌측 정렬 및 간격 최적화 --- */
-        .section-title { 
-            max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; 
-            font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left;
-        }
-        .skills-wrapper {
-            max-width: 1100px; margin: 0 auto 80px; padding: 0 20px;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-        }
-        .skill-group {
-            background: var(--card); border: 2px solid var(--border); padding: 25px;
-            display: flex; flex-direction: column; gap: 8px;
-        }
-        .skill-group-title {
-            font-size: 0.95rem; color: var(--accent); text-align: left; 
-            border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 12px;
-        }
-        /* 좌측 정렬 및 촘촘한 간격 */
-        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 4px 0; }
-        .skill-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+        /* --- 3. 보유 기술(PLAYER ABILITIES) : 좌측 정렬 및 간격 축소 --- */
+        .section-title { max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left; }
+        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .skill-group { background: var(--card); border: 2px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .skill-group-title { font-size: 0.95rem; color: var(--accent); text-align: left; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
+
+        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 4px 0; }
+        .skill-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .skill-name { font-size: 0.9rem; color: var(--text-main); font-weight: bold; }
         .stars { color: #ffff00; font-size: 0.7rem; }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
 
-        /* --- 4. 프로젝트(SELECT STAGE) : 3열 격자 고정 --- */
-        .project-container { 
-            max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; 
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; 
-        }
-        .project-card {
-            background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s;
-            display: flex; flex-direction: column;
-        }
+        /* --- 4. 프로젝트(SELECT STAGE) --- */
+        .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-dim); }
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .card-info-box { padding: 18px; text-align: center; flex-grow: 1; }
-        .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 10px; display: block; }
-        .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; word-break: keep-all; }
+        .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 8px; display: block; }
+        .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. 모달 (UI 깨짐 방지) --- */
+        /* --- 5. 모달 (프로젝트 상세 좌측 정렬 적용) --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--bg); border: 4px solid var(--accent); width: 100%; max-width: 1000px; height: 90vh; overflow-y: auto; padding: 40px; box-sizing: border-box; position: relative; }
         .close-pixel { position: absolute; top: 20px; right: 20px; color: var(--accent); font-size: 1.5rem; cursor: pointer; }
-        .info-box { border: 2px dashed var(--accent); padding: 25px; margin: 25px 0; background: var(--accent-dim); }
+        
+        /* [수정] 모달 내부 텍스트 좌측 정렬 및 여백 조정 */
+        .modal-body { text-align: left; }
+        .modal-body h2 { color: var(--accent); font-size: 1.8rem; margin: 0 0 10px 0; text-align: left; }
+        .modal-body .project-tag { font-weight: bold; color: var(--text-sub); margin-bottom: 25px; display: block; text-align: left; }
+        .modal-body .desc-text { font-size: 1.1rem; line-height: 1.8; color: #eee; margin-bottom: 30px; text-align: left; }
+        
+        .info-box { border: 2px dashed var(--accent); padding: 25px; margin: 25px 0; background: var(--accent-dim); text-align: left; }
+        .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 15px 0; text-align: left; }
+        .info-box ul { padding-left: 20px; margin: 0; text-align: left; }
+        .info-box li { font-size: 1rem; margin-bottom: 8px; color: var(--text-main); }
+        
         iframe { width: 100%; height: 700px; border: 2px solid var(--border); margin-top: 30px; background: #fff; }
 
-        @media (max-width: 950px) {
-            .skills-wrapper, .project-container { grid-template-columns: 1fr; }
-            .hero { height: 280px; }
-        }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .hero { height: 280px; } }
     </style>
 </head>
 <body>
@@ -217,7 +207,7 @@
         </div>
         <div class="project-card" onclick="openModal(1)">
             <div class="card-img-box"><img src="P2.png"></div>
-            <div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>코코두기 (KOKODUGI)</h3></div>
+            <div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI</h3></div>
         </div>
         <div class="project-card" onclick="openModal(2)">
             <div class="card-img-box"><img src="P3.png"></div>
@@ -236,12 +226,11 @@
     <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-pixel" onclick="closeModal()">[X] EXIT</span>
-            <div id="modalBody"></div>
+            <div id="modalBody" class="modal-body"></div>
         </div>
     </div>
 
     <script>
-        // 화면 전환 함수
         function startGame() {
             const overlay = document.getElementById('intro-overlay');
             if (overlay) {
@@ -265,9 +254,9 @@
                 <div style="text-align:center; margin-bottom:30px;">
                     <img src="${p.img}" style="max-width:100%; border:3px solid var(--accent); box-shadow: 10px 10px 0 var(--border);">
                 </div>
-                <h2 style="color:var(--accent); font-size:1.6rem; margin-bottom:15px;">${p.title}</h2>
-                <p style="font-weight:bold; color:var(--text-sub); margin-bottom:25px;">[ ${p.tag} ]</p>
-                <p style="font-size:1.1rem; line-height:1.8; color:#eee;">${p.desc}</p>
+                <h2>${p.title}</h2>
+                <span class="project-tag">[ ${p.tag} ]</span>
+                <p class="desc-text">${p.desc}</p>
                 <div class="info-box">
                     <h4>MISSION ACHIEVEMENTS (핵심 성과)</h4>
                     <ul>${p.achievements}</ul>

@@ -69,7 +69,7 @@
         .skill-name { font-size: 0.95rem; color: #fff; font-weight: bold; }
         .skill-desc { color: var(--text-sub); font-size: 0.85rem; line-height: 1.4; }
 
-        /* --- 4. 프로젝트 리스트 --- */
+        /* --- 4. 프로젝트 그리드 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
         .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
@@ -86,10 +86,10 @@
             height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column;
         }
         
-        /* [수정] 상단 헤더: 나가기 버튼 잘림 방지를 위해 오른쪽 패딩을 120px로 확대 */
+        /* [수정] EXIT 버튼 잘림 방지를 위해 헤더 오른쪽 여백을 150px로 대폭 확대 */
         .project-header-top {
             width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0;
-            border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 120px 0 40px; 
+            border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 150px 0 40px; 
         }
         .header-bg-blur {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -99,16 +99,17 @@
         .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; justify-content: space-between; }
         .header-title-box h2 { font-size: 1.8rem; color: #fff; margin: 0; text-shadow: 0 0 15px var(--accent-glow); }
 
-        /* [수정] EXIT 버튼: 더 안정적인 위치 고정 */
+        /* [수정] EXIT 버튼 위치 고정 및 왼쪽으로 이동 */
         .close-system-btn { 
             background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); 
             padding: 10px 25px; font-size: 1rem; cursor: pointer; transition: 0.3s;
             font-weight: bold; white-space: nowrap; flex-shrink: 0;
+            position: absolute; right: 40px; /* 위치를 더 안정적으로 고정 */
         }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
-        .modal-inner-content { padding: 40px 60px; }
+        .modal-inner-content { padding: 40px 60px 20px; } /* 하단 패딩 조정 */
 
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 30px; margin-bottom: 40px; text-align: left; }
         .mission-log { border: 2px solid var(--border); padding: 30px; margin-bottom: 40px; background: rgba(255,255,255,0.02); text-align: left; }
@@ -122,11 +123,11 @@
         .asset-btn { padding: 12px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 20px var(--accent); }
 
-        /* [수정] 뷰어 영역 너비 및 높이 최적화 (한 페이지 보기) */
-        .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0; border-top: 2px solid var(--accent-dark); text-align: center; }
+        /* [수정] 뷰어 영역: 하단 공백 없이 가득 채우기 위해 높이를 850px로 확대 */
+        .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0 60px; border-top: 2px solid var(--accent-dark); text-align: center; }
         .asset-viewer { 
-            width: 85%; /* 너무 꽉 차지 않게 너비 조정 */
-            height: 620px; /* 한 페이지가 다 보이도록 높이 조정 */
+            width: 100%; /* 너비도 시원하게 확대 */
+            height: 850px; /* 아래 공백까지 채우기 위해 높이 대폭 확대 */
             display: none; margin: 0 auto; border: none; 
         }
         .asset-viewer.active { display: block; }
@@ -135,10 +136,11 @@
         .excel-combined-ui.active { display: flex; }
         .excel-download-card { width: 80%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
 
-        .video-player-frame { width: 100%; height: 620px; display: flex; align-items: center; justify-content: center; }
-        .video-player-frame iframe { width: 90%; height: 90%; border: 3px solid var(--accent); }
+        /* 비디오 프레임도 뷰어와 동일한 높이 적용 */
+        .video-player-frame { width: 100%; height: 850px; display: flex; align-items: center; justify-content: center; }
+        .video-player-frame iframe { width: 95%; height: 90%; border: 3px solid var(--accent); }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .modal-inner-content { padding: 30px 20px; } .project-header-top { padding: 0 60px 0 20px; height: 110px; } .asset-viewer, .video-player-frame { width: 95%; height: 400px; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .modal-inner-content { padding: 30px 20px; } .project-header-top { padding: 0 100px 0 20px; height: 110px; } .asset-viewer, .video-player-frame { height: 500px; } .close-system-btn { right: 20px; } }
     </style>
 </head>
 <body>
@@ -279,10 +281,10 @@
                 } else if(as.type === 'link') {
                     return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-ui active"><i class="fas fa-link" style="font-size:3rem; color:var(--accent); margin-bottom:20px;"></i><p style="color:var(--accent); margin-bottom:20px;">기획 문서를 외부 노션 링크에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션(Notion) 열기</a></div></div>`;
                 } else if(as.type === 'excel-combined') {
-                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-ui active"><div class="video-player-frame" style="height:450px;"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div><div class="excel-download-card"><p style="color:var(--accent); margin-bottom:15px; font-weight:bold;">VBA 데이터 매니저 (자동화 도구)</p><a href="${as.downloadUrl}" download class="btn-pixel" style="font-size:0.9rem;">💾 파일 다운로드 (.xlsm)</a></div></div></div>`;
+                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-ui active"><div class="video-player-frame" style="height:550px;"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div><div class="excel-download-card"><p style="color:var(--accent); margin-bottom:15px; font-weight:bold;">VBA 데이터 매니저 (자동화 도구)</p><a href="${as.downloadUrl}" download class="btn-pixel" style="font-size:0.9rem;">💾 파일 다운로드 (.xlsm)</a></div></div></div>`;
                 } else {
-                    // [수정] FitV(세로 맞춤) 옵션으로 한 페이지 전체 노출 유도
-                    return `<iframe class="asset-viewer ${idx===0?'active':''}" id="view-${idx}" src="${as.url}#view=FitV&toolbar=0"></iframe>`;
+                    // [수정] PDF 자동 맞춤 옵션 최적화
+                    return `<iframe class="asset-viewer ${idx===0?'active':''}" id="view-${idx}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
                 }
             }).join('');
 

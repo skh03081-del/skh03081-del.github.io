@@ -18,7 +18,7 @@
             --border: #30363d;
         }
 
-        /* 폰트 기본 설정: 한글 Galmuri9 우선 적용 */
+        /* 폰트 기본 설정 */
         body, button { font-family: 'Galmuri9', sans-serif; }
         h1, h2, h3, .pixel-font, .tag { font-family: 'Press Start 2P', 'Galmuri9', cursive; }
 
@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 1. 인트로 오버레이 --- */
+        /* --- 1. 인트로 오버레이 (START 버튼 화면) --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10000; display: flex; flex-direction: column;
@@ -40,120 +40,61 @@
         #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
         .btn-pixel {
             padding: 15px 35px; background: var(--accent); color: #0d1117;
             border: none; cursor: pointer; font-weight: bold;
             box-shadow: -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000;
             transition: 0.1s; font-size: 1.1rem;
         }
+        .btn-pixel:hover { filter: brightness(1.2); transform: scale(1.05); }
 
         /* --- 2. 히어로 섹션: 이름 뒤 흐릿한 롤링 배너 --- */
         .hero {
-            position: relative;
-            width: 100%;
-            height: 320px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-bottom: 3px solid var(--border);
+            position: relative; width: 100%; height: 320px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; border-bottom: 3px solid var(--border);
         }
-
-        .hero-bg-marquee {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .marquee-track {
-            display: flex; width: max-content;
-            animation: scroll-left 50s linear infinite;
-            filter: blur(12px) brightness(0.3); 
-        }
-
+        .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(12px) brightness(0.3); }
         .marquee-item { width: 500px; height: 320px; flex-shrink: 0; }
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 1100px;
-            padding: 0 20px;
-        }
-
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 1100px; padding: 0 20px; }
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
         .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
 
         /* --- 3. 보유 기술(PLAYER ABILITIES) : 좌측 정렬 및 간격 축소 --- */
-        .section-title { 
-            max-width: 1100px; margin: 60px auto 30px; padding: 0 20px; 
-            font-size: 1.3rem; 
-            color: var(--accent); letter-spacing: 2px;
-            text-align: left;
-        }
-        
-        .skills-wrapper {
-            max-width: 1100px; margin: 0 auto 80px; padding: 0 20px;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-        }
+        .section-title { max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left; }
+        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .skill-group { background: var(--card); border: 2px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .skill-group-title { font-size: 0.95rem; color: var(--accent); text-align: left; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
 
-        .skill-group {
-            background: var(--card); border: 2px solid var(--border); padding: 25px;
-            display: flex; flex-direction: column; gap: 8px; /* 항목 간 폭 대폭 축소 */
-        }
-
-        .skill-group-title {
-            font-size: 0.95rem;
-            color: var(--accent); text-align: left; /* 좌측 정렬 */
-            border-bottom: 2px solid var(--border); padding-bottom: 10px;
-            margin-bottom: 12px;
-        }
-
-        /* [수정] 좌측 정렬 적용 및 텍스트 줄바꿈 방지 */
-        .skill-item { 
-            display: flex; flex-direction: column; 
-            align-items: flex-start; /* 좌측 정렬 */
-            justify-content: center; 
-            text-align: left; padding: 4px 0;
-        }
+        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 4px 0; }
         .skill-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .skill-name { font-size: 0.9rem; color: var(--text-main); font-weight: bold; }
         .stars { color: #ffff00; font-size: 0.7rem; }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
 
-        /* --- 4. 프로젝트(SELECT STAGE) : 격자 레이아웃 안정화 --- */
-        .project-container { 
-            max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; 
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; 
-        }
-        
-        .project-card {
-            background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s;
-            display: flex; flex-direction: column;
-        }
+        /* --- 4. 프로젝트(SELECT STAGE) --- */
+        .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-dim); }
-        
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-
         .card-info-box { padding: 18px; text-align: center; flex-grow: 1; }
-        .tag { font-size: 0.6rem; color: var(--accent); margin-bottom: 8px; display: block; }
-        .project-card h3 { font-size: 0.95rem; margin: 0; color: #fff; line-height: 1.4; word-break: keep-all; }
+        .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 8px; display: block; }
+        .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. 모달 스타일 --- */
+        /* --- 5. 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--bg); border: 4px solid var(--accent); width: 100%; max-width: 1000px; height: 90vh; overflow-y: auto; padding: 40px; box-sizing: border-box; position: relative; }
         .close-pixel { position: absolute; top: 20px; right: 20px; color: var(--accent); font-size: 1.5rem; cursor: pointer; }
         .info-box { border: 2px dashed var(--accent); padding: 25px; margin: 25px 0; background: var(--accent-dim); }
         iframe { width: 100%; height: 700px; border: 2px solid var(--border); margin-top: 30px; background: #fff; }
 
-        @media (max-width: 950px) {
-            .skills-wrapper, .project-container { grid-template-columns: 1fr; }
-            .hero { height: 280px; }
-        }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .hero { height: 280px; } }
     </style>
 </head>
 <body>
@@ -180,69 +121,69 @@
         </div>
         <div class="hero-content">
             <h1>LEE JAE YOUNG<span>_</span></h1>
-            [cite_start]<p>"끈기 있는 데이터 기반의 게임 체인저" [cite: 9]</p>
+            <p>"끈기 있는 데이터 기반의 게임 체인저" [cite: 9, 70]</p>
         </div>
     </header>
 
     <h2 class="section-title">> 보유 기술(PLAYER ABILITIES)</h2>
     <div class="skills-wrapper">
         <div class="skill-group">
-            <div class="skill-group-title">협업 & 관리(MANAGEMENT)</div>
+            <div class="skill-group-title">협업 & 관리</div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Jira</span> <span class="stars">★★★★★</span></div>
-                <div class="skill-desc">마일스톤 관리 및 이슈 트래킹</div>
+                <div class="skill-desc">마일스톤 관리 및 이슈 트래킹 [cite: 30-39]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Slack</span> <span class="stars">★★★★★</span></div>
-                <div class="skill-desc">원활한 팀 커뮤니케이션</div>
+                <div class="skill-desc">원활한 팀 커뮤니케이션 [cite: 31, 35]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Confluence</span> <span class="stars">★★★★★</span></div>
-                <div class="skill-desc">프로젝트 문서화 및 아카이빙</div>
+                <div class="skill-desc">프로젝트 문서화 및 아카이빙 [cite: 32, 38]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Notion</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">대시보드 및 일정 관리</div>
+                <div class="skill-desc">대시보드 및 일정 관리 [cite: 40, 41]</div>
             </div>
         </div>
 
         <div class="skill-group">
-            <div class="skill-group-title">기획 & 데이터(DESIGN & DATA)</div>
+            <div class="skill-group-title">기획 & 데이터</div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Excel</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">데이터 분석 및 VBA 자동화</div>
+                <div class="skill-desc">데이터 분석 및 VBA 자동화 [cite: 44, 53]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Figma</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">UI/UX 설계 및 프로토타입</div>
+                <div class="skill-desc">UI/UX 설계 및 프로토타입 [cite: 42, 49]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">PowerPoint</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">제안서 기획 및 비주얼 디자인</div>
+                <div class="skill-desc">제안서 기획 및 비주얼 디자인 [cite: 43, 50]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Word</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">표준 문서 관리 및 명세서</div>
+                <div class="skill-desc">표준 문서 관리 및 명세서 [cite: 45, 54]</div>
             </div>
         </div>
 
         <div class="skill-group">
-            <div class="skill-group-title">개발 & 엔진(DEV & ENGINE)</div>
+            <div class="skill-group-title">개발 & 엔진</div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Gamemaker</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">축구+리듬 하이브리드 게임 기획</div>
+                <div class="skill-desc">축구+리듬 하이브리드 기획 [cite: 57, 58]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Unity</span> <span class="stars">★★★☆☆</span></div>
-                <div class="skill-desc">엔진 기반 협업 및 기능 활용</div>
+                <div class="skill-desc">엔진 기반 협업 및 기능 활용 [cite: 64, 68]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">Gemini</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">코딩 파트너 및 데이터 시각화</div>
+                <div class="skill-desc">코딩 파트너 및 데이터 시각화 [cite: 61, 62]</div>
             </div>
             <div class="skill-item">
                 <div class="skill-name-row"><span class="skill-name">NotebookLM</span> <span class="stars">★★★★☆</span></div>
-                <div class="skill-desc">방대한 설정 분석 및 검증</div>
+                <div class="skill-desc">방대한 설정 분석 및 검증 [cite: 65, 69]</div>
             </div>
         </div>
     </div>
@@ -251,23 +192,23 @@
     <div class="project-container">
         <div class="project-card" onclick="openModal(0)">
             <div class="card-img-box"><img src="P1.png"></div>
-            <div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div>
+            <div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN [cite: 92]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(1)">
             <div class="card-img-box"><img src="P2.png"></div>
-            <div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>코코두기 (KOKODUGI)</h3></div>
+            <div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI [cite: 93]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(2)">
             <div class="card-img-box"><img src="P3.png"></div>
-            <div class="card-info-box"><span class="tag">EA KOREA MISSION</span><h3>밸런스 개선 제안</h3></div>
+            <div class="card-info-box"><span class="tag">EA MISSION</span><h3>밸런스 개선 제안 [cite: 313]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(3)">
             <div class="card-img-box"><img src="P4.png"></div>
-            <div class="card-info-box"><span class="tag">SYSTEM DESIGN</span><h3>감독의 전술 노트</h3></div>
+            <div class="card-info-box"><span class="tag">SYSTEM DESIGN</span><h3>감독의 전술 노트 [cite: 417]</h3></div>
         </div>
         <div class="project-card" onclick="openModal(4)">
             <div class="card-img-box"><img src="P5.png"></div>
-            <div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>공공 야간약국 선정</h3></div>
+            <div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>공공 야간약국 선정 [cite: 604]</h3></div>
         </div>
     </div>
 
@@ -279,19 +220,25 @@
     </div>
 
     <script>
+        // 1. 인트로 종료 및 화면 전환 함수 (이 부분이 있어야 넘어갑니다)
         function startGame() {
             const overlay = document.getElementById('intro-overlay');
-            overlay.style.transition = '0.8s';
-            overlay.style.opacity = '0';
-            setTimeout(() => overlay.style.display = 'none', 800);
+            if (overlay) {
+                overlay.style.transition = '0.8s';
+                overlay.style.opacity = '0';
+                // 애니메이션이 끝난 후 요소를 완전히 제거합니다.
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 800);
+            }
         }
 
         const projects = [
-            [cite_start]{ title: "RHYTHM ELEVEN", tag: "1인 기획 & 개발", desc: "축구 전략성과 리듬 실력 기반 입력을 융합한 게임입니다. AI 협업을 통해 로직 효율성을 검증하며 완성도를 높였습니다. [cite: 92, 105][cite_start]", achievements: "<li>동적 난이도 시스템 설계 [cite: 216][cite_start]</li><li>코드 기반 유연한 비주얼 연출 구현 [cite: 225]</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "코코두기 (KOKODUGI)", tag: "10인 팀 협업", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다. [cite_start]레벨 디자인과 데이터 입력 도구 개발을 주도했습니다. [cite: 93, 263][cite_start]", achievements: "<li>VBA 기반 전용 데이터 매니저 구축 [cite: 308][cite_start]</li><li>단계적 튜토리얼 및 레벨 밸런싱 [cite: 288]</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            [cite_start]{ title: "게임 밸런스 개선안", tag: "EA KOREA 실무", desc: "라이브 지표 분석을 통해 유저 만족도 하락 원인을 분석하고, 데이터에 근거한 개선안을 제안했습니다. [cite: 313, 331][cite_start]", achievements: "<li>로빙 스루 패스 지표 83% 감소 원인 규명 [cite: 374][cite_start]</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증 [cite: 371]</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "감독의 전술 노트", tag: "신규 시스템 제안", desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템입니다. [cite_start]유기적인 선순환 구조와 다각도 BM을 설계했습니다. [cite: 417, 431][cite_start]", achievements: "<li>수집-조합-시너지-성장 코어 루프 설계 [cite: 483][cite_start]</li><li>시즌 패스 및 감독팩 유료화 모델링 [cite: 566]</li>", img: "P4.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "공공 야간약국 최적지", tag: "데이터 분석", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다. [cite_start]복합 지표 가중치 로직을 통해 실질적인 해결책을 도출했습니다. [cite: 604, 617][cite_start]", achievements: "<li>자치구별 복합 가중치 분석 모델 설계 [cite: 678][cite_start]</li><li>QGIS 시각화를 통한 최적지 산출 [cite: 673]</li>", img: "P5.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
+            { title: "RHYTHM ELEVEN", tag: "1인 기획 & 개발", desc: "축구 전략성과 리듬 실력 기반 입력을 융합한 게임입니다[cite: 108]. AI 협업을 통해 로직 효율성을 검증하며 완성도를 높였습니다 [cite: 194].", achievements: "<li>동적 난이도 시스템 설계 [cite: 216]</li><li>코드 기반 유연한 비주얼 연출 구현 [cite: 225]</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "코코두기 (KOKODUGI)", tag: "10인 팀 협업", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다[cite: 269]. 레벨 디자인과 데이터 입력 도구 개발을 주도했습니다 [cite: 255, 259].", achievements: "<li>VBA 기반 전용 데이터 매니저 구축 [cite: 308]</li><li>단계적 튜토리얼 및 레벨 밸런싱 [cite: 288, 270]</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "게임 밸런스 개선안", tag: "EA KOREA 실무", desc: "라이브 지표 분석을 통해 유저 만족도 하락 원인을 분석하고 [cite: 350], 데이터에 근거한 개선안을 제안했습니다 [cite: 324].", achievements: "<li>로빙 스루 패스 지표 83% 감소 원인 규명 [cite: 374]</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증 [cite: 371]</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "감독의 전술 노트", tag: "신규 시스템 제안", desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템입니다[cite: 428]. 유기적인 선순환 구조와 다각도 BM을 설계했습니다 [cite: 483, 487].", achievements: "<li>수집-조합-시너지-성장 코어 루프 설계 [cite: 483]</li><li>시즌 패스 및 감독팩 유료화 모델링 [cite: 526, 566]</li>", img: "P4.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "공공 야간약국 최적지", tag: "데이터 분석", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다[cite: 608]. 복합 지표 가중치 로직을 통해 실질적인 해결책을 도출했습니다 [cite: 651, 677].", achievements: "<li>자치구별 복합 가중치 분석 모델 설계 [cite: 678]</li><li>QGIS 시각화를 통한 최적지 산출 [cite: 673, 676]</li>", img: "P5.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
         ];
 
         function openModal(i) {
@@ -313,7 +260,10 @@
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
     </script>
 </body>
 </html>

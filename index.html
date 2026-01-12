@@ -72,10 +72,10 @@
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
         .hero-content { position: relative; z-index: 2; text-align: center; }
-        .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; min-height: 3rem; display: flex; justify-content: center; align-items: center; }
+        .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; min-height: 3.5rem; display: flex; justify-content: center; align-items: center; }
         
-        .cursor-blink { display: inline-block; font-family: 'Press Start 2P'; color: var(--accent); margin-left: 5px; animation: blink 0.8s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .cursor { display: inline-block; width: 20px; height: 4px; background-color: var(--accent); margin-left: 10px; vertical-align: baseline; animation: cursor-blink 0.8s infinite; }
+        @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .hero-content p { 
             font-size: 1.1rem; color: #fff; margin-top: 25px; background: #000; 
@@ -93,13 +93,15 @@
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { background: var(--card); border: 2px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; }
         
-        .skill-group::after { content: "READY"; position: absolute; top: 12px; right: 18px; font-family: 'Press Start 2P'; font-size: 1.2rem; color: var(--accent-glow); text-shadow: 0 0 8px var(--accent); }
+        .skill-group::after { content: "READY"; position: absolute; top: 12px; right: 18px; font-family: 'Press Start 2P'; font-size: 1.1rem; color: var(--accent-glow); text-shadow: 0 0 8px var(--accent); }
         .skill-group-title { font-size: 0.9rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 10px; margin-bottom: 5px; }
         
+        /* [수정] 모든 스킬 헤더 구조 통일 (이름 좌측, LV 우측) */
         .skill-item { display: flex; flex-direction: column; margin-bottom: 5px; }
         .skill-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; width: 100%; }
         .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
-        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--lv5-color); }
+        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--lv5-color); text-align: right; }
+        
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; margin-top: 5px; }
@@ -112,6 +114,7 @@
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
         .card-info-box { padding: 20px; text-align: left; }
         .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 10px; display: inline-block; background: var(--accent-dark); padding: 4px 8px; border: 1px solid var(--accent-glow); }
+        .project-card h3 { font-size: 1.1rem; margin: 0; color: #fff; }
 
         /* --- 5. 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
@@ -121,7 +124,7 @@
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.7); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; justify-content: space-between; }
         .header-title-box h2 { font-size: 1.8rem; color: #fff; margin: 0; text-shadow: 0 0 15px var(--accent-glow); }
-        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 10px 30px; font-size: 1rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 120px; }
+        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 10px 30px; font-size: 1rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 220px; }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
@@ -136,16 +139,18 @@
 
         .viewer-container { width: 100%; background: #0a0e14; padding: 60px 0; border-top: 2px solid var(--accent-dark); text-align: center; }
         .pdf-viewer { width: 75%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        /* [수정] 워드 영향 분석서 35% 폭 적용 */
         .pdf-viewer.narrow { width: 35% !important; }
         .pdf-viewer.active { display: block; }
-        
+
         .video-container { width: 75%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 3px solid var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
+        /* [수정] 통합 컨테이너 레이아웃: 영상 + 다운로드 카드 */
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 75%; margin: 0 auto; gap: 30px; }
         .excel-combined-container.active { display: flex; }
-        .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; box-shadow: inset 0 0 30px var(--accent-dark); }
+        .excel-download-card { width: 75%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; box-shadow: inset 0 0 30px var(--accent-dark); }
 
         @media (max-width: 950px) { .pdf-viewer, .video-container, .excel-combined-container { width: 95% !important; } .close-system-btn { right: 20px; } }
     </style>
@@ -177,7 +182,7 @@
             </div>
         </div>
         <div class="hero-content">
-            <h1><span id="typing-text"></span><span class="cursor-blink">_</span></h1>
+            <h1><span id="typing-text"></span><span class="cursor"></span></h1>
             <p id="main-slogan">"끈기 있는 데이터 기반의 게임 체인저"</p>
         </div>
     </header>
@@ -243,9 +248,8 @@
     <script>
         function startLoadingSequence(e) {
             if(e) e.stopPropagation();
-            const intro = document.getElementById('intro-overlay');
             const loading = document.getElementById('loading-screen');
-            intro.style.display = 'none';
+            document.getElementById('intro-overlay').style.display = 'none';
             loading.style.display = 'flex';
             let width = 0;
             let itv = setInterval(() => {
@@ -257,17 +261,18 @@
                         setTimeout(() => { loading.style.display = 'none'; typeWriterEffect(); }, 500);
                     }, 400);
                 } else {
-                    width += Math.floor(Math.random() * 15) + 3; 
+                    width += Math.floor(Math.random() * 20) + 5; 
                     if(width > 100) width = 100;
                     document.getElementById('loader-fill').style.width = width + '%';
                     document.getElementById('loader-percent').innerText = width + '%';
                 }
-            }, 45);
+            }, 60);
         }
 
         function typeWriterEffect() {
             const nameTarget = document.getElementById('typing-text');
             const sloganTarget = document.getElementById('main-slogan');
+            const sections = document.querySelectorAll('.reveal-section');
             const nameText = "LEE JAE YOUNG";
             let i = 0;
             function type() {
@@ -278,7 +283,7 @@
                 } else {
                     sloganTarget.style.opacity = '1';
                     setTimeout(() => {
-                        document.querySelectorAll('.reveal-section').forEach((sec, idx) => {
+                        sections.forEach((sec, idx) => {
                             setTimeout(() => sec.classList.add('active'), idx * 300);
                         });
                     }, 600);
@@ -289,22 +294,25 @@
         }
 
         const projects = [
-            { title: "RHYTHM ELEVEN", tag: "SOLO QUEST", desc: "축구 전략성과 리듬 입력을 융합한 게임입니다.", achievements: "<li>동적 난이도 시스템 설계</li><li>코드 기반 연출 구현</li>", img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }] },
+            { title: "RHYTHM ELEVEN", tag: "SOLO QUEST", desc: "축구 전략성과 리듬 입력을 융합한 게임입니다.", achievements: "<li>동적 난이도 설계</li>", img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }] },
             { 
-                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 프로젝트입니다.", achievements: "<li>VBA 데이터 도구 제작</li>", img: "P2.png", 
+                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 프로젝트입니다.", 
+                achievements: "<li>VBA 자동화 도구 제작</li>", img: "P2.png", 
                 assets: [
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" },
+                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
                     { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
                     { 
                         type: "excel-combined", 
                         title: "데이터 입력기", 
-                        videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", // 해결됨
+                        videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg?enablejsapi=1", // 임베드 링크 확인
                         downloadUrl: "KOKO_Data_Manager.xlsm" 
                     },
                     { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" }
                 ] 
             },
-            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석 기반 개선 프로젝트입니다.", achievements: "<li>로빙 스루 패스 분석</li>", img: "P3.png", assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2.pdf", isNarrow: true }] }
+            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석 기반 개선 프로젝트입니다.", achievements: "<li>로빙 스루 패스 분석</li>", img: "P3.png", assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2.pdf", isNarrow: true }] },
+            { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
+            { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i, e) {
@@ -316,11 +324,13 @@
             document.getElementById('modalTitle').innerText = p.title;
             document.getElementById('modalDesc').innerText = p.desc;
             document.getElementById('modalAchievements').innerHTML = p.achievements;
+
             let viewersHtml = p.assets.map((as, idx) => {
                 const isActive = idx === 0 ? 'active' : '';
                 if(as.type === 'video') return `<div class="video-container ${isActive}" id="view-${idx}"><iframe src="${as.url}" allowfullscreen></iframe></div>`;
-                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idx}"><div class="excel-download-card"><p>기획 문서를 외부 노션 링크에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션 열기</a></div></div>`;
+                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idx}"><div class="excel-download-card"><p>상세 기획 문서를 노션에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션 열기</a></div></div>`;
                 if(as.type === 'excel-combined') {
+                    // [해결] 데이터 입력기 영상 재생 보장 구조
                     return `<div class="excel-combined-container ${isActive}" id="view-${idx}">
                                 <div class="video-container active" style="width:100%; margin-bottom:30px;"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div>
                                 <div class="excel-download-card"><p style="color:var(--accent); margin-bottom:15px; font-weight:bold;">VBA 데이터 매니저 (자동화 도구)</p><a href="${as.downloadUrl}" download class="btn-pixel">💾 파일 다운로드 (.xlsm)</a></div>
@@ -328,17 +338,17 @@
                 }
                 return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idx}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
             }).join('');
+
             document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, ${idx}, event)">${as.title}</button>`).join('');
             document.getElementById('viewerContainer').innerHTML = viewersHtml;
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            document.getElementById('modalBodyScroll').scrollTop = 0;
         }
 
         function switchTab(btn, idx, e) {
             if(e) e.stopPropagation();
             document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
-            // 모든 타입 숨기기
+            // 모든 뷰어 타입 숨기기
             document.querySelectorAll('.pdf-viewer, .video-container, .excel-combined-container').forEach(v => {
                 v.classList.remove('active');
                 if(v.classList.contains('excel-combined-container')) v.style.display = 'none';
@@ -346,7 +356,7 @@
             btn.classList.add('active');
             const target = document.getElementById(`view-${idx}`);
             target.classList.add('active');
-            // 데이터 입력기(통합형)면 flex 적용
+            // 데이터 입력기 전용 레이아웃 활성화
             if(target.classList.contains('excel-combined-container')) target.style.display = 'flex';
         }
 

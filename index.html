@@ -62,7 +62,7 @@
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
         .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
 
-        /* --- 3. 보유 기술(PLAYER ABILITIES) --- */
+        /* --- 3. 보유 기술 --- */
         .section-title { max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .skill-group { background: var(--card); border: 2px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
@@ -72,7 +72,7 @@
         .stars { color: #ffff00; font-size: 0.7rem; }
         .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
 
-        /* --- 4. 프로젝트(SELECT STAGE) --- */
+        /* --- 4. 프로젝트 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
         .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-dim); }
@@ -82,22 +82,21 @@
         .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 8px; display: block; }
         .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. 모달 및 [수정] 스티키 EXIT 시스템 --- */
+        /* --- 5. 모달 및 스티키 시스템 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--bg); border: 4px solid var(--accent); width: 100%; max-width: 1100px; height: 90vh; overflow-y: auto; padding: 0; position: relative; }
         
-        /* [수정] EXIT 버튼 고정 스타일: 탭 바 위에 떠있거나 함께 스티키 되도록 설정 */
         .close-pixel { 
             position: sticky; top: 20px; right: 20px; 
-            float: right; color: var(--accent); font-size: 1.2rem; cursor: pointer; 
+            float: right; color: var(--accent); font-size: 1.1rem; cursor: pointer; 
             z-index: 2000; background: var(--bg); padding: 5px 15px; 
             border: 2px solid var(--accent); margin: 20px 20px 0 0;
         }
-        .close-pixel:hover { background: var(--accent); color: #000; }
+        .close-pixel:hover { background: var(--accent); color: #0d1117; }
 
         .modal-inner-padding { padding: 40px; clear: both; }
         
-        /* 탭 고정(Sticky) 스타일 */
+        /* 탭 고정(Sticky) 영역 */
         .asset-selector { 
             display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-start;
             position: sticky; top: 0; z-index: 1000;
@@ -115,7 +114,7 @@
         .asset-viewer { width: 100%; height: 750px; border: none; display: none; }
         .asset-viewer.active { display: block; }
 
-        /* [수정] 플레이 영상 크기 83% 정중앙 배치 */
+        /* 플레이 영상 83% 크기 조정 */
         .video-wrapper { 
             width: 100%; height: 100%; 
             display: flex; align-items: center; justify-content: center; 
@@ -130,7 +129,7 @@
         .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 15px 0; }
         .info-box ul { padding-left: 20px; margin: 0; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .viewer-container { min-height: 450px; } .asset-viewer { height: 450px; } .asset-selector { padding: 15px 20px; } .close-pixel { top: 10px; right: 10px; font-size: 0.9rem; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .viewer-container { min-height: 450px; } .asset-viewer { height: 450px; } .asset-selector { padding: 15px 20px; } }
     </style>
 </head>
 <body>
@@ -158,7 +157,7 @@
         </div>
     </header>
 
-    <h2 class="section-title">> 보유 기술(PLAYER ABILITIES)</h2>
+    <h2 class="section-title">> PLAYER ABILITIES(보유 기술)</h2>
     <div class="skills-wrapper">
         <div class="skill-group">
             <div class="skill-group-title">협업 & 관리</div>
@@ -171,19 +170,19 @@
             <div class="skill-group-title">기획 & 분석</div>
             <div class="skill-item"><div class="skill-name">Excel ★★★★☆</div><div class="skill-desc">데이터 분석 및 VBA 자동화</div></div>
             <div class="skill-item"><div class="skill-name">Figma ★★★★☆</div><div class="skill-desc">UI/UX 설계 및 프로토타입</div></div>
-            <div class="skill-item"><div class="skill-name">PowerPoint ★★★★☆</div><div class="skill-desc">제안서 및 비주얼 기획</div></div>
+            <div class="skill-item"><div class="skill-name">PowerPoint ★★★★☆</div><div class="skill-desc">제안서 기획 및 비주얼 디자인</div></div>
             <div class="skill-item"><div class="skill-name">Word ★★★★☆</div><div class="skill-desc">표준 문서 관리 및 명세서</div></div>
         </div>
         <div class="skill-group">
             <div class="skill-group-title">개발 & 엔진</div>
             <div class="skill-item"><div class="skill-name">Gamemaker ★★★★☆</div><div class="skill-desc">축구+리듬 하이브리드 기획</div></div>
-            <div class="skill-item"><div class="skill-name">Unity ★★★☆☆</div><div class="skill-desc">엔진 협업 및 기능 활용</div></div>
-            <div class="skill-item"><div class="skill-name">Gemini ★★★★☆</div><div class="skill-desc">AI 협업 및 데이터 시각화</div></div>
+            <div class="skill-item"><div class="skill-name">Unity ★★★☆☆</div><div class="skill-desc">엔진 기반 협업 및 기능 활용</div></div>
+            <div class="skill-item"><div class="skill-name">Gemini ★★★★☆</div><div class="skill-desc">AI 협업 및 자료 정리</div></div>
             <div class="skill-item"><div class="skill-name">NotebookLM ★★★★☆</div><div class="skill-desc">방대한 설정 분석 및 검증</div></div>
         </div>
     </div>
 
-    <h2 class="section-title">> 프로젝트(SELECT STAGE)</h2>
+    <h2 class="section-title">> SELECT STAGE(프로젝트)</h2>
     <div class="project-container">
         <div class="project-card" onclick="openModal(0)">
             <div class="card-img-box"><img src="P1.png"></div>
@@ -220,6 +219,7 @@
             if(overlay) { overlay.style.transition = '0.8s'; overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; }, 800); }
         }
 
+        // [데이터 구성] 요청하신 모든 프로젝트 PDF 정보 반영
         const projects = [
             { 
                 title: "RHYTHM ELEVEN", tag: "SOLO QUEST", 
@@ -232,14 +232,39 @@
                     { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }
                 ]
             },
-            { title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", achievements: "<li>VBA 기반 전용 데이터 매니저 구축</li><li>단계적 튜토리얼 및 레벨 밸런싱</li>", img: "P2.png", assets: [{ type: "pdf", title: "기획서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] },
-            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 유저 만족도 하락 원인을 분석하고, 데이터에 근거한 개선안을 제안했습니다.", achievements: "<li>로빙 스루 패스 지표 83% 감소 원인 규명</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증</li>", img: "P3.png", assets: [{ type: "pdf", title: "분석서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] },
-            { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템입니다.", achievements: "<li>수집-조합-시너지-성장 코어 루프 설계</li><li>시즌 패스 및 감독팩 유료화 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "제안서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] },
-            { title: "공공 야간약국 최적지", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>자치구별 복합 가중치 분석 모델 설계</li><li>QGIS 시각화를 통한 최적지 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "보고서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] }
+            { 
+                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
+                desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
+                achievements: "<li>VBA 기반 전용 데이터 매니저 구축</li><li>단계적 튜토리얼 및 레벨 밸런싱</li>", img: "P2.png", 
+                assets: [{ type: "pdf", title: "기획서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] 
+            },
+            { 
+                title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", 
+                desc: "라이브 지표 분석을 통해 유저 만족도 하락 원인을 분석하고 개선안을 도출했습니다.", 
+                achievements: "<li>로빙 스루 패스 지표 83% 감소 원인 규명</li><li>수비 AI 개선에 따른 간접적 너프 영향 입증</li>", img: "P3.png", 
+                assets: [
+                    { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" },
+                    { type: "pdf", title: "업데이트 이후 영향 분석서", url: "P3_2_게임분석서.pdf" }
+                ] 
+            },
+            { 
+                title: "감독의 전술 노트", tag: "SYSTEM DESIGN", 
+                desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템 제안서입니다.", 
+                achievements: "<li>수집-조합-시너지-성장 코어 루프 설계</li><li>시즌 패스 및 감독팩 유료화 모델링</li>", img: "P4.png", 
+                assets: [{ type: "pdf", title: "신규 시스템 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
+            },
+            { 
+                title: "공공 야간약국 최적지", tag: "DATA ANALYSIS", 
+                desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", 
+                achievements: "<li>자치구별 복합 가중치 분석 모델 설계</li><li>QGIS 시각화를 통한 최적지 산출</li>", img: "P5.png", 
+                assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
+            }
         ];
 
         function openModal(i) {
             const p = projects[i];
+            
+            // 모든 자료 미리 로드 (읽던 위치 유지)
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {
                     return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="video-wrapper"><iframe src="${as.url}" allowfullscreen></iframe></div></div>`;
@@ -273,8 +298,8 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // 탭 전환 시 영상 자동 정지 및 위치 유지
         function switchTab(btn, idx) {
+            // 영상 정지 메시지 전송
             document.querySelectorAll('.video-wrapper iframe').forEach(ifr => {
                 ifr.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
             });

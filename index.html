@@ -17,7 +17,7 @@
             --text-main: #f0f6fc;
             --text-sub: #8b949e;
             --border: #30363d;
-            --cyber-panel-bg: rgba(13, 17, 23, 0.85);
+            --browser-bg: #21262d;
         }
 
         body, button { font-family: 'Galmuri9', sans-serif; }
@@ -40,7 +40,6 @@
         }
         #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; text-shadow: 0 0 20px var(--accent-glow); }
         .blink { animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .btn-pixel {
             padding: 15px 35px; background: var(--accent); color: #0d1117;
             border: 2px solid #fff; cursor: pointer; font-weight: bold;
@@ -73,7 +72,7 @@
         .skill-name { font-size: 0.95rem; color: #fff; font-weight: bold; }
         .skill-desc { color: var(--text-sub); font-size: 0.85rem; line-height: 1.4; }
 
-        /* --- 4. 프로젝트 리스트 --- */
+        /* --- 4. 프로젝트 그리드 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
         .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
@@ -83,67 +82,77 @@
         .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 10px; display: inline-block; background: var(--accent-dark); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-glow); }
         .project-card h3 { font-size: 1.1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. [수정] 프로젝트 상세 모달 --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(15px); }
+        /* --- 5. [핵심] 브라우저 스타일 프로젝트 모달 --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
         .modal-content { 
-            background: var(--bg); border: 2px solid var(--accent); width: 95%; max-width: 1150px; height: 92vh; 
-            overflow-y: auto; position: relative; box-shadow: 0 0 60px rgba(0,0,0,1); animation: modalEntrance 0.4s ease-out;
+            background: var(--bg); border: 2px solid var(--accent); width: 95%; max-width: 1200px; height: 92vh; 
+            overflow: hidden; position: relative; box-shadow: 0 0 60px rgba(0,0,0,1); display: flex; flex-direction: column;
         }
-        @keyframes modalEntrance { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
-        .close-pixel { position: sticky; top: 25px; right: 25px; float: right; color: var(--accent); font-size: 1rem; cursor: pointer; z-index: 2000; background: rgba(13, 17, 23, 0.8); padding: 10px 25px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
-
-        .modal-inner-padding { padding: 40px 50px; clear: both; }
-
-        /* [요청 반영] 사진 배경 제거 및 효과 집중 */
-        .cyber-img-container {
-            width: 100%; display: flex; justify-content: center; margin-bottom: 35px;
+        /* [수정] 브라우저 상단바 디자인 (Blur 이미지 배경) */
+        .browser-header {
+            width: 100%; height: 140px; position: relative; background: #1c2128; overflow: hidden; flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
         }
-        .cyber-img-frame {
-            position: relative;
-            max-width: 100%;
-            height: 240px; /* 고정 높이 유지 */
-            display: inline-flex; /* 사진 크기에 맞게 조절 */
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-            background: transparent; /* 검은 배경 제거 */
+        .browser-bg-blur {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            filter: blur(20px) brightness(0.4); opacity: 0.8; transform: scale(1.1);
         }
-        .modal-img { max-width: 100%; height: 100%; object-fit: contain; z-index: 1; }
+        .browser-chrome {
+            position: relative; z-index: 5; height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        /* 탭 영역 */
+        .browser-tabs { display: flex; align-items: flex-end; padding: 10px 20px 0; gap: 5px; height: 50px; }
+        .browser-tab {
+            background: rgba(45, 51, 59, 0.7); color: var(--text-sub); padding: 8px 25px; 
+            border-radius: 8px 8px 0 0; font-size: 0.8rem; display: flex; align-items: center; gap: 10px;
+            border: 1px solid var(--border); border-bottom: none; min-width: 180px;
+        }
+        .browser-tab.active { background: var(--bg); color: var(--accent); border-top: 2px solid var(--accent); }
+        
+        /* 주소창 영역 */
+        .browser-url-bar {
+            background: rgba(0,0,0,0.3); display: flex; align-items: center; padding: 8px 20px; gap: 15px; border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .browser-controls { display: flex; gap: 10px; color: var(--text-sub); }
+        .url-box {
+            flex-grow: 1; background: #0d1117; border: 1px solid var(--border); padding: 6px 15px;
+            border-radius: 20px; font-size: 0.85rem; color: var(--accent); display: flex; align-items: center; gap: 10px;
+        }
+        .close-btn-rect { 
+            background: transparent; color: #ff5f56; border: none; font-size: 1.2rem; cursor: pointer; padding: 5px 15px;
+        }
+        .close-btn-rect:hover { color: #fff; background: #ff5f56; }
+
+        /* 모달 바디 스크롤 영역 */
+        .modal-body-scroll { flex-grow: 1; overflow-y: auto; padding: 40px 60px; }
 
         .game-data-panel { background: rgba(20, 25, 35, 0.7); border-left: 6px solid var(--accent); padding: 30px; margin-bottom: 40px; }
         .game-header { font-size: 1.8rem; color: var(--accent); margin: 10px 0; text-shadow: 0 0 10px var(--accent-glow); }
-        .game-header-tag { display: inline-block; background: var(--accent); color:#000; padding: 4px 12px; font-weight: bold; margin-bottom: 10px; }
 
         .mission-log-box { border: 2px solid var(--border); padding: 25px; margin: 30px 0; background: rgba(255,255,255,0.03); text-align: left; }
         .mission-log-box h4 { color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
-        .mission-log-box ul { list-style: none; padding: 0; }
-        .mission-log-box li { margin-bottom: 12px; color: #d1d5db; position: relative; padding-left: 25px; }
-        .mission-log-box li::before { content: "►"; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; top: 3px; }
+        .mission-log-box li { margin-bottom: 12px; color: #d1d5db; position: relative; padding-left: 25px; list-style: none; }
+        .mission-log-box li::before { content: "►"; position: absolute; left: 0; color: var(--accent); }
         
-        .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: rgba(22, 27, 34, 0.9); padding: 20px 50px; border-bottom: 3px solid var(--accent); backdrop-filter: blur(10px); }
-        .asset-btn { padding: 12px 25px; background: rgba(13, 17, 23, 0.8); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
-        .asset-btn:hover { border-color: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow); }
-        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 25px var(--accent); }
+        /* 자료 선택 탭 버튼 */
+        .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: -1px; z-index: 1000; background: var(--bg); padding: 20px 0; border-bottom: 3px solid var(--accent); }
+        .asset-btn { padding: 12px 25px; background: #21262d; border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
+        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 20px var(--accent); }
 
-        .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0; border-top: 2px solid var(--accent-dark); }
-        .asset-viewer { width: 94%; height: 700px; display: none; margin: 0 auto; }
+        .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0; }
+        .asset-viewer { width: 100%; height: 700px; display: none; margin: 0 auto; border: none; }
         .asset-viewer.active { display: block; }
 
-        /* [요청 반영] 엑셀 통합 뷰어 스타일 */
-        .excel-combined-container { 
-            display: none; flex-direction: column; align-items: center; width: 94%; margin: 0 auto; gap: 30px;
-        }
+        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
         .excel-combined-container.active { display: flex; }
-        .excel-download-box {
-            width: 80%; padding: 30px; background: rgba(22, 27, 34, 0.8); border: 2px solid var(--accent); text-align: center; box-shadow: inset 0 0 30px var(--accent-dark);
-        }
+        .excel-download-box { width: 80%; padding: 40px; background: #161b22; border: 2px dashed var(--accent); text-align: center; }
 
         .video-wrapper { width: 100%; height: 700px; display: flex; align-items: center; justify-content: center; }
         .video-wrapper iframe { width: 85%; height: 85%; border: 3px solid var(--accent); }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .asset-selector { padding: 15px 20px; } .cyber-img-frame { height: 180px; } .asset-viewer, .video-wrapper { height: 450px; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .browser-tab { min-width: 120px; } .modal-body-scroll { padding: 30px 20px; } .asset-viewer, .video-wrapper { height: 450px; } }
     </style>
 </head>
 <body>
@@ -204,10 +213,30 @@
         <div class="project-card" onclick="openModal(4)"><div class="card-img-box"><img src="P5.png"></div><div class="card-info-box"><span class="tag">DATA ANALYSIS</span><h3>공공 야간약국 선정</h3></div></div>
     </div>
 
-    <div id="projectModal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-pixel" onclick="closeModal()">[X] EXIT SYSTEM</span>
-            <div id="modalBody"></div>
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div id="browserHeader" class="browser-header">
+                <div id="browserBg" class="browser-bg-blur"></div>
+                <div class="browser-chrome">
+                    <div class="browser-tabs">
+                        <div class="browser-tab active">
+                            <i class="fas fa-file-alt"></i> <span id="tabTitle">Project Data</span>
+                        </div>
+                        <button class="close-btn-rect" onclick="closeModal()">×</button>
+                    </div>
+                    <div class="browser-url-bar">
+                        <div class="browser-controls">
+                            <i class="fas fa-arrow-left"></i> <i class="fas fa-arrow-right"></i> <i class="fas fa-redo"></i>
+                        </div>
+                        <div class="url-box">
+                            <i class="fas fa-lock" style="font-size: 0.7rem;"></i> 
+                            https://portfolio.leejaeyoung.com/<span id="urlPath">project</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="modalBody" class="modal-body-scroll"></div>
         </div>
     </div>
 
@@ -234,16 +263,15 @@
                 desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
                 achievements: "<li>VBA 기반 데이터 매니저 제작</li><li>15종 이상의 기획 문서 아카이빙</li>", img: "P2.png", 
                 assets: [
-                    // [요청 반영] 순서 재구성 및 엑셀 통합
                     { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
-                    { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
+                    { type: "pdf", title: "보고서", url: "P2_1.pdf" },
                     { 
                         type: "excel-combined", 
-                        title: "데이터 입력기", 
+                        title: "엑셀", 
                         videoUrl: "https://www.youtube.com/embed/KfmdTe9rUjM?enablejsapi=1",
                         downloadUrl: "KOKO_Data_Manager.xlsm" 
                     },
-                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
+                    { type: "link", title: "상세 기획", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
                 ] 
             },
             { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
@@ -253,14 +281,19 @@
 
         function openModal(i) {
             const p = projects[i];
-            const modalContent = document.querySelector('.modal-content');
-            if (modalContent) modalContent.scrollTop = 0;
+            const modal = document.getElementById('projectModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            // 상단 브라우저 정보 업데이트
+            document.getElementById('browserBg').style.backgroundImage = `url(${p.img})`;
+            document.getElementById('tabTitle').innerText = p.title;
+            document.getElementById('urlPath').innerText = p.title.toLowerCase().replace(/ /g, '-');
 
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {
                     return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="video-wrapper"><iframe src="${as.url}" allowfullscreen></iframe></div></div>`;
                 } else if(as.type === 'link') {
-                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-container active"><i class="fas fa-link" style="font-size:3.5rem; color:var(--accent); margin-bottom:20px;"></i><p style="margin-bottom:20px; font-size:1.1rem; color:var(--accent);">방대한 기획 명세서를 노션에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션(Notion) 열기</a></div></div>`;
+                    return `<div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}"><div class="excel-combined-container active"><i class="fas fa-external-link-alt" style="font-size:3rem; color:var(--accent); margin-bottom:20px;"></i><p style="margin-bottom:20px; font-size:1.1rem; color:var(--accent);">방대한 기획 명세서를 노션에서 확인하세요.</p><a href="${as.url}" target="_blank" class="btn-pixel">노션(Notion) 열기</a></div></div>`;
                 } else if(as.type === 'excel-combined') {
                     return `
                         <div class="asset-viewer ${idx===0?'active':''}" id="view-${idx}">
@@ -280,22 +313,20 @@
 
             let buttonsHtml = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, ${idx})">${as.title}</button>`).join('');
 
-            document.getElementById('modalBody').innerHTML = `
-                <div class="modal-inner-padding">
-                    <div class="cyber-img-container"><div class="cyber-img-frame"><img src="${p.img}" class="modal-img"></div></div>
-                    <div class="game-data-panel">
-                        <span class="game-header-tag">${p.tag}</span>
-                        <h2 class="game-header">${p.title}</h2>
-                        <p class="game-desc">${p.desc}</p>
-                    </div>
-                    <div class="mission-log-box"><h4>핵심 성과 (Mission Log)</h4><ul>${p.achievements}</ul></div>
+            modalBody.innerHTML = `
+                <div class="game-data-panel">
+                    <span style="display:inline-block; background:var(--accent); color:#000; padding:4px 12px; font-weight:bold; margin-bottom:10px;">${p.tag}</span>
+                    <h2 class="game-header">${p.title}</h2>
+                    <p style="font-size:1.1rem; line-height:1.8; color:#e0e6ed;">${p.desc}</p>
                 </div>
+                <div class="mission-log-box"><h4>핵심 성과 (MISSION LOG)</h4><ul>${p.achievements}</ul></div>
                 <div class="asset-selector">${buttonsHtml}</div>
                 <div class="viewer-container">${viewersHtml}</div>
             `;
-            document.getElementById('projectModal').style.display = 'flex';
+            
+            modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            setTimeout(() => { modalContent.scrollTop = 0; }, 10);
+            modalBody.scrollTop = 0;
         }
 
         function switchTab(btn, idx) {

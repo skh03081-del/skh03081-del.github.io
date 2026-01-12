@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이재영 | Game Designer Portfolio</title>
+    <title>LEE JAE YOUNG | Game Designer Portfolio</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 1. 인트로 --- */
+        /* --- 1. 인트로 오버레이 (성함 영문 복구) --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10000; display: flex; flex-direction: column;
@@ -46,7 +46,7 @@
             transition: 0.1s; font-size: 1.1rem;
         }
 
-        /* --- 2. 히어로 섹션 --- */
+        /* --- 2. 히어로 섹션 (롤링 배경 복구) --- */
         .hero {
             position: relative; width: 100%; height: 320px;
             display: flex; align-items: center; justify-content: center;
@@ -61,8 +61,18 @@
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
         .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
 
-        /* --- 3. 프로젝트 카드 --- */
-        .project-container { max-width: 1100px; margin: 60px auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        /* --- 3. 보유 기술 (PLAYER ABILITIES 복구) --- */
+        .section-title { max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left; }
+        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .skill-group { background: var(--card); border: 2px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .skill-group-title { font-size: 0.95rem; color: var(--accent); text-align: left; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
+        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 4px 0; }
+        .skill-name { font-size: 0.9rem; color: var(--text-main); font-weight: bold; }
+        .stars { color: #ffff00; font-size: 0.7rem; }
+        .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
+
+        /* --- 4. 프로젝트 리스트 --- */
+        .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
         .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
         .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; }
@@ -72,7 +82,7 @@
         .tag { font-size: 0.6rem; color: var(--accent); margin-bottom: 8px; display: block; }
         .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 4. [수정] 모달 시스템 디자인 --- */
+        /* --- 5. 모달 시스템 디자인 --- */
         .modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center; 
@@ -85,7 +95,6 @@
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
         
-        /* EXIT 버튼 고정 */
         .close-pixel { 
             position: sticky; top: 20px; right: 20px; 
             float: right; color: var(--accent); font-size: 1rem; cursor: pointer; 
@@ -97,14 +106,12 @@
 
         .modal-inner-padding { padding: 50px; clear: both; }
 
-        /* [수정] 사진 크기 통일 및 세련된 프레임 */
+        /* 모달 이미지 프레임 */
         .modal-img-container {
             width: 100%; height: 350px;
-            background: #000;
-            margin-bottom: 35px;
+            background: #000; margin-bottom: 35px;
             display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-            border: 2px solid var(--accent);
+            overflow: hidden; border: 2px solid var(--accent);
             box-shadow: 0 0 20px var(--accent-glow);
         }
         .modal-img { max-width: 100%; height: 100%; object-fit: contain; }
@@ -113,7 +120,7 @@
         .project-info-header { border-left: 4px solid var(--accent); padding-left: 25px; margin-bottom: 40px; text-align: left; }
         .project-info-header h2 { font-size: 1.8rem; color: var(--accent); margin-bottom: 10px; }
         
-        /* [수정] 탭 시인성 강화 (가장 눈에 잘 띄게) */
+        /* 탭 버튼 시인성 강화 */
         .asset-selector { 
             display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;
             position: sticky; top: 0; z-index: 1000;
@@ -127,17 +134,13 @@
             font-weight: bold;
         }
         .asset-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .asset-btn.active { 
-            background: var(--accent); color: #0d1117; 
-            border-color: #fff; box-shadow: 0 0 10px var(--accent); 
-        }
+        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 10px var(--accent); }
 
         /* 뷰어 영역 */
         .viewer-container { width: 100%; min-height: 700px; background: #000; padding: 30px 0; }
         .asset-viewer { width: 96%; height: 700px; border: 2px solid var(--border); display: none; margin: 0 auto; }
         .asset-viewer.active { display: block; }
 
-        /* 노션 버튼 */
         .link-viewer-container {
             display: none; flex-direction: column; align-items: center; justify-content: center;
             width: 96%; height: 400px; margin: 0 auto; background: #161b22; border: 2px dashed var(--accent);
@@ -156,7 +159,7 @@
 <body>
 
     <div id="intro-overlay">
-        <h1>GAME DESIGNER<br>이재영<br><span>PORTFOLIO</span></h1>
+        <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO</span></h1>
         <button class="btn-pixel blink" onclick="startGame()">START ADVENTURE</button>
     </div>
 
@@ -177,6 +180,32 @@
         </div>
     </header>
 
+    <h2 class="section-title">> PLAYER ABILITIES(보유 기술)</h2>
+    <div class="skills-wrapper">
+        <div class="skill-group">
+            <div class="skill-group-title">협업 & 관리</div>
+            <div class="skill-item"><div class="skill-name">Jira ★★★★★</div><div class="skill-desc">마일스톤 관리 및 이슈 트래킹</div></div>
+            <div class="skill-item"><div class="skill-name">Slack ★★★★★</div><div class="skill-desc">원활한 팀 커뮤니케이션</div></div>
+            <div class="skill-item"><div class="skill-name">Confluence ★★★★★</div><div class="skill-desc">문서화 및 아카이빙</div></div>
+            <div class="skill-item"><div class="skill-name">Notion ★★★★☆</div><div class="skill-desc">대시보드 및 일정 관리</div></div>
+        </div>
+        <div class="skill-group">
+            <div class="skill-group-title">기획 & 분석</div>
+            <div class="skill-item"><div class="skill-name">Excel ★★★★☆</div><div class="skill-desc">데이터 분석 및 VBA 자동화</div></div>
+            <div class="skill-item"><div class="skill-name">Figma ★★★★☆</div><div class="skill-desc">UI/UX 설계 및 프로토타입</div></div>
+            <div class="skill-item"><div class="skill-name">PowerPoint ★★★★☆</div><div class="skill-desc">제안서 및 비주얼 기획</div></div>
+            <div class="skill-item"><div class="skill-name">Word ★★★★☆</div><div class="skill-desc">표준 문서 관리 및 명세서</div></div>
+        </div>
+        <div class="skill-group">
+            <div class="skill-group-title">개발 & 엔진</div>
+            <div class="skill-item"><div class="skill-name">Gamemaker ★★★★☆</div><div class="skill-desc">축구+리듬 하이브리드 기획</div></div>
+            <div class="skill-item"><div class="skill-name">Unity ★★★☆☆</div><div class="skill-desc">엔진 기반 협업 및 기능 활용</div></div>
+            <div class="skill-item"><div class="skill-name">Gemini ★★★★☆</div><div class="skill-desc">AI 협업 및 자료 정리</div></div>
+            <div class="skill-item"><div class="skill-name">NotebookLM ★★★★☆</div><div class="skill-desc">설정 분석 및 검증</div></div>
+        </div>
+    </div>
+
+    <h2 class="section-title">> SELECT STAGE(프로젝트)</h2>
     <div class="project-container">
         <div class="project-card" onclick="openModal(0)"><div class="card-img-box"><img src="P1.png"></div><div class="card-info-box"><span class="tag">SOLO QUEST</span><h3>RHYTHM ELEVEN</h3></div></div>
         <div class="project-card" onclick="openModal(1)"><div class="card-img-box"><img src="P2.png"></div><div class="card-info-box"><span class="tag">PARTY QUEST</span><h3>KOKODUGI (코코두기)</h3></div></div>
@@ -213,13 +242,15 @@
             { 
                 title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
                 desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", 
-                achievements: "<li>노션을 활용한 방대한 기획 문서 관리</li><li>사용자 경험 중심의 단계적 튜토리얼 설계</li>", img: "P2.png", 
+                achievements: "<li>15종 이상의 기획 문서 노션 아카이빙</li><li>사용자 경험 중심의 단계적 튜토리얼 설계</li>", img: "P2.png", 
                 assets: [
+                    // [요청 반영] 코코두기 플레이 영상 1순위 노출
+                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
                     { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
                     { type: "link", title: "상세 기획 (노션)", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2?source=copy_link" }
                 ] 
             },
-            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "업데이트 이후 영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
+            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "라이브 지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
             { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
             { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
         ];
@@ -228,8 +259,7 @@
             const p = projects[i];
             const modal = document.getElementById('projectModal');
             const modalContent = modal.querySelector('.modal-content');
-
-            if (modalContent) { modalContent.scrollTop = 0; }
+            if (modalContent) modalContent.scrollTop = 0;
 
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {

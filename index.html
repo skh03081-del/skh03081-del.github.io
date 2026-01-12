@@ -3,243 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEE JAE YOUNG | SYSTEM_INTERFACE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Rajdhani:wght@600;700&family=Noto+Sans+KR:wght@300;500;800&display=swap" rel="stylesheet">
+    <title>이재영 | Game Designer Portfolio (Pixel Ver.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --neon: #00f2ff;
-            --accent: #3b82f6;
-            --bg-dark: #020408;
-            --panel: rgba(15, 23, 42, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --text: #e2e8f0;
+            --bg: #000000;
+            --card: #1a1a1a;
+            --pixel-border: #ffffff;
+            --accent: #00ff00; /* 클래식 게임 그린 */
+            --accent-pink: #ff00ff;
+            --text-main: #ffffff;
+            --text-sub: #aaaaaa;
         }
 
-        body {
-            margin: 0; padding: 0; background-color: var(--bg-dark);
-            color: var(--text); font-family: 'Noto Sans KR', sans-serif;
-            overflow: hidden; height: 100vh;
-            background-image: radial-gradient(circle at 50% 50%, #0f172a 0%, #020408 100%);
-        }
+        /* 폰트 설정 */
+        h1, h2, h3, .pixel-font, .tag { font-family: 'Press Start 2P', cursive; text-transform: uppercase; }
+        body { background-color: var(--bg); color: var(--text-main); font-family: 'Pretendard', sans-serif; margin: 0; padding: 0; cursor: url('https://cur.cursors-4u.net/games/gam-4/gam382.cur'), auto; }
 
-        /* --- 1. 시네마틱 부팅 인트로 --- */
-        #loading-screen {
+        /* --- 1. 인트로 오버레이 --- */
+        #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            justify-content: center; align-items: center; text-align: center;
         }
-        .load-bar { width: 250px; height: 2px; background: #1e293b; margin-top: 20px; overflow: hidden; position: relative; }
-        .load-fill { width: 0; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); animation: fill 2.5s forwards; }
-        @keyframes fill { to { width: 100%; } }
-        .start-btn { 
-            margin-top: 30px; padding: 12px 40px; background: transparent; border: 1px solid var(--neon);
-            color: var(--neon); font-family: 'Orbitron'; cursor: pointer; display: none;
-            letter-spacing: 3px; transition: 0.3s;
-        }
-        .start-btn:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
+        #intro-overlay h1 { font-size: 2rem; color: var(--accent); margin-bottom: 50px; line-height: 1.5; }
+        .blink { animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* --- 2. 최신 RPG HUD 레이아웃 --- */
-        .hud-wrapper {
-            display: grid; grid-template-columns: 320px 1fr; height: 100vh;
-            padding: 40px; box-sizing: border-box; gap: 40px;
-            opacity: 0; transition: 1s ease-in-out; transform: translateY(20px);
+        /* 픽셀 스타일 버튼 */
+        .btn-pixel {
+            padding: 20px 40px; background: var(--pixel-border); color: #000;
+            font-family: 'Press Start 2P', cursive; border: none; cursor: pointer;
+            box-shadow: -5px 0 0 0 #000, 5px 0 0 0 #000, 0 -5px 0 0 #000, 0 5px 0 0 #000;
+            transition: 0.1s;
         }
+        .btn-pixel:hover { background: var(--accent); }
+        .btn-pixel:active { transform: translateY(5px); box-shadow: none; }
 
-        /* 왼쪽: 내비게이션 & 프로필 */
-        .sidebar { display: flex; flex-direction: column; gap: 30px; }
-        .player-card { 
-            background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
-            padding: 30px; backdrop-filter: blur(20px);
-        }
-        .name-tag { font-family: 'Orbitron'; font-size: 1.8rem; margin: 0; border-bottom: 2px solid var(--neon); padding-bottom: 10px; }
-        .level-info { font-size: 0.8rem; color: var(--neon); margin-top: 10px; display: block; letter-spacing: 2px; }
-
-        .nav-menu { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .nav-link { 
-            font-family: 'Rajdhani'; font-size: 1.2rem; cursor: pointer; color: #64748b;
-            transition: 0.3s; display: flex; align-items: center; gap: 12px;
-        }
-        .nav-link:hover, .nav-link.active { color: #fff; transform: translateX(10px); }
-        .nav-link.active i { color: var(--neon); text-shadow: 0 0 8px var(--neon); }
-
-        /* 오른쪽: 콘텐츠 디스플레이 */
-        .main-display {
-            background: var(--panel); border: 1px solid var(--border); border-radius: 30px;
-            backdrop-filter: blur(20px); padding: 50px; overflow-y: auto;
-            position: relative; scroll-behavior: smooth;
+        /* --- 2. 배경 스캔라인 효과 (고전 TV 느낌) --- */
+        body::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2000; background-size: 100% 4px, 3px 100%; pointer-events: none;
         }
 
-        /* 섹션별 스타일 */
-        .section-title { font-family: 'Orbitron'; font-size: 1.4rem; color: var(--neon); margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
-        .section-title::after { content: ''; flex-grow: 1; height: 1px; background: var(--border); }
+        /* --- 3. 헤더 섹션 --- */
+        header { max-width: 1200px; margin: 0 auto; padding: 100px 20px 40px; position: relative; z-index: 10; }
+        header h1 { font-size: 2rem; color: var(--accent); }
+        header h1 span { color: var(--accent-pink); }
+        header p.tagline { font-size: 1.1rem; color: var(--text-sub); margin-top: 30px; letter-spacing: 1px; }
 
-        /* 기술 스택 그리드 */
-        .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 60px; }
-        .skill-node { 
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 20px;
-            border-radius: 15px; transition: 0.3s;
+        /* --- 4. 무한 배경 롤링 (픽셀 창 스타일) --- */
+        .background-marquee {
+            position: absolute; top: 0; left: 0; width: 100%; height: 500px;
+            overflow: hidden; z-index: -1; opacity: 0.2; filter: grayscale(1);
         }
-        .skill-node:hover { border-color: var(--neon); background: rgba(0, 242, 255, 0.05); }
-        .skill-node h4 { margin: 0 0 8px 0; font-size: 1rem; color: var(--neon); }
-        .skill-node p { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.4; }
+        .marquee-track { display: flex; width: max-content; animation: scroll-right 20s linear infinite; padding-top: 50px; }
+        .window-item { 
+            width: 250px; height: 180px; background: #333; margin-right: 40px; 
+            border: 4px solid #fff; box-shadow: 8px 8px 0 #000;
+        }
+        @keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
-        /* 프로젝트(퀘스트) 카드 */
-        .quest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
-        .quest-card {
-            background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 20px;
-            overflow: hidden; cursor: pointer; transition: 0.4s;
+        /* --- 5. 보유 기술 (스탯 창 스타일) --- */
+        .section-title { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; font-size: 1.2rem; color: var(--accent); }
+        .skills-container { 
+            max-width: 1200px; margin: 0 auto 80px; padding: 0 20px; 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; 
         }
-        .quest-card:hover { transform: translateY(-10px); border-color: var(--neon); box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1); }
-        .quest-img { width: 100%; height: 200px; background: #000; overflow: hidden; }
-        .quest-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
-        .quest-card:hover .quest-img img { opacity: 1; transform: scale(1.1); }
-        .quest-info { padding: 25px; }
-        .quest-cat { font-family: 'Rajdhani'; color: var(--neon); font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; }
-        .quest-name { font-size: 1.2rem; font-weight: 800; }
+        .skill-item {
+            background: #000; border: 4px solid #fff; padding: 20px;
+            transition: 0.2s; position: relative;
+        }
+        .skill-item:hover { border-color: var(--accent); transform: scale(1.05); }
+        .skill-name { font-size: 0.8rem; margin-bottom: 10px; color: var(--accent); }
+        .stars { color: #ffff00; font-size: 0.7rem; }
+        .skill-desc { color: #fff; font-size: 0.85rem; margin-top: 10px; line-height: 1.4; }
 
-        /* 상세 모달 */
-        .modal { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); z-index: 10000; justify-content: center; align-items: center; padding: 40px;
+        /* --- 6. 프로젝트 (게임 팩 스타일) --- */
+        .project-container { max-width: 1200px; margin: 0 auto 100px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .project-card {
+            background: #111; border: 4px solid #fff; border-radius: 0; /* 픽셀은 직각 */
+            cursor: pointer; position: relative; transition: 0.2s;
         }
-        .modal-content { 
-            background: #0f172a; width: 100%; max-width: 1100px; height: 90vh; border-radius: 40px;
-            padding: 60px; overflow-y: auto; border: 1px solid var(--neon); position: relative;
-        }
-        .close-btn { position: absolute; top: 30px; right: 50px; font-size: 2rem; cursor: pointer; color: #475569; }
-        iframe { width: 100%; height: 750px; border-radius: 20px; border: 1px solid var(--border); margin-top: 30px; }
+        .project-card:hover { transform: translateY(-10px); border-color: var(--accent-pink); box-shadow: 10px 10px 0 var(--accent-pink); }
+        .card-img-box { width: 100%; height: 200px; background: #000; display: flex; align-items: center; justify-content: center; border-bottom: 4px solid #fff; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .card-info-box { padding: 20px; text-align: center; }
+        .tag { font-size: 0.5rem; color: var(--accent); display: block; margin-bottom: 10px; }
+        .project-card h3 { font-size: 0.8rem; margin: 0; line-height: 1.5; }
 
-        @media (max-width: 1000px) { .hud-wrapper { grid-template-columns: 1fr; } .sidebar { display: none; } }
+        /* --- 7. 모달 (게임 정보창 스타일) --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #000; border: 8px solid #fff; width: 100%; max-width: 1000px; height: 90vh; overflow-y: auto; padding: 40px; box-sizing: border-box; }
+        .close-pixel { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2rem; cursor: pointer; }
+        .info-box { border: 4px dashed var(--accent); padding: 20px; margin: 20px 0; }
+        .info-box h4 { color: var(--accent); font-size: 0.7rem; margin-top: 0; }
+        iframe { width: 100%; height: 600px; border: 4px solid #fff; margin-top: 20px; }
+
+        @media (max-width: 900px) { .skills-container, .project-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <div id="loading-screen">
-        <h2 style="font-family: 'Orbitron'; letter-spacing: 5px;">SYSTEM INITIALIZING</h2>
-        <div class="load-bar"><div class="load-fill"></div></div>
-        <button class="start-btn" id="startBtn" onclick="enterUI()">START MISSION</button>
+    <div id="intro-overlay">
+        <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO</span></h1>
+        <button class="btn-pixel blink" onclick="startGame()">PRESS START</button>
+        <p style="margin-top: 30px; font-size: 0.6rem; color: #555;">© 1997-2026 JAE YOUNG PIXEL INC.</p>
     </div>
 
-    <div class="hud-wrapper" id="hudMain">
-        
-        <aside class="sidebar">
-            <div class="player-card">
-                <h1 class="name-tag">LEE JAE YOUNG</h1>
-                <span class="level-info">LV.02 GAME DESIGNER</span>
-                <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 20px; line-height: 1.6;">
-                    "데이터와 시스템으로 <br>재미의 논리를 설계합니다."
-                </p>
-            </div>
-
-            <nav class="nav-menu">
-                <div class="nav-link active" onclick="scrollSection('status')"><i class="fa-solid fa-user-gear"></i> CHARACTER STATUS</div>
-                <div class="nav-link" onclick="scrollSection('quests')"><i class="fa-solid fa-flag"></i> MISSION LOG</div>
-            </nav>
-
-            <div style="margin-top: auto; padding: 20px; border: 1px dashed var(--border); border-radius: 15px; text-align: center;">
-                <span style="font-family: 'Rajdhani'; font-size: 0.7rem; color: #475569;">CONNECTION: STABLE_100%</span>
-            </div>
-        </aside>
-
-        <main class="main-display" id="contentArea">
-            
-            <section id="status">
-                <div class="section-title">CORE SPECIFICATIONS</div>
-                <div class="skills-grid">
-                    <div class="skill-node"><h4>JIRA</h4><p>마일스톤 관리 및 정교한 이슈 트래킹</p></div>
-                    <div class="skill-node"><h4>EXCEL VBA</h4><p>지표 시각화 및 자동화 툴 설계 전문</p></div>
-                    <div class="skill-node"><h4>FIGMA</h4><p>상세 가이드 기반 UI/UX 프로토타이핑</p></div>
-                    <div class="skill-node"><h4>GAMEMAKER</h4><p>핵심 메커니즘 설계 및 1인 개발 완수</p></div>
-                    <div class="skill-node"><h4>UNITY</h4><p>협업 프로젝트 최적화 및 엔진 응용</p></div>
-                    <div class="skill-node"><h4>GEMINI AI</h4><p>논리 구조 검증 및 개발 협업 최적화</p></div>
-                </div>
-            </section>
-
-            <section id="quests">
-                <div class="section-title">MISSION ARCHIVE</div>
-                <div class="quest-grid">
-                    <div class="quest-card" onclick="openModal(0)">
-                        <div class="quest-img"><img src="P1.png"></div>
-                        <div class="quest-info">
-                            <div class="quest-cat">MAIN_QUEST | SOLO DEV</div>
-                            <div class="quest-name">RHYTHM ELEVEN</div>
-                        </div>
-                    </div>
-                    <div class="quest-card" onclick="openModal(1)">
-                        <div class="quest-img"><img src="P2.png"></div>
-                        <div class="quest-info">
-                            <div class="quest-cat">PARTY_QUEST | TEAM DEV</div>
-                            <div class="quest-name">KOKODUGI (코코두기)</div>
-                        </div>
-                    </div>
-                    <div class="quest-card" onclick="openModal(2)">
-                        <div class="quest-img"><img src="P3.png"></div>
-                        <div class="quest-info">
-                            <div class="quest-cat">ELITE_QUEST | EA KOREA</div>
-                            <div class="quest-name">밸런싱 지표 분석 및 개선</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <div class="background-marquee">
+        <div class="marquee-track">
+            <div class="window-item"><img src="P1.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="window-item"><img src="P2.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="window-item"><img src="P3.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="window-item"><img src="P4.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="window-item"><img src="P5.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="window-item"><img src="P1.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="window-item"><img src="P2.png" style="width:100%; height:100%; object-fit:cover;"></div>
+        </div>
     </div>
 
-    <div id="missionModal" class="modal" onclick="closeModal()">
+    <header>
+        <h1>LEE JAE YOUNG<span>_</span></h1>
+        <p class="tagline">> DATA-DRIVEN GAME CHANGER LOADING...</p>
+    </header>
+
+    <h2 class="section-title">> PLAYER ABILITIES</h2>
+    <div class="skills-container">
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name">JIRA</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">BUG TRACKING & SCHEDULING</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name">SLACK</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">TEAM COMM & HISTORY</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name">CONFLUENCE</div><div class="stars">★★★★★</div></div>
+            <div class="skill-desc">DOCS & WORKSPACE</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name">EXCEL</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">DATA VIZ & VBA MACRO</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name">FIGMA</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">UI/UX & PROTOTYPING</div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-top"><div class="skill-name">GM MAKER</div><div class="stars">★★★★☆</div></div>
+            <div class="skill-desc">SOCCER+RHYTHM SOLO DEV</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">> SELECT STAGE</h2>
+    <div class="project-container">
+        <div class="project-card" onclick="openModal(0)">
+            <div class="card-img-box"><img src="P1.png"></div>
+            <div class="card-info-box"><span class="tag">SOLO DEV</span><h3>RHYTHM ELEVEN</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(1)">
+            <div class="card-img-box"><img src="P2.png"></div>
+            <div class="card-info-box"><span class="tag">10P TEAM</span><h3>KOKODUGI</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(2)">
+            <div class="card-img-box"><img src="P3.png"></div>
+            <div class="card-info-box"><span class="tag">EA KOREA</span><h3>BALANCE FIX</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(3)">
+            <div class="card-img-box"><img src="P4.png"></div>
+            <div class="card-info-box"><span class="tag">SYSTEM</span><h3>TACTICS NOTE</h3></div>
+        </div>
+        <div class="project-card" onclick="openModal(4)">
+            <div class="card-img-box"><img src="P5.png"></div>
+            <div class="card-info-box"><span class="tag">DATA</span><h3>PHARMACY MAP</h3></div>
+        </div>
+    </div>
+
+    <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">×</span>
-            <div id="modalBody"></div>
+            <span class="close-pixel" onclick="closeModal()">[X]</span>
+            <div id="modalBody" class="modal-body"></div>
         </div>
     </div>
 
     <script>
-        // 1. 인트로 제어
-        setTimeout(() => { document.getElementById('startBtn').style.display = 'block'; }, 2500);
-
-        function enterUI() {
-            document.getElementById('loading-screen').style.transition = '1s';
-            document.getElementById('loading-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-                const main = document.getElementById('hudMain');
-                main.style.opacity = '1'; main.style.transform = 'translateY(0)';
-            }, 1000);
+        // 인트로 종료 함수
+        function startGame() {
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.transition = '0.5s';
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 500);
         }
 
-        // 2. 미션 데이터 (데브켓 PDF 정보 기반)
-        const missions = [
-            { title: "RHYTHM ELEVEN", cat: "SOLO QUEST", desc: "축구 전략성과 리듬 실력 기반 입력을 결합한 독창적 시스템 기획입니다.", stats: "<li>AI 협업을 통한 로직 효율성 검증</li><li>동적 난이도 및 비트 동기화 설계</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "KOKODUGI (코코두기)", cat: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 10인 팀 프로젝트입니다.", stats: "<li>Excel VBA 데이터 입력기 개발</li><li>단계별 튜토리얼 및 UX 가이드 설계</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
-            { title: "EA KOREA BALANCE", cat: "ELITE QUEST", desc: "정량적 지표 분석을 통해 밸런싱 근거를 정립한 실무 프로젝트입니다.", stats: "<li>중거리 슛 실점률 분석 및 8% 감소 달성</li><li>부정 여론 2,000건 정량 데이터화</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
+        const projects = [
+            { title: "RHYTHM ELEVEN", tag: "SOLO DEV", desc: "축구 전략성과 리듬 실력 기반 입력을 융합한 게임입니다.", stats: "<li>AI 코딩파트너를 통한 효율성 검증</li><li>동적 난이도 설계</li>", img: "P1.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "KOKODUGI", tag: "10P TEAM", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", stats: "<li>Excel VBA 데이터 매니저 개발</li><li>단계적 튜토리얼 구축</li>", img: "P2.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "BALANCE FIX", tag: "EA KOREA", desc: "로빙 스루 패스 지표 분석을 통해 밸런싱의 근거를 증명했습니다.", stats: "<li>부정 여론 2,000건 정량 분석</li><li>수비 AI 개선안 제시</li>", img: "P3.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "TACTICS NOTE", tag: "SYSTEM", desc: "전술적 갈증을 성장의 재미로 전환하는 수집 시스템입니다.", stats: "<li>시너지 성장 모델 설계</li><li>다각도 BM 기획</li>", img: "P4.png", pdf: "데브켓_포트폴리오_이재영.pdf" },
+            { title: "PHARMACY MAP", tag: "DATA", desc: "의료 사각지대 해소를 위한 정량적 입지 전략입니다.", stats: "<li>복합 가중치 로직 설계</li><li>QGIS 시각화 분석</li>", img: "P5.png", pdf: "데브켓_포트폴리오_이재영.pdf" }
         ];
 
-        // 3. 네비게이션 & 모달 기능
-        function scrollSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-        }
-
         function openModal(i) {
-            const m = missions[i];
+            const p = projects[i];
             document.getElementById('modalBody').innerHTML = `
-                <h1 style="font-family:'Orbitron'; color:var(--neon); font-size:3rem; margin-bottom:10px;">${m.title}</h1>
-                <p style="font-family:'Rajdhani'; color:var(--accent); font-weight:800; letter-spacing:2px;">${m.cat}</p>
-                <div style="margin:40px 0; font-size:1.2rem; line-height:1.8; color:#cbd5e1;">${m.desc}</div>
-                <div style="background:rgba(0, 242, 255, 0.05); padding:30px; border-radius:24px; border-left:4px solid var(--neon);">
-                    <h3 style="margin-top:0; color:var(--neon);">MISSION ACHIEVEMENTS</h3>
-                    <ul style="line-height:2.2; color:#94a3b8;">${m.stats}</ul>
+                <img src="${p.img}" style="width:100%; border:4px solid #fff; margin-bottom:20px;">
+                <h2 style="color:var(--accent);">${p.title}</h2>
+                <p class="pixel-font" style="font-size:0.7rem; color:var(--accent-pink);">${p.tag}</p>
+                <p style="font-size:1rem; line-height:1.6;">${p.desc}</p>
+                <div class="info-box">
+                    <h4>[ MISSION LOG ]</h4>
+                    <ul style="font-size:0.8rem; line-height:1.8;">${p.stats}</ul>
                 </div>
-                <iframe src="${m.pdf}"></iframe>
+                <iframe src="${p.pdf}"></iframe>
             `;
-            document.getElementById('missionModal').style.display = 'flex';
+            document.getElementById('projectModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
-
-        function closeModal() {
-            document.getElementById('missionModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        function closeModal() { document.getElementById('projectModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
     </script>
 </body>
 </html>

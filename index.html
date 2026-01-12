@@ -12,7 +12,7 @@
             --bg: #0d1117; 
             --card: #161b22;
             --accent: #97c1e7;
-            --accent-dim: rgba(151, 193, 231, 0.1);
+            --accent-glow: rgba(151, 193, 231, 0.4);
             --text-main: #f0f6fc;
             --text-sub: #8b949e;
             --border: #30363d;
@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 1. 인트로 오버레이 --- */
+        /* --- 1. 인트로 애니메이션 --- */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10000; display: flex; flex-direction: column;
@@ -39,12 +39,6 @@
         #intro-overlay h1 { font-size: 1.5rem; color: var(--accent); margin-bottom: 50px; line-height: 2; }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .btn-pixel {
-            padding: 15px 35px; background: var(--accent); color: #0d1117;
-            border: none; cursor: pointer; font-weight: bold;
-            box-shadow: -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 -4px 0 0 #000;
-            transition: 0.1s; font-size: 1.1rem;
-        }
 
         /* --- 2. 히어로 섹션 --- */
         .hero {
@@ -59,87 +53,120 @@
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .hero-content { position: relative; z-index: 2; text-align: center; }
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px #000; }
-        .hero-content p { font-size: 1.1rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); display: inline-block; padding: 5px 15px; }
 
-        /* --- 3. 보유 기술 --- */
-        .section-title { max-width: 1100px; margin: 60px auto 25px; padding: 0 20px; font-size: 1.3rem; color: var(--accent); letter-spacing: 2px; text-align: left; }
-        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .skill-group { background: var(--card); border: 2px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .skill-group-title { font-size: 0.95rem; color: var(--accent); text-align: left; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 12px; }
-        .skill-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 4px 0; }
-        .skill-name { font-size: 0.9rem; color: var(--text-main); font-weight: bold; }
-        .stars { color: #ffff00; font-size: 0.7rem; }
-        .skill-desc { color: var(--text-sub); font-size: 0.8rem; line-height: 1.3; }
-
-        /* --- 4. 프로젝트 리스트 --- */
-        .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
-        .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-dim); }
+        /* --- 3. 프로젝트 카드 격자 --- */
+        .project-container { max-width: 1100px; margin: 60px auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .project-card { background: var(--card); border: 3px solid var(--border); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-info-box { padding: 18px; text-align: left; flex-grow: 1; }
-        .tag { font-size: 0.65rem; color: var(--accent); margin-bottom: 8px; display: block; }
-        .project-card h3 { font-size: 1rem; margin: 0; color: #fff; line-height: 1.4; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .project-card:hover .card-img-box img { transform: scale(1.1); }
+        .card-info-box { padding: 18px; text-align: left; }
+        .tag { font-size: 0.6rem; color: var(--accent); margin-bottom: 8px; display: block; }
+        .project-card h3 { font-size: 0.9rem; margin: 0; color: #fff; line-height: 1.4; }
 
-        /* --- 5. 모달 시스템 --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10001; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: var(--bg); border: 4px solid var(--accent); width: 100%; max-width: 1100px; height: 90vh; overflow-y: auto; padding: 0; position: relative; }
+        /* --- 4. [대폭 수정] 모달 & 프리미엄 디자인 --- */
+        .modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center; 
+            backdrop-filter: blur(8px);
+        }
         
-        /* EXIT 버튼 고정 */
+        /* 모달 열릴 때 애니메이션 */
+        @keyframes modalShow {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-content { 
+            background: var(--bg); border: 2px solid var(--accent); 
+            width: 95%; max-width: 1100px; height: 90vh; 
+            overflow-y: auto; position: relative;
+            animation: modalShow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 50px rgba(0,0,0,1), 0 0 20px var(--accent-glow);
+        }
+        
+        /* EXIT 버튼 디자인 강화 */
         .close-pixel { 
             position: sticky; top: 20px; right: 20px; 
-            float: right; color: var(--accent); font-size: 1.1rem; cursor: pointer; 
-            z-index: 2000; background: var(--bg); padding: 8px 18px; 
-            border: 3px solid var(--accent); margin: 20px 20px 0 0;
-            box-shadow: 4px 4px 0 #000;
+            float: right; color: var(--accent); font-size: 1rem; cursor: pointer; 
+            z-index: 2000; background: #000; padding: 10px 20px; 
+            border: 2px solid var(--accent); margin: 20px 20px 0 0;
+            box-shadow: 4px 4px 0 var(--accent);
+            transition: 0.2s;
         }
+        .close-pixel:hover { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--accent); background: var(--accent); color: #000; }
 
-        .modal-inner-padding { padding: 40px; clear: both; }
-        
-        /* [수정] 모든 프로젝트 이미지 크기 동일하게 고정 */
-        .modal-img-container {
-            width: 100%;
-            height: 350px; /* 고정 높이 설정으로 크기 통일 */
-            background: #000;
-            margin-bottom: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .modal-inner-padding { padding: 50px; clear: both; }
+
+        /* [수정] 사진이 안 잘리고 세련된 프레임 디자인 */
+        .premium-img-frame {
+            width: 100%; height: 450px;
+            background: radial-gradient(circle, #1c2128 0%, #0d1117 100%);
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
             overflow: hidden;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 15px var(--accent);
+        }
+        /* 장식용 네온 코너 */
+        .premium-img-frame::before {
+            content: ""; position: absolute; top: 15px; left: 15px; width: 30px; height: 30px;
+            border-top: 3px solid var(--accent); border-left: 3px solid var(--accent);
+        }
+        .premium-img-frame::after {
+            content: ""; position: absolute; bottom: 15px; right: 15px; width: 30px; height: 30px;
+            border-bottom: 3px solid var(--accent); border-right: 3px solid var(--accent);
         }
         .modal-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 이미지가 잘리더라도 비율 유지하며 꽉 채움 */
+            max-width: 90%; max-height: 90%;
+            object-fit: contain; /* 사진 절대 안 잘림 */
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+            z-index: 5;
         }
 
-        /* 탭 버튼 시각적 강화 */
+        /* 텍스트 정보 디자인 */
+        .project-header-info { border-left: 4px solid var(--accent); padding-left: 25px; margin-bottom: 40px; }
+        .project-header-info h2 { font-size: 1.8rem; color: var(--accent); margin: 0 0 10px 0; text-shadow: 2px 2px 0 #000; }
+        .project-header-info .p-tag { color: var(--text-sub); font-weight: bold; font-size: 1rem; margin-bottom: 15px; display: block; }
+        
+        /* 탭 가독성 극대화 */
         .asset-selector { 
-            display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;
+            display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-start;
             position: sticky; top: 0; z-index: 1000;
-            background: #161b22; padding: 25px 40px;
-            border-bottom: 4px solid var(--accent);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            background: #161b22; padding: 25px 50px;
+            border-bottom: 3px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
         .asset-btn { 
-            padding: 12px 24px; background: #21262d; border: 2px solid var(--border); 
-            color: var(--text-main); cursor: pointer; font-size: 0.95rem; transition: 0.2s;
-            font-weight: bold;
+            padding: 14px 28px; background: #0d1117; border: 2px solid var(--border); 
+            color: var(--text-main); cursor: pointer; font-size: 0.9rem; transition: 0.3s;
+            font-weight: bold; position: relative;
         }
-        .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 10px var(--accent); }
+        .asset-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .asset-btn.active { 
+            background: var(--accent); color: #0d1117; border-color: #fff;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
 
-        .viewer-container { width: 100%; min-height: 680px; background: #000; position: relative; padding: 20px 0; }
-        .asset-viewer { width: 96%; height: 680px; border: 2px solid var(--border); display: none; margin: 0 auto; }
+        .viewer-container { width: 100%; min-height: 750px; background: #000; padding: 30px 0; }
+        .asset-viewer { width: 94%; height: 750px; border: 1px solid var(--border); display: none; margin: 0 auto; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
         .asset-viewer.active { display: block; }
-        .video-wrapper { width: 100%; height: 680px; display: flex; align-items: center; justify-content: center; }
-        .video-wrapper iframe { width: 83%; height: 83%; }
+        
+        .video-wrapper { width: 100%; height: 750px; display: flex; align-items: center; justify-content: center; }
+        .video-wrapper iframe { width: 83%; height: 83%; border: 2px solid var(--accent); }
 
-        .info-box { border: 2px dashed var(--accent); padding: 25px; margin: 25px 0; background: var(--accent-dim); text-align: left; }
-        .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 15px 0; }
+        .info-box { border: 1px solid var(--border); padding: 30px; margin: 30px 0; background: rgba(255,255,255,0.02); }
+        .info-box h4 { color: var(--accent); font-size: 1rem; margin: 0 0 20px 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .info-box li { margin-bottom: 12px; color: #d1d5db; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .asset-selector { padding: 15px 20px; } .modal-img-container { height: 250px; } }
+        @media (max-width: 950px) { 
+            .project-container { grid-template-columns: 1fr; } 
+            .premium-img-frame { height: 280px; }
+            .asset-viewer, .video-wrapper { height: 450px; }
+            .asset-selector { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -166,32 +193,6 @@
         </div>
     </header>
 
-    <h2 class="section-title">> PLAYER ABILITIES(보유 기술)</h2>
-    <div class="skills-wrapper">
-        <div class="skill-group">
-            <div class="skill-group-title">협업 & 관리</div>
-            <div class="skill-item"><div class="skill-name">Jira ★★★★★</div><div class="skill-desc">마일스톤 관리 및 이슈 트래킹</div></div>
-            <div class="skill-item"><div class="skill-name">Slack ★★★★★</div><div class="skill-desc">원활한 팀 커뮤니케이션</div></div>
-            <div class="skill-item"><div class="skill-name">Confluence ★★★★★</div><div class="skill-desc">프로젝트 문서화 및 아카이빙</div></div>
-            <div class="skill-item"><div class="skill-name">Notion ★★★★☆</div><div class="skill-desc">대시보드 및 일정 관리</div></div>
-        </div>
-        <div class="skill-group">
-            <div class="skill-group-title">기획 & 분석</div>
-            <div class="skill-item"><div class="skill-name">Excel ★★★★☆</div><div class="skill-desc">데이터 분석 및 VBA 자동화</div></div>
-            <div class="skill-item"><div class="skill-name">Figma ★★★★☆</div><div class="skill-desc">UI/UX 설계 및 프로토타입</div></div>
-            <div class="skill-item"><div class="skill-name">PowerPoint ★★★★☆</div><div class="skill-desc">제안서 및 비주얼 기획</div></div>
-            <div class="skill-item"><div class="skill-name">Word ★★★★☆</div><div class="skill-desc">표준 문서 관리 및 명세서</div></div>
-        </div>
-        <div class="skill-group">
-            <div class="skill-group-title">개발 & 엔진</div>
-            <div class="skill-item"><div class="skill-name">Gamemaker ★★★★☆</div><div class="skill-desc">축구+리듬 하이브리드 기획</div></div>
-            <div class="skill-item"><div class="skill-name">Unity ★★★☆☆</div><div class="skill-desc">엔진 기반 협업 및 기능 활용</div></div>
-            <div class="skill-item"><div class="skill-name">Gemini ★★★★☆</div><div class="skill-desc">AI 협업 및 데이터 시각화</div></div>
-            <div class="skill-item"><div class="skill-name">NotebookLM ★★★★☆</div><div class="skill-desc">방대한 설정 분석 및 검증</div></div>
-        </div>
-    </div>
-
-    <h2 class="section-title">> SELECT STAGE(프로젝트)</h2>
     <div class="project-container">
         <div class="project-card" onclick="openModal(0)">
             <div class="card-img-box"><img src="P1.png"></div>
@@ -217,7 +218,7 @@
 
     <div id="projectModal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-pixel" onclick="closeModal()">[X] EXIT</span>
+            <span class="close-pixel" onclick="closeModal()">[X] EXIT MISSION</span>
             <div id="modalBody"></div>
         </div>
     </div>
@@ -225,37 +226,37 @@
     <script>
         function startGame() {
             const overlay = document.getElementById('intro-overlay');
-            if(overlay) { overlay.style.transition = '0.8s'; overlay.style.opacity = '0'; setTimeout(() => { overlay.style.display = 'none'; }, 800); }
+            if(overlay) { 
+                overlay.style.transition = '0.8s cubic-bezier(0.16, 1, 0.3, 1)'; 
+                overlay.style.opacity = '0'; 
+                setTimeout(() => { overlay.style.display = 'none'; }, 800); 
+            }
         }
 
         const projects = [
             { 
                 title: "RHYTHM ELEVEN", tag: "SOLO QUEST", 
-                desc: "축구 전략성과 리듬 입력을 융합한 게임입니다. AI 협업을 통해 로직 효율성을 검증했습니다.", 
-                achievements: "<li>동적 난이도 시스템 설계</li><li>코드 기반 유연한 비주얼 연출 구현</li>", img: "P1.png",
+                desc: "축구 전략성과 리듬 입력을 융합한 독창적인 하이브리드 게임입니다. AI 협업을 통해 로직 효율성을 극대화했습니다.", 
+                achievements: "<li>동적 난이도 곡선 설계 및 데이터 자동화</li><li>GML 기반 유연한 연출 시스템 구현</li><li>사용자 시선의 UX 개선 및 플레이 타임 최적화</li>", img: "P1.png",
                 assets: [
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" },
-                    { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" },
-                    { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" },
-                    { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }
+                    { type: "video", title: "PLAY VIDEO", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" },
+                    { type: "pdf", title: "CONCEPT PLAN", url: "P1_2.pdf" },
+                    { type: "pdf", title: "UI/UX DESIGN", url: "P1_3.pdf" },
+                    { type: "pdf", title: "POST-MORTEM", url: "P1_4.pdf" }
                 ]
             },
-            { title: "KOKODUGI", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", achievements: "<li>VBA 기반 데이터 매니저 구축</li><li>단계적 튜토리얼 및 밸런싱</li>", img: "P2.png", assets: [{ type: "pdf", title: "기획서 확인", url: "데브켓_포트폴리오_이재영.pdf" }] },
-            { title: "밸런스 개선 제안", tag: "PLAYER-DRIVEN PROPOSAL", desc: "지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf" } ] },
-            { title: "감독의 전술 노트", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
-            { title: "공공 야간약국 선정", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
+            { title: "KOKODUGI", tag: "PARTY QUEST", desc: "사용자 시선의 학습 곡선을 설계한 기업 연계 프로젝트입니다.", achievements: "<li>VBA 기반 데이터 매니저 구축</li><li>단계적 튜토리얼 및 밸런싱</li>", img: "P2.png", assets: [{ type: "pdf", title: "VIEW PLAN", url: "데브켓_포트폴리오_이재영.pdf" }] },
+            { title: "BALANCE PROPOSAL", tag: "PLAYER-DRIVEN PROPOSAL", desc: "지표 분석을 통해 개선안을 도출한 실무형 프로젝트입니다.", achievements: "<li>로빙 스루 패스 지표 분석</li><li>수비 AI 개선 영향 분석</li>", img: "P3.png", assets: [ { type: "pdf", title: "IMPROVEMENT", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "ANALYSIS", url: "P3_2_게임분석서.pdf" } ] },
+            { title: "STRATEGY NOTE", tag: "SYSTEM DESIGN", desc: "성장의 재미를 극대화하는 수집 시스템 제안서입니다.", achievements: "<li>성장 코어 루프 설계</li><li>시즌 패스 BM 모델링</li>", img: "P4.png", assets: [{ type: "pdf", title: "NEW SYSTEM", url: "P4_1_신규 시스템 제안서.pdf" }] },
+            { title: "PHARMACY DATA", tag: "DATA ANALYSIS", desc: "의료 사각지대 해소를 위한 정량적 입지 분석 프로젝트입니다.", achievements: "<li>복합 가중치 분석 모델 설계</li><li>QGIS 시각화 산출</li>", img: "P5.png", assets: [{ type: "pdf", title: "DATA ANALYSIS", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i) {
             const p = projects[i];
-            const modal = document.getElementById('projectModal');
-            const modalContent = modal.querySelector('.modal-content');
-
-            // [핵심 수정] 모달을 열 때마다 스크롤을 0으로 강제 초기화
-            if (modalContent) {
-                modalContent.scrollTo(0, 0);
-                modalContent.scrollTop = 0;
-            }
+            const modalContent = document.querySelector('.modal-content');
+            
+            // [강제 초기화] 모달 열 때 스크롤 위치를 무조건 0으로
+            modalContent.scrollTop = 0;
 
             let viewersHtml = p.assets.map((as, idx) => {
                 if(as.type === 'video') {
@@ -271,25 +272,29 @@
 
             document.getElementById('modalBody').innerHTML = `
                 <div class="modal-inner-padding">
-                    <div class="modal-img-container">
+                    <div class="premium-img-frame">
                         <img src="${p.img}" class="modal-img">
                     </div>
-                    <h2 style="color:var(--accent); font-size:1.6rem; margin-bottom:10px; text-align:left;">${p.title}</h2>
-                    <p style="font-weight:bold; color:var(--text-sub); margin-bottom:25px; text-align:left;">[ ${p.tag} ]</p>
-                    <p style="font-size:1.1rem; line-height:1.8; color:#eee; text-align:left;">${p.desc}</p>
+
+                    <div class="project-header-info">
+                        <span class="p-tag">[ ${p.tag} ]</span>
+                        <h2>${p.title}</h2>
+                        <p style="font-size:1.1rem; line-height:1.8; color:#eee; max-width:800px;">${p.desc}</p>
+                    </div>
+
                     <div class="info-box">
-                        <h4 style="text-align:left;">핵심 성과(MISSION ACHIEVEMENTS)</h4>
-                        <ul style="text-align:left;">${p.achievements}</ul>
+                        <h4>MISSION ACHIEVEMENTS (주요 성과)</h4>
+                        <ul>${p.achievements}</ul>
                     </div>
                 </div>
                 
                 <div class="asset-selector">${buttonsHtml}</div>
                 <div class="viewer-container">${viewersHtml}</div>
             `;
-            modal.style.display = 'flex';
+            document.getElementById('projectModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
-            // 한 번 더 확실하게 스크롤 초기화 (렌더링 지연 대비)
+            // 렌더링 후 한 번 더 보정
             setTimeout(() => { modalContent.scrollTop = 0; }, 10);
         }
 

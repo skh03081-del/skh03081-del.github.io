@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEE JAE YOUNG | Game Designer Portfolio</title>
+    <title>LEE JAE YOUNG | Stage Select Portfolio</title>
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skh03081-del.github.io/">
@@ -54,10 +54,10 @@
         @keyframes btn-blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0.8; box-shadow: 0 0 30px var(--accent); transform: scale(1.02); } }
 
         /* --- 2. 히어로 섹션 --- */
-        .hero { position: relative; width: 100%; height: 420px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
+        .hero { position: relative; width: 100%; height: 380px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
         .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(4px) brightness(0.5); }
-        .marquee-item { width: 500px; height: 420px; flex-shrink: 0; }
+        .marquee-item { width: 500px; height: 380px; flex-shrink: 0; }
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
@@ -65,20 +65,19 @@
         .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
         .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
         .main-slogan-text { margin-top: 25px; padding: 10px 25px; background: #000; border: 1px solid var(--accent); display: inline-block; font-size: 1.1rem; color: #fff; opacity: 0; transition: 0.8s; }
 
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. 보유 기술 --- */
+        /* --- 3. 보유 기술 (READY 정렬 수정) --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { background: var(--card); border: 2px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; }
         
-        /* [수정] READY 정렬 및 위치 조정 */
-        .skill-group::after { content: "READY"; position: absolute; top: 25px; right: 18px; font-family: 'Press Start 2P'; font-size: 1rem; color: var(--accent-glow); text-shadow: 0 0 8px var(--accent); }
+        /* [수정] READY 표시 위치를 아래로 내려 바(Bar)와 정렬 */
+        .skill-group::after { content: "READY"; position: absolute; top: 45px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.9rem; color: var(--accent-glow); opacity: 0.8; }
         
         .skill-group-title { font-size: 0.9rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 15px; margin-bottom: 5px; }
         .skill-item { display: flex; flex-direction: column; margin-bottom: 12px; }
@@ -90,42 +89,95 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- 4. 프로젝트 그리드 --- */
+        /* --- 4. 프로젝트 스테이지 선택 UI --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .project-card { background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
-        .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-        .card-img-box { width: 100%; height: 200px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .tag { position: absolute; top: 12px; left: 12px; font-size: 0.65rem; color: #000; font-weight: bold; background: var(--accent); padding: 4px 10px; border: 1px solid #fff; z-index: 5; font-family: 'Press Start 2P'; }
-        .card-info-box { padding: 20px; text-align: left; }
-        .card-info-box h3 { font-size: 1.1rem; margin: 0; color: #fff; }
-
-        /* --- 5. 프로젝트 모달 --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
-        .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
+        .project-card { 
+            background: #000; 
+            border: 2px solid var(--border); 
+            cursor: pointer; 
+            transition: 0.3s; 
+            overflow: hidden; 
+            position: relative;
+            box-shadow: 0 0 0px transparent;
+        }
+        .project-card::before {
+            content: "STAGE UNLOCKED";
+            position: absolute; bottom: 10px; right: 10px;
+            font-family: 'Press Start 2P'; font-size: 0.4rem; color: var(--accent); opacity: 0; transition: 0.3s;
+        }
+        .project-card:hover { 
+            transform: scale(1.03); 
+            border-color: var(--accent); 
+            box-shadow: 0 0 25px var(--accent-glow); 
+        }
+        .project-card:hover::before { opacity: 1; }
+        .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 3px solid var(--accent); overflow: hidden; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.3s; }
+        .project-card:hover .card-img-box img { opacity: 1; }
         
-        /* [수정] EXIT 버튼 위치 미세 조정 */
+        .tag { position: absolute; top: 0; left: 0; font-size: 0.65rem; color: #000; font-weight: bold; background: var(--accent); padding: 5px 12px; border-bottom-right-radius: 8px; z-index: 5; font-family: 'Press Start 2P'; }
+        
+        .card-info-box { padding: 20px; text-align: left; background: linear-gradient(180deg, #161b22 0%, #0d1117 100%); }
+        .card-info-box h3 { font-size: 1rem; margin: 0; color: #fff; letter-spacing: 1px; }
+
+        /* --- 5. 프로젝트 모달 최적화 --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
+        .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 92vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
+        
+        /* [수정] 팝업 상단 디자인 보정 */
         .project-header-top { width: 100%; height: 100px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 40px; }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.4); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; justify-content: space-between; }
-        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 8px 25px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 60px; top: 25px; }
+        
+        /* [수정] 파티 퀘스트 태그 위치 및 강조 */
+        #modalTag { 
+            font-family: 'Press Start 2P'; 
+            font-size: 0.8rem; 
+            color: var(--accent); 
+            display: block; 
+            margin-top: 15px; 
+            margin-bottom: 5px; 
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        /* [수정] EXIT 버튼 위치 이동 */
+        .close-system-btn { 
+            background: rgba(0, 0, 0, 0.7); 
+            color: var(--accent); 
+            border: 2px solid var(--accent); 
+            padding: 10px 30px; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-weight: bold; 
+            position: absolute; 
+            right: 40px; 
+            top: 30px; 
+        }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
-        .modal-inner-content { padding: 40px 60px; }
+        .modal-inner-content { padding: 30px 60px; }
 
-        /* EQUIPPED TOOLS 디자인 */
-        .tools-equipped-bar { background: rgba(151, 193, 231, 0.1); padding: 15px 25px; border: 1px solid var(--accent-dark); margin-bottom: 30px; display: flex; align-items: center; gap: 20px; }
+        .tools-equipped-bar { background: rgba(151, 193, 231, 0.1); padding: 15px 25px; border: 1px solid var(--accent-dark); margin-bottom: 25px; display: flex; align-items: center; gap: 20px; }
         .tools-label { font-size: 0.7rem; color: var(--accent); font-family: 'Press Start 2P'; }
         .tools-value { font-size: 1rem; color: #fff; font-weight: bold; }
 
-        .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 25px; margin-bottom: 35px; text-align: left; }
+        .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 25px; margin-bottom: 30px; text-align: left; }
         
-        /* [성과 강조] 핵심 성과 섹션 */
-        .mission-log { border: 2px solid var(--accent); padding: 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
-        .mission-log h4 { color: #fff; margin-bottom: 20px; font-size: 1.2rem; text-shadow: 0 0 10px var(--accent-glow); }
-        .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 1rem; }
-        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; }
+        /* [수정] 핵심 성과 섹션 공간 최적화 및 인덱스 제거 */
+        .mission-log { 
+            border: 2px solid var(--accent); 
+            padding: 20px 30px; 
+            margin-bottom: 30px; 
+            background: rgba(151, 193, 231, 0.05); 
+            text-align: left; 
+            box-shadow: 0 0 15px var(--accent-glow); 
+        }
+        .mission-log h4 { color: #fff; margin-bottom: 15px; font-size: 1.1rem; text-shadow: 0 0 10px var(--accent-glow); }
+        .mission-log li { margin-bottom: 8px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.4; }
+        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1rem; }
         
         .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 3px solid var(--accent); }
         .asset-btn { padding: 10px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
@@ -141,13 +193,13 @@
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
         /* [수정] 코코두기 동영상 프레임 최적화 */
-        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; gap: 30px; }
+        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); }
+        .combined-video-frame { width: 85%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin: 0 auto; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
-        .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
+        .excel-download-card { width: 85%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; margin: 0 auto; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .excel-combined-container { width: 95% !important; } .close-system-btn { right: 10px; top: 10px; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .excel-download-card { width: 95% !important; } .close-system-btn { right: 10px; top: 10px; } }
     </style>
 </head>
 <body onclick="closeModal(event)">
@@ -210,7 +262,7 @@
     </div>
 
     <div class="reveal-section">
-        <h2 class="section-title">SELECT STAGE</h2>
+        <h2 class="section-title">MISSION STAGES</h2>
         <div class="project-container">
             <div class="project-card" onclick="openModal(0, event)"><div class="card-img-box"><div class="tag">SOLO</div><img src="P1.png"></div><div class="card-info-box"><h3>RHYTHM ELEVEN</h3></div></div>
             <div class="project-card" onclick="openModal(1, event)"><div class="card-img-box"><div class="tag">PARTY</div><img src="P2.png"></div><div class="card-info-box"><h3>KOKODUGI (코코두기)</h3></div></div>
@@ -225,7 +277,7 @@
             <div class="project-header-top">
                 <div id="headerBlur" class="header-bg-blur"></div>
                 <div class="header-info-content">
-                    <div class="header-title-box"><span id="modalTag" style="font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--accent);">TYPE</span><h2 id="modalTitle">TITLE</h2></div>
+                    <div class="header-title-box"><span id="modalTag">TYPE</span><h2 id="modalTitle">TITLE</h2></div>
                     <button class="close-system-btn" onclick="closeModal(event)">[X] EXIT</button>
                 </div>
             </div>
@@ -290,18 +342,18 @@
 
         const projects = [
             { 
-                title: "RHYTHM ELEVEN", tag: "SOLO QUEST", 
+                title: "RHYTHM ELEVEN", tag: "[ SOLO QUEST ]", 
                 tools: "GameMaker, PowerPoint, Figma", 
                 desc: "축구 전략과 리듬 액션을 융합하여 복잡한 게임 규칙을 직관적으로 학습하게 하는 독창적 하이브리드 게임 기획입니다.", 
-                achievements: "<li>선수의 행동이 난이도에 직결되는 '동적 난이도 시스템' 설계 [cite: 1038]</li><li>대부분의 시각 효과를 코드로 직접 구현하여 유연한 연출 구조 확보 [cite: 1039, 1040]</li><li>축구 룰(반칙 등)을 박자 요소로 도입하여 교육적 가치와 재미 동시 달성 [cite: 939, 940]</li>", 
+                achievements: "<li>선수의 행동이 난이도에 직결되는 '동적 난이도 시스템' 설계</li><li>대부분의 시각 효과를 코드로 직접 구현하여 유연한 연출 구조 확보</li><li>축구 룰(반칙 등)을 박자 요소로 도입하여 교육적 가치와 재미 동시 달성</li>", 
                 img: "P1.png", 
                 assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] 
             },
             { 
-                title: "KOKODUGI (코코두기)", tag: "PARTY QUEST", 
+                title: "KOKODUGI (코코두기)", tag: "[ PARTY QUEST ]", 
                 tools: "Unity, Excel, PowerPoint, Notion", 
                 desc: "기획 데이터 관리의 비효율을 해결하기 위해 VBA 기반 자동화 도구를 제작하고, 사용자 중심의 학습 곡선을 설계한 프로젝트입니다.", 
-                achievements: "<li>기획 생산성 향상을 위한 Excel VBA 기반 데이터 자동화 도구 기획 및 제작 [cite: 1122]</li><li>15종 이상의 방대한 기획 문서 통합 관리 및 아카이빙 프로세스 주도 [cite: 1122, 1114]</li><li>실제 플레이 데이터 분석을 통한 사용자 시선의 최적 학습 곡선 설계 [cite: 1098, 1099]</li>", 
+                achievements: "<li>기획 생산성 향상을 위한 Excel VBA 기반 데이터 자동화 도구 기획 및 제작</li><li>15종 이상의 방대한 기획 문서 통합 관리 및 아카이빙 프로세스 주도</li><li>실제 플레이 데이터 분석을 통한 사용자 시선의 최적 학습 곡선 설계</li>", 
                 img: "P2.png", 
                 assets: [
                     { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
@@ -311,26 +363,26 @@
                 ] 
             },
             { 
-                title: "밸런스 개선 제안", tag: "PROPOSAL QUEST", 
+                title: "밸런스 개선 제안", tag: "[ PROPOSAL QUEST ]", 
                 tools: "내부 개발툴, PowerPoint, Word", 
                 desc: "라이브 지표 분석을 통해 게임 메타 불균형 문제를 정의하고, 정량적 수치 기반의 개선안을 수립한 실무 중심 프로젝트입니다.", 
-                achievements: "<li>2,000여 건의 부정 여론 모니터링을 통한 만족도 하락 원인 규명 [cite: 1163, 1164]</li><li>수비 AI 개선으로 인한 패스 시도 감소 원인을 데이터로 논리적 증명 [cite: 1185]</li><li>시스템 간 상호작용 분석을 통한 공격 루트 다양성 확보 로직 설계 [cite: 1178, 1192]</li>", 
+                achievements: "<li>2,000여 건의 부정 여론 모니터링을 통한 만족도 하락 원인 규명</li><li>수비 AI 개선으로 인한 패스 시도 감소 원인을 데이터로 논리적 증명</li><li>시스템 간 상호작용 분석을 통한 공격 루트 다양성 확보 로직 설계</li>", 
                 img: "P3.png", 
                 assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] 
             },
             { 
-                title: "감독의 전술 노트", tag: "SYSTEM DESIGN", 
+                title: "감독의 전술 노트", tag: "[ SYSTEM DESIGN ]", 
                 tools: "PowerPoint", 
                 desc: "수집-조합-시너지-성장으로 이어지는 코어 루프를 설계하여 유저의 전술적 갈증을 성장의 재미로 전환한 시스템 제안서입니다.", 
-                achievements: "<li>수집-조합-시너지-성장으로 이어지는 게임 유기적 선순환 구조 설계 [cite: 1297]</li><li>시즌 패스 및 확률형 아이템의 전략적 결합을 통한 BM 모델링 [cite: 1379, 1380]</li><li>엔드 게임 콘텐츠 확장을 통한 최고 레벨 유저 잔존율 상승 전략 수립 [cite: 1405, 1406]</li>", 
+                achievements: "<li>수집-조합-시너지-성장으로 이어지는 게임 유기적 선순환 구조 설계</li><li>시즌 패스 및 확률형 아이템의 전략적 결합을 통한 BM 모델링</li><li>엔드 게임 콘텐츠 확장을 통한 최고 레벨 유저 잔존율 상승 전략 수립</li>", 
                 img: "P4.png", 
                 assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
             },
             { 
-                title: "공공 야간약국 선정", tag: "DATA ANALYSIS", 
+                title: "공공 야간약국 선정", tag: "[ DATA ANALYSIS ]", 
                 tools: "Python, QGIS, PowerPoint", 
                 desc: "의료 접근성 데이터를 정량 분석하여 사각지대 해소를 위한 최적의 약국 입지를 선정하고 맞춤형 홍보 전략을 제시했습니다.", 
-                achievements: "<li>Python 및 QGIS를 활용한 의료 사각지대 정량적 데이터 가공 및 분석 [cite: 1493]</li><li>총인구, 응급실 거리 등 복합 가중치 분석 모델 설계를 통한 우선순위 산출 [cite: 1492]</li><li>데이터 분석 결과를 실질적인 지역 밀착형 타겟 홍보 방안으로 연결 [cite: 1504, 1505]</li>", 
+                achievements: "<li>Python 및 QGIS를 활용한 의료 사각지대 정량적 데이터 가공 및 분석</li><li>총인구, 응급실 거리 등 복합 가중치 분석 모델 설계를 통한 우선순위 산출</li><li>데이터 분석 결과를 실질적인 지역 밀착형 타겟 홍보 방안으로 연결</li>", 
                 img: "P5.png", 
                 assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
             }

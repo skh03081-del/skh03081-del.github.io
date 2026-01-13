@@ -36,7 +36,7 @@
             cursor: url('https://cur.cursors-4u.net/games/gam-4/gam382.cur'), auto;
         }
 
-        /* --- 1. 인트로 & 로딩 시스템 --- */
+        /* --- 1. 인트로 시스템 --- */
         #intro-overlay, #loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 10001; display: flex; flex-direction: column;
@@ -53,7 +53,7 @@
         .btn-blink { animation: btn-blink 0.8s infinite alternate; }
         @keyframes btn-blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0.8; box-shadow: 0 0 30px var(--accent); transform: scale(1.02); } }
 
-        /* --- 2. 히어로 섹션 --- */
+        /* --- 2. 히어로 섹션 (높이 280px 최적화) --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
         .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(4px) brightness(0.5); }
@@ -70,7 +70,7 @@
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. 보유 기술 --- */
+        /* --- 3. 보유 기술 (READY 정렬 완벽) --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -102,54 +102,29 @@
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.3s; }
         .project-card:hover .card-img-box img { opacity: 0.9; }
 
-        /* [수정] 카드 태그: 배경 제거, 글자만 강조 */
-        .tag { position: absolute; top: 15px; left: 15px; font-size: 0.75rem; color: var(--accent); font-weight: bold; z-index: 5; font-family: 'Press Start 2P'; text-shadow: 2px 2px 4px #000; }
+        /* [수정] 퀘스트 태그: 배경 제거, 글자 강조 */
+        .tag { position: absolute; top: 15px; left: 15px; font-size: 0.7rem; color: var(--accent); font-weight: bold; z-index: 5; font-family: 'Press Start 2P'; text-shadow: 2px 2px 4px #000; pointer-events: none; }
         
         .card-info-box { padding: 20px; text-align: left; }
-        .card-info-box h3 { font-size: 1rem; margin: 0; color: #fff; letter-spacing: 1px; }
+        .card-info-box h3 { font-size: 0.95rem; margin: 0; color: #fff; letter-spacing: 1px; line-height: 1.4; }
 
-        /* --- 5. 프로젝트 모달 디자인 --- */
+        /* --- 5. 프로젝트 모달 디자인 (정밀 조정) --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
         .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
         
-        /* [수정] 모달 헤더 상하 정렬 최적화 */
-        .project-header-top { 
-            width: 100%; height: 140px; position: relative; overflow: hidden; flex-shrink: 0; 
-            border-bottom: 2px solid var(--accent); 
-            display: flex; flex-direction: column; justify-content: center; /* 상하 균등 배분 */
-            align-items: flex-start;
-            padding-left: 40px; 
-            box-sizing: border-box;
-        }
+        /* 헤더 상하 정렬 최적화 */
+        .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 40px; box-sizing: border-box; }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.4); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; width: 100%; }
 
-        /* [수정] 퀘스트 타입 태그 상하 정렬 */
-        #modalTag { 
-            font-family: 'Press Start 2P'; 
-            font-size: 0.8rem; 
-            color: var(--accent); 
-            display: block; 
-            margin-bottom: 12px; /* 제목과의 간격 */
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-        #modalTitle { margin: 0; }
+        #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 12px; font-weight: bold; text-shadow: 0 0 10px var(--accent-glow); }
+        #modalTitle { margin: 0; font-size: 1.8rem; }
 
-        /* [수정] EXIT 버튼: 좌우 대칭 여백 및 상하 중앙 */
+        /* EXIT 버튼: 우측 여백 40px로 좌측 대칭, 상하 중앙 */
         .close-system-btn { 
-            background: rgba(0, 0, 0, 0.8); 
-            color: var(--accent); 
-            border: 2px solid var(--accent); 
-            padding: 10px 25px; 
-            font-size: 0.9rem; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-weight: bold; 
-            position: absolute; 
-            right: 40px; /* 좌측 여백 40px와 동일하게 맞춤 */
-            top: 50%;
-            transform: translateY(-50%); /* 상하 정중앙 */
+            background: rgba(0, 0, 0, 0.8); color: var(--accent); border: 2px solid var(--accent); 
+            padding: 10px 25px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; 
+            position: absolute; right: 40px; top: 50%; transform: translateY(-50%); 
         }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
@@ -158,29 +133,34 @@
         .tools-equipped-bar { background: rgba(151, 193, 231, 0.1); padding: 15px 25px; border: 1px solid var(--accent-dark); margin-bottom: 30px; display: flex; align-items: center; gap: 20px; }
         .tools-label { font-size: 0.7rem; color: var(--accent); font-family: 'Press Start 2P'; }
         .tools-value { font-size: 1rem; color: #fff; font-weight: bold; }
+
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 25px; margin-bottom: 35px; text-align: left; }
-        .mission-log { border: 2px solid var(--accent); padding: 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
-        .mission-log h4 { color: #fff; margin-bottom: 20px; font-size: 1.2rem; text-shadow: 0 0 10px var(--accent-glow); }
-        .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 1rem; }
-        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; }
+        
+        .mission-log { border: 2px solid var(--accent); padding: 25px 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
+        .mission-log h4 { color: #fff; margin-bottom: 18px; font-size: 1.15rem; text-shadow: 0 0 10px var(--accent-glow); }
+        .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
+        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1rem; }
         
         .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 3px solid var(--accent); }
         .asset-btn { padding: 10px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 15px var(--accent); }
+
         .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0; border-top: 2px solid var(--accent-dark); text-align: center; }
         .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); }
         .pdf-viewer.narrow { width: 35% !important; }
         .pdf-viewer.active { display: block; }
+        
         .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 3px solid var(--accent); }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
+
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        .combined-video-frame { width: 85%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin: 0 auto; }
+        .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin: 0 auto; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
-        .excel-download-card { width: 85%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; margin: 0 auto; }
+        .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .excel-combined-container { width: 95% !important; } .close-system-btn { right: 20px; top: 15px; transform: none; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .excel-download-card { width: 95% !important; } .close-system-btn { right: 20px; top: 15px; transform: none; } }
     </style>
 </head>
 <body onclick="closeModal(event)">
@@ -245,11 +225,11 @@
     <div class="reveal-section">
         <h2 class="section-title">MISSION STAGES</h2>
         <div class="project-container">
-            <div class="project-card" onclick="openModal(0, event)"><div class="card-img-box"><div class="tag">SOLO QUEST</div><img src="P1.png"></div><div class="card-info-box"><h3>1인 기획 / 개발</h3></div></div>
+            <div class="project-card" onclick="openModal(0, event)"><div class="card-img-box"><div class="tag">SOLO QUEST</div><img src="P1.png"></div><div class="card-info-box"><h3>자체 기획 및 개발</h3></div></div>
             <div class="project-card" onclick="openModal(1, event)"><div class="card-img-box"><div class="tag">PARTY QUEST</div><img src="P2.png"></div><div class="card-info-box"><h3>다인 협업 프로젝트</h3></div></div>
-            <div class="project-card" onclick="openModal(2, event)"><div class="card-img-box"><div class="tag">LIVE SERVICE BALANCING</div><img src="P3.png"></div><div class="card-info-box"><h3>밸런스 개선 제안</h3></div></div>
-            <div class="project-card" onclick="openModal(3, event)"><div class="card-img-box"><div class="tag">SYSTEM DESIGN</div><img src="P4.png"></div><div class="card-info-box"><h3>신규 시스템 제안서</h3></div></div>
-            <div class="project-card" onclick="openModal(4, event)"><div class="card-img-box"><div class="tag">DATA</div><img src="P5.png"></div><div class="card-info-box"><h3>데이터 분석을 통한 입지 선정</h3></div></div>
+            <div class="project-card" onclick="openModal(2, event)"><div class="card-img-box"><div class="tag">BALANCE QUEST</div><img src="P3.png"></div><div class="card-info-box"><h3>라이브 서비스 개선</h3></div></div>
+            <div class="project-card" onclick="openModal(3, event)"><div class="card-img-box"><div class="tag">SYSTEM QUEST</div><img src="P4.png"></div><div class="card-info-box"><h3>신규 시스템 설계</h3></div></div>
+            <div class="project-card" onclick="openModal(4, event)"><div class="card-img-box"><div class="tag">DATA QUEST</div><img src="P5.png"></div><div class="card-info-box"><h3>데이터 기반 분석</h3></div></div>
         </div>
     </div>
 
@@ -324,18 +304,18 @@
 
         const projects = [
             { 
-                title: "1인 기획 / 개발", tag: "SOLO QUEST", 
+                title: "자체 기획 및 개발", tag: "SOLO QUEST", 
                 tools: "GameMaker, PowerPoint, Figma", 
-                desc: "축구 전략과 리듬 액션을 융합하여 복잡한 게임 규칙을 직관적으로 학습하게 하는 독창적 하이브리드 게임 기획입니다.", 
-                achievements: "<li>선수의 행동이 난이도에 직결되는 '동적 난이도 시스템' 설계</li><li>대부분의 시각 효과를 코드로 직접 구현하여 유연한 연출 구조 확보</li><li>축구 룰(반칙 등)을 박자 요소로 도입하여 교육적 가치와 재미 동시 달성</li>", 
+                desc: "축구 전략성과 리듬 게임의 융합을 통해 복잡한 오프사이드 등의 축구 룰을 직관적으로 학습할 수 있는 하이브리드 게임 기획입니다.", 
+                achievements: "<li>선수의 행동과 판정이 난이도에 직결되는 '동적 난이도 시스템' 설계</li><li>대부분의 시각 효과 및 판정 연출을 코드로 직접 구현하여 개발 효율성 확보</li><li>축구 전술 성공/실패 로직을 리듬 입력과 결합한 독창적 학습 구조 설계</li>", 
                 img: "P1.png", 
                 assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] 
             },
             { 
                 title: "다인 협업 프로젝트", tag: "PARTY QUEST", 
                 tools: "Unity, Excel, PowerPoint, Notion", 
-                desc: "기획 데이터 관리의 비효율을 해결하기 위해 VBA 기반 자동화 도구를 제작하고, 사용자 중심의 학습 곡선을 설계한 프로젝트입니다.", 
-                achievements: "<li>기획 생산성 향상을 위한 Excel VBA 기반 데이터 자동화 도구 기획 및 제작</li><li>15종 이상의 방대한 기획 문서 통합 관리 및 아카이빙 프로세스 주도</li><li>실제 플레이 데이터 분석을 통한 사용자 시선의 최적 학습 곡선 설계</li>", 
+                desc: "사용자 시선의 학습 곡선을 최적화하고, 방대한 게임 데이터를 효율적으로 관리하기 위한 VBA 자동화 시스템 구축 프로젝트입니다.", 
+                achievements: "<li>기획 생산성 30% 이상 향상을 위한 Excel VBA 기반 데이터 자동화 도구 기획 및 제작</li><li>15종 이상의 방대한 기획 문서 통합 관리 및 실시간 협업 아카이빙 프로세스 주도</li><li>실제 유저 플레이 데이터 분석을 통한 스테이지별 난이도 밸런스 및 학습 곡선 설계</li>", 
                 img: "P2.png", 
                 assets: [
                     { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
@@ -345,26 +325,26 @@
                 ] 
             },
             { 
-                title: "밸런스 개선 제안", tag: "LIVE SERVICE BALANCING", 
+                title: "라이브 서비스 개선", tag: "BALANCE QUEST", 
                 tools: "내부 개발툴, PowerPoint, Word", 
-                desc: "라이브 지표 분석을 통해 게임 메타 불균형 문제를 정의하고, 정량적 수치 기반의 개선안을 수립한 실무 중심 프로젝트입니다.", 
-                achievements: "<li>2,000여 건의 부정 여론 모니터링을 통한 만족도 하락 원인 규명</li><li>수비 AI 개선으로 인한 패스 시도 감소 원인을 데이터로 논리적 증명</li><li>시스템 간 상호작용 분석을 통한 공격 루트 다양성 확보 로직 설계</li>", 
+                desc: "라이브 지표 분석을 통해 게임 메타 불균형 문제를 정의하고, 정량적 수치 기반의 개선 패치안을 수립한 실무 프로젝트입니다.", 
+                achievements: "<li>2,000여 건 이상의 유저 피드백 및 지표 모니터링을 통한 텐백 전술 고착화 원인 규명</li><li>수비 AI 개선에 따른 공격 루트 영향력을 데이터로 증명하여 공격적 메타 전환 로직 설계</li><li>패치 후 예상 변화 시나리오 작성을 통한 밸런스 안정성 및 유저 만족도 변화 예측</li>", 
                 img: "P3.png", 
                 assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] 
             },
             { 
-                title: "신규 시스템 제안서", tag: "SYSTEM DESIGN", 
+                title: "신규 시스템 제안서", tag: "SYSTEM QUEST", 
                 tools: "PowerPoint", 
-                desc: "수집-조합-시너지-성장으로 이어지는 코어 루프를 설계하여 유저의 전술적 갈증을 성장의 재미로 전환한 시스템 제안서입니다.", 
-                achievements: "<li>수집-조합-시너지-성장으로 이어지는 게임 유기적 선순환 구조 설계</li><li>시즌 패스 및 확률형 아이템의 전략적 결합을 통한 BM 모델링</li><li>엔드 게임 콘텐츠 확장을 통한 최고 레벨 유저 잔존율 상승 전략 수립</li>", 
+                desc: "수집-조합-시너지-성장으로 이어지는 게임의 유기적 선순환 구조를 설계하여 유저의 전술적 재미를 극대화한 시스템 제안서입니다.", 
+                achievements: "<li>수집형 시즌 패스 모델링과 유저 잔존율 향상을 위한 엔드 게임 성장 루프 설계</li><li>시너지 및 보상 체계의 정밀 밸런싱을 통한 유저의 지속적인 동기 부여 전략 수립</li><li>시스템 간 상호작용 분석을 통한 신규 콘텐츠 도입의 안정성 및 BM 기대 효과 산출</li>", 
                 img: "P4.png", 
                 assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
             },
             { 
-                title: "데이터 분석을 통한 입지 선정", tag: "DATA", 
+                title: "데이터 기반 분석", tag: "DATA QUEST", 
                 tools: "Python, QGIS, PowerPoint", 
-                desc: "의료 접근성 데이터를 정량 분석하여 사각지대 해소를 위한 최적의 약국 입지를 선정하고 맞춤형 홍보 전략을 제시했습니다.", 
-                achievements: "<li>Python 및 QGIS를 활용한 의료 사각지대 정량적 데이터 가공 및 분석</li><li>총인구, 응급실 거리 등 복합 가중치 분석 모델 설계를 통한 우선순위 산출</li><li>데이터 분석 결과를 실질적인 지역 밀착형 타겟 홍보 방안으로 연결</li>", 
+                desc: "의료 접근성 데이터를 정량 분석하여 사각지대 해소를 위한 최적의 입지를 선정하고 논리적 홍보 전략을 제시한 분석 프로젝트입니다.", 
+                achievements: "<li>Python 및 QGIS를 활용한 의료 사각지대 정량적 데이터 가공 및 가시화 프로세스 구축</li><li>인구 밀도, 응급실 거리 등 복합 가중치 분석 모델 설계를 통한 최적 입지 우선순위 산출</li><li>데이터 분석 결과를 바탕으로 지역 밀착형 타겟 유저 선별 및 맞춤형 홍보 방안 도출</li>", 
                 img: "P5.png", 
                 assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
             }
@@ -375,7 +355,7 @@
             const p = projects[i];
             const modal = document.getElementById('projectModal');
             document.getElementById('headerBlur').style.backgroundImage = `url(${p.img})`;
-            document.getElementById('modalTag').innerText = `[ ${p.tag} ]`;
+            document.getElementById('modalTag').innerText = p.tag;
             document.getElementById('modalTitle').innerText = p.title;
             document.getElementById('modalDesc').innerText = p.desc;
             document.getElementById('modalAchievements').innerHTML = p.achievements;

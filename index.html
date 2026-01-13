@@ -42,7 +42,7 @@
             background: #000; z-index: 10001; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
         }
-        #intro-overlay h1 { color: var(--accent); font-size: 2.5rem; line-height: 1.4; }
+        #intro-overlay h1 { color: var(--accent); font-size: 2.5rem; line-height: 1.4; text-shadow: 0 0 10px var(--accent-glow); }
         #loading-screen { z-index: 10002; display: none; }
         .loader-container { width: 400px; text-align: center; }
         .loader-bar-bg { width: 100%; height: 24px; border: 2px solid var(--accent); padding: 3px; background: #000; }
@@ -53,30 +53,31 @@
         .btn-blink { animation: btn-blink 0.8s infinite alternate; }
         @keyframes btn-blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0.8; box-shadow: 0 0 30px var(--accent); transform: scale(1.02); } }
 
-        /* --- 2. 히어로 섹션 (수정 사항 반영) --- */
+        /* --- 2. 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
-        .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.5; }
-        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; }
+        .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
+        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(2px) brightness(0.6); }
         .marquee-item { width: 500px; height: 280px; flex-shrink: 0; }
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
-        /* [수정] 메인 텍스트 영역에 살짝 흰색 반투명 배경 추가 및 상하 정렬 */
+        /* [수정] 이름과 슬로건 상하 폭 동일하게 설정 */
         .hero-content { 
-            position: relative; z-index: 2; text-align: center; 
-            background: rgba(255, 255, 255, 0.08); /* 흰색 배경 살짝 */
-            backdrop-filter: blur(8px); /* 세련된 흐림 효과 */
-            padding: 30px 50px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; z-index: 2; 
+            text-align: center; 
+            max-width: 800px; 
+            padding: 40px 0; /* 상하 여백을 동일하게 부여 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .hero-content h1 { font-size: 2.3rem; color: var(--accent); margin: 0; text-shadow: 2px 2px 5px #000; letter-spacing: 2px; }
+        .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
         .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; color: var(--accent); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         
-        /* [수정] 슬로건과의 상하 간격을 이름 상단 간격과 동일하게 맞춤 */
+        /* [수정] 슬로건 위치 간격 최적화 */
         .main-slogan-text { 
-            margin-top: 20px; /* 이름 하단 간격 */
+            margin-top: 40px; /* 이름 상단 여백과 동일하게 맞춤 */
             padding: 10px 25px; 
             background: rgba(0, 0, 0, 0.7); 
             border: 1px solid var(--accent); 
@@ -88,12 +89,11 @@
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. 보유 기술 (READY 정렬) --- */
+        /* --- 3. 보유 기술 --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { background: var(--card); border: 3px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
-        
         .skill-group::after { content: "READY"; position: absolute; top: 28px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.85rem; color: var(--accent); text-shadow: 0 0 12px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
         @keyframes ready-glow { 0% { opacity: 1; } 100% { opacity: 0.4; } }
         
@@ -107,55 +107,53 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- 4. 프로젝트 디자인 (배경 제거 태그) --- */
+        /* --- 4. 프로젝트 디자인 --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: #000; border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
-        .project-card::before, .project-card::after { content: ""; position: absolute; width: 20px; height: 20px; border: 0 solid var(--accent); transition: 0.3s; z-index: 10; opacity: 0; }
-        .project-card::before { top: 10px; left: 10px; border-top-width: 3px; border-left-width: 3px; }
-        .project-card::after { bottom: 10px; right: 10px; border-bottom-width: 3px; border-right-width: 3px; }
         .project-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-        .project-card:hover::before, .project-card:hover::after { opacity: 1; transform: scale(1.1); }
 
         .card-img-box { width: 100%; height: 200px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.3s; }
         .project-card:hover .card-img-box img { opacity: 0.9; }
 
-        /* [수정] 태그 배경 제거, 글자만 강조 */
-        .tag { position: absolute; top: 15px; left: 15px; font-size: 0.75rem; color: var(--accent); font-weight: bold; z-index: 5; font-family: 'Press Start 2P'; text-shadow: 2px 2px 4px #000; }
+        /* [수정] 태그 배경 흰색 추가 및 가독성 강조 */
+        .tag { 
+            position: absolute; top: 12px; left: 12px; 
+            font-size: 0.65rem; color: #000; font-weight: bold; 
+            background: #ffffff; /* 흰색 배경 살짝 */
+            padding: 5px 10px; 
+            border: 1px solid var(--accent);
+            z-index: 5; 
+            font-family: 'Press Start 2P';
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
         
         .card-info-box { padding: 20px; text-align: left; }
-        .card-info-box h3 { font-size: 0.9rem; margin: 0; color: #fff; letter-spacing: 1px; line-height: 1.4; }
+        .card-info-box h3 { font-size: 0.95rem; margin: 0; color: #fff; letter-spacing: 1px; }
 
         /* --- 5. 프로젝트 모달 (EXIT 버튼 복구) --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
         .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
         
+        /* [복구] 상단 헤더 및 EXIT 버튼 상하 중앙 정렬 */
         .project-header-top { 
             width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; 
             border-bottom: 2px solid var(--accent); 
-            display: flex; flex-direction: column; justify-content: center; 
-            align-items: flex-start; padding-left: 40px; box-sizing: border-box; 
+            display: flex; align-items: center; justify-content: space-between; /* 양끝 정렬 */
+            padding: 0 40px; box-sizing: border-box; 
         }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.4); opacity: 1; transform: scale(1.1); z-index: 1; }
-        .header-info-content { position: relative; z-index: 2; width: 100%; }
+        
+        .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 5px; }
 
-        #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 12px; font-weight: bold; text-shadow: 0 0 10px var(--accent-glow); }
-        #modalTitle { margin: 0; font-size: 1.8rem; }
+        #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--accent); font-weight: bold; text-shadow: 0 0 10px var(--accent-glow); }
+        #modalTitle { margin: 0; font-size: 1.8rem; color: #fff; }
 
-        /* [복구] EXIT 버튼 위치 및 정렬 */
+        /* [복구] EXIT 버튼: 좌우 대칭 여백 40px 적용 */
         .close-system-btn { 
-            background: rgba(0, 0, 0, 0.8); 
-            color: var(--accent); 
-            border: 2px solid var(--accent); 
-            padding: 10px 25px; 
-            font-size: 0.9rem; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            font-weight: bold; 
-            position: absolute; 
-            right: 40px; /* 좌측 40px와 대칭 */
-            top: 50%;
-            transform: translateY(-50%); /* 상하 중앙 정렬 */
+            position: relative; z-index: 3;
+            background: rgba(0, 0, 0, 0.8); color: var(--accent); border: 2px solid var(--accent); 
+            padding: 10px 25px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; 
         }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
@@ -164,13 +162,11 @@
         .tools-equipped-bar { background: rgba(151, 193, 231, 0.1); padding: 15px 25px; border: 1px solid var(--accent-dark); margin-bottom: 30px; display: flex; align-items: center; gap: 20px; }
         .tools-label { font-size: 0.7rem; color: var(--accent); font-family: 'Press Start 2P'; }
         .tools-value { font-size: 1rem; color: #fff; font-weight: bold; }
-
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 25px; margin-bottom: 35px; text-align: left; }
-        
-        .mission-log { border: 2px solid var(--accent); padding: 25px 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
-        .mission-log h4 { color: #fff; margin-bottom: 18px; font-size: 1.15rem; text-shadow: 0 0 10px var(--accent-glow); }
-        .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
-        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1rem; }
+        .mission-log { border: 2px solid var(--accent); padding: 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
+        .mission-log h4 { color: #fff; margin-bottom: 20px; font-size: 1.2rem; }
+        .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 1rem; }
+        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; }
         
         .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 3px solid var(--accent); }
         .asset-btn { padding: 10px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
@@ -180,18 +176,17 @@
         .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); }
         .pdf-viewer.narrow { width: 35% !important; }
         .pdf-viewer.active { display: block; }
-        
         .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 3px solid var(--accent); }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        .combined-video-frame { width: 85%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin: 0 auto; }
+        .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin: 0 auto; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
-        .excel-download-card { width: 85%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; margin: 0 auto; }
+        .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .excel-download-card { width: 95% !important; } .close-system-btn { right: 20px; top: 15px; transform: none; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .excel-download-card { width: 95% !important; } }
     </style>
 </head>
 <body onclick="closeModal(event)">
@@ -334,51 +329,11 @@
         }
 
         const projects = [
-            { 
-                title: "Solo Quest: 자체 기획 및 개발", tag: "SOLO QUEST", 
-                tools: "GameMaker, PowerPoint, Figma", 
-                desc: "축구 전략성과 리듬 게임의 융합을 통해 복잡한 오프사이드 등의 축구 룰을 직관적으로 학습할 수 있는 하이브리드 게임 기획입니다. [cite: 922]", 
-                achievements: "<li>선수의 행동과 판정이 난이도에 직결되는 '동적 난이도 시스템' 설계 [cite: 1030, 1031]</li><li>대부분의 시각 효과 및 판정 연출을 코드로 직접 구현하여 개발 효율성 확보 [cite: 1040]</li><li>축구 전술 성공/실패 로직을 리듬 입력과 결합한 독창적 학습 구조 설계 [cite: 921, 956]</li>", 
-                img: "P1.png", 
-                assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] 
-            },
-            { 
-                title: "Party Quest: 다인 협업 프로젝트", tag: "PARTY QUEST", 
-                tools: "Unity, Excel, PowerPoint, Notion", 
-                desc: "사용자 시선의 학습 곡선을 최적화하고, 방대한 게임 데이터를 효율적으로 관리하기 위한 VBA 자동화 시스템 구축 프로젝트입니다. [cite: 1073]", 
-                achievements: "<li>기획 생산성 30% 이상 향상을 위한 Excel VBA 기반 데이터 자동화 도구 기획 및 제작 [cite: 1122]</li><li>15종 이상의 방대한 기획 문서 통합 관리 및 실시간 협업 아카이빙 프로세스 주도 [cite: 1122, 1114]</li><li>실제 유저 플레이 데이터 분석을 통한 스테이지별 난이도 밸런스 및 학습 곡선 설계 [cite: 1098, 1099]</li>", 
-                img: "P2.png", 
-                assets: [
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" },
-                    { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" },
-                    { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg?enablejsapi=1", downloadUrl: "KOKO_Data_Manager.xlsm" },
-                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" }
-                ] 
-            },
-            { 
-                title: "Balance Quest: 라이브 서비스 개선", tag: "BALANCE QUEST", 
-                tools: "내부 개발툴, PowerPoint, Word", 
-                desc: "라이브 지표 분석을 통해 게임 메타 불균형 문제를 정의하고, 정량적 수치 기반의 개선 패치안을 수립한 실무 프로젝트입니다. [cite: 1132, 1145]", 
-                achievements: "<li>2,000여 건 이상의 유저 피드백 및 지표 모니터링을 통한 텐백 전술 고착화 원인 규명 [cite: 1163, 1164]</li><li>수비 AI 개선에 따른 공격 루트 영향력을 데이터로 증명하여 공격적 메타 전환 로직 설계 [cite: 1185, 1192]</li><li>패치 후 예상 변화 시나리오 작성을 통한 밸런스 안정성 및 유저 만족도 변화 예측 [cite: 1193, 1146]</li>", 
-                img: "P3.png", 
-                assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] 
-            },
-            { 
-                title: "System Quest: 신규 시스템 설계", tag: "SYSTEM QUEST", 
-                tools: "PowerPoint", 
-                desc: "수집-조합-시너지-성장으로 이어지는 게임의 유기적 선순환 구조를 설계하여 유저의 전술적 재미를 극대화한 시스템 제안서입니다. [cite: 1296]", 
-                achievements: "<li>수집형 시즌 패스 모델링과 유저 잔존율 향상을 위한 엔드 게임 성장 루프 설계 [cite: 1393, 1405]</li><li>시너지 및 보상 체계의 정밀 밸런싱을 통한 유저의 지속적인 동기 부여 전략 수립 [cite: 1297, 1338]</li><li>시스템 간 상호작용 분석을 통한 신규 콘텐츠 도입의 안정성 및 BM 기대 효과 산출 [cite: 1341, 1385]</li>", 
-                img: "P4.png", 
-                assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
-            },
-            { 
-                title: "Data Quest: 데이터 기반 분석", tag: "DATA QUEST", 
-                tools: "Python, QGIS, PowerPoint", 
-                desc: "의료 접근성 데이터를 정량 분석하여 사각지대 해소를 위한 최적의 입지를 선정하고 논리적 홍보 전략을 제시한 분석 프로젝트입니다. [cite: 1422, 1431]", 
-                achievements: "<li>Python 및 QGIS를 활용한 의료 사각지대 정량적 데이터 가공 및 가시화 프로세스 구축 [cite: 1493]</li><li>인구 밀도, 응급실 거리 등 복합 가중치 분석 모델 설계를 통한 최적 입지 우선순위 산출 [cite: 1491, 1492]</li><li>데이터 분석 결과를 바탕으로 지역 밀착형 타겟 유저 선별 및 맞춤형 홍보 방안 도출 [cite: 1504, 1505]</li>", 
-                img: "P5.png", 
-                assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
-            }
+            { title: "Solo Quest: 자체 기획 및 개발", tag: "SOLO QUEST", tools: "GameMaker, PowerPoint, Figma", desc: "축구 전략성과 리듬 게임의 융합을 통해 복잡한 오프사이드 등의 축구 룰을 직관적으로 학습할 수 있는 하이브리드 게임 기획입니다.", achievements: "<li>선수의 행동과 판정이 난이도에 직결되는 '동적 난이도 시스템' 설계</li><li>대부분의 시각 효과 및 판정 연출을 코드로 직접 구현하여 개발 효율성 확보</li><li>축구 전술 성공/실패 로직을 리듬 입력과 결합한 독창적 학습 구조 설계</li>", img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8?enablejsapi=1" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] },
+            { title: "Party Quest: 다인 협업 프로젝트", tag: "PARTY QUEST", tools: "Unity, Excel, PowerPoint, Notion", desc: "사용자 시선의 학습 곡선을 최적화하고, 방대한 게임 데이터를 효율적으로 관리하기 위한 VBA 자동화 시스템 구축 프로젝트입니다.", achievements: "<li>기획 생산성 30% 이상 향상을 위한 Excel VBA 기반 데이터 자동화 도구 기획 및 제작</li><li>15종 이상의 방대한 기획 문서 통합 관리 및 실시간 협업 아카이빙 프로세스 주도</li><li>실제 유저 플레이 데이터 분석을 통한 스테이지별 난이도 밸런스 및 학습 곡선 설계</li>", img: "P2.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM?enablejsapi=1" }, { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" }, { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg?enablejsapi=1", downloadUrl: "KOKO_Data_Manager.xlsm" }, { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" }] },
+            { title: "Balance Quest: 라이브 서비스 개선", tag: "BALANCE QUEST", tools: "내부 개발툴, PowerPoint, Word", desc: "라이브 지표 분석을 통해 게임 메타 불균형 문제를 정의하고, 정량적 수치 기반의 개선 패치안을 수립한 실무 프로젝트입니다.", achievements: "<li>2,000여 건 이상의 유저 피드백 및 지표 모니터링을 통한 텐백 전술 고착화 원인 규명</li><li>수비 AI 개선에 따른 공격 루트 영향력을 데이터로 증명하여 공격적 메타 전환 로직 설계</li><li>패치 후 예상 변화 시나리오 작성을 통한 밸런스 안정성 및 유저 만족도 변화 예측</li>", img: "P3.png", assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] },
+            { title: "System Quest: 신규 시스템 설계", tag: "SYSTEM QUEST", tools: "PowerPoint", desc: "수집-조합-시너지-성장으로 이어지는 게임의 유기적 선순환 구조를 설계하여 유저의 전술적 재미를 극대화한 시스템 제안서입니다.", achievements: "<li>수집형 시즌 패스 모델링과 유저 잔존율 향상을 위한 엔드 게임 성장 루프 설계</li><li>시너지 및 보상 체계의 정밀 밸런싱을 통한 유저의 지속적인 동기 부여 전략 수립</li><li>시스템 간 상호작용 분석을 통한 신규 콘텐츠 도입의 안정성 및 BM 기대 효과 산출</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
+            { title: "Data Quest: 데이터 기반 분석", tag: "DATA QUEST", tools: "Python, QGIS, PowerPoint", desc: "의료 접근성 데이터를 정량 분석하여 사각지대 해소를 위한 최적의 입지를 선정하고 논리적 홍보 전략을 제시한 분석 프로젝트입니다.", achievements: "<li>Python 및 QGIS를 활용한 의료 사각지대 정량적 데이터 가공 및 가시화 프로세스 구축</li><li>인구 밀도, 응급실 거리 등 복합 가중치 분석 모델 설계를 통한 최적 입지 우선순위 산출</li><li>데이터 분석 결과를 바탕으로 지역 밀착형 타겟 유저 선별 및 맞춤형 홍보 방안 도출</li>", img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] }
         ];
 
         function openModal(i, e) {
@@ -426,6 +381,7 @@
         }
 
         function closeModal(e) {
+            // EXIT 버튼 또는 모달 외부 클릭 시 닫기
             if (e && e.target !== document.getElementById('projectModal') && !e.target.classList.contains('close-system-btn')) return;
             document.getElementById('projectModal').style.display = 'none';
             document.body.style.overflow = 'auto';

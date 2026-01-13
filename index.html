@@ -42,15 +42,24 @@
             background: #000; z-index: 10001; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
         }
+        
+        /* [수정] 인트로 글자 색상 흰색 고정 */
+        #intro-overlay h1 { color: #ffffff; font-size: 2.5rem; line-height: 1.4; }
+        #intro-overlay h1 span { color: var(--accent); }
+
         #loading-screen { z-index: 10002; display: none; }
         .loader-container { width: 400px; text-align: center; }
         .loader-bar-bg { width: 100%; height: 24px; border: 2px solid var(--accent); padding: 3px; background: #000; }
         .loader-bar-fill { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
         .loader-percent { margin-top: 15px; font-family: 'Press Start 2P'; font-size: 1rem; color: var(--accent); }
 
+        /* [수정] 인트로 버튼 깜빡임 효과 복구 */
         .btn-pixel { padding: 15px 35px; background: var(--accent); color: #0d1117; border: 2px solid #fff; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px var(--accent-glow); transition: 0.2s; font-size: 1.1rem; text-decoration: none; display: inline-block; }
-        .btn-blink { animation: btn-blink 1s infinite; }
-        @keyframes btn-blink { 0%, 100% { opacity: 1; box-shadow: 0 0 15px var(--accent-glow); } 50% { opacity: 0.7; } }
+        .btn-blink { animation: btn-blink 0.8s infinite alternate; }
+        @keyframes btn-blink { 
+            0% { opacity: 1; box-shadow: 0 0 15px var(--accent-glow); transform: scale(1); } 
+            100% { opacity: 0.8; box-shadow: 0 0 30px var(--accent), 0 0 10px #fff; transform: scale(1.02); } 
+        }
 
         /* --- 2. 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 420px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
@@ -62,8 +71,11 @@
         
         .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
         .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
-        .cursor { display: inline-block; width: 20px; height: 4px; background-color: var(--accent); vertical-align: baseline; animation: cursor-blink 0.8s infinite; }
-        @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        /* [수정] 커서 깜빡임 효과 복구 (인트로/메인 공통) */
+        .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; }
+        .cursor { display: inline-block; width: 20px; height: 4px; background-color: var(--accent); vertical-align: baseline; animation: blink 0.8s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .profile-info { margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.85); border: 1px solid var(--accent); opacity: 0; transition: 0.8s; }
         .profile-info p { margin: 5px 0; font-size: 0.95rem; color: #fff; }
@@ -72,7 +84,7 @@
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. 보유 기술 (아이콘 컬러 통일) --- */
+        /* --- 3. 보유 기술 (아이콘 수정 완료) --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -84,7 +96,6 @@
         .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; width: 100%; }
         
         .skill-name-box { display: flex; align-items: center; gap: 12px; }
-        /* [수정] 모든 아이콘 색상을 사이트 포인트 컬러로 통일 */
         .skill-name-box i { font-size: 1.1rem; width: 22px; text-align: center; color: var(--accent); filter: drop-shadow(0 0 5px var(--accent-glow)); } 
         .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
         .skill-lv { font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--lv5-color); }
@@ -138,7 +149,7 @@
 
     <div id="intro-overlay">
         <h1>GAME DESIGNER<br>LEE JAE YOUNG<br><span>PORTFOLIO<span class="cursor-blink">_</span></span></h1>
-        <button class="btn-pixel btn-pixel blink" onclick="startLoadingSequence(event)">START ADVENTURE</button>
+        <button class="btn-pixel btn-blink" onclick="startLoadingSequence(event)">Press The Button</button>
     </div>
 
     <div id="loading-screen">
@@ -191,7 +202,7 @@
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-book"></i><span class="skill-name">Notion</span></div><span class="skill-lv">LV.4</span></div>
+                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-n"></i><span class="skill-name">Notion</span></div><span class="skill-lv">LV.4</span></div>
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
                 </div>
             </div>
@@ -203,7 +214,7 @@
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-powerpoint"></i><span class="skill-name">PPT</span></div><span class="skill-lv">LV.4</span></div>
+                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-powerpoint"></i><span class="skill-name">PowerPoint</span></div><span class="skill-lv">LV.4</span></div>
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div>
                 </div>
                 <div class="skill-item">
@@ -219,7 +230,7 @@
             <div class="skill-group">
                 <div class="skill-group-title">개발 & 엔진</div>
                 <div class="skill-item">
-                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-cube"></i><span class="skill-name">Gamemaker</span></div><span class="skill-lv">LV.4</span></div>
+                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-cubes"></i><span class="skill-name">Gamemaker</span></div><span class="skill-lv">LV.4</span></div>
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div>
                 </div>
                 <div class="skill-item">
@@ -227,11 +238,11 @@
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 65%;"></div></div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-wand-magic-sparkles"></i><span class="skill-name">Gemini</span></div><span class="skill-lv">LV.4</span></div>
+                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-star-of-life"></i><span class="skill-name">Gemini</span></div><span class="skill-lv">LV.4</span></div>
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
                 </div>
                 <div class="skill-item">
-                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-microchip"></i><span class="skill-name">NotebookLM</span></div><span class="skill-lv">LV.4</span></div>
+                    <div class="skill-header"><div class="skill-name-box"><i class="fas fa-book-open"></i><span class="skill-name">NotebookLM</span></div><span class="skill-lv">LV.4</span></div>
                     <div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div>
                 </div>
             </div>

@@ -42,9 +42,7 @@
             background: #000; z-index: 10001; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
         }
-        /* [수정] 인트로 글자 색상 포인트 컬러로 복구 */
         #intro-overlay h1 { color: var(--accent); font-size: 2.5rem; line-height: 1.4; text-shadow: 0 0 10px var(--accent-glow); }
-        
         #loading-screen { z-index: 10002; display: none; }
         .loader-container { width: 400px; text-align: center; }
         .loader-bar-bg { width: 100%; height: 24px; border: 2px solid var(--accent); padding: 3px; background: #000; }
@@ -55,12 +53,10 @@
         .btn-blink { animation: btn-blink 0.8s infinite alternate; }
         @keyframes btn-blink { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0.8; box-shadow: 0 0 30px var(--accent); transform: scale(1.02); } }
 
-        /* --- 2. 히어로 섹션 (높이 축소) --- */
-        /* [수정] 높이를 280px로 줄임 */
+        /* --- 2. 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
         .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(4px) brightness(0.5); }
-        /* [수정] 높이를 280px로 줄임 */
         .marquee-item { width: 500px; height: 280px; flex-shrink: 0; }
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -74,36 +70,31 @@
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 3. 보유 기술 (READY 정렬 및 효과 수정) --- */
+        /* --- 3. 보유 기술 (READY 정렬 수정) --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        
-        /* [수정] 게임 스타일 UI 강화 */
         .skill-group { 
             background: var(--card); 
-            border: 3px solid var(--border); /* 테두리 두껍게 */
+            border: 3px solid var(--border); 
             padding: 25px; 
             display: flex; flex-direction: column; gap: 15px; position: relative; 
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5); /* 내부 그림자 추가 */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
         
-        /* [수정] READY 표시 위치 정렬 및 깜빡임 효과 추가 */
+        /* [수정] READY 위치 상하정렬 맞춤 및 효과 추가 */
         .skill-group::after { 
             content: "READY"; 
             position: absolute; 
-            top: 15px; /* 타이틀과 높이 맞춤 */
-            right: 20px; 
+            top: 28px; /* 협업 관리 텍스트와 높이 일치 */
+            right: 25px; 
             font-family: 'Press Start 2P'; 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             color: var(--accent); 
-            text-shadow: 0 0 10px var(--accent-glow); /* 글로우 효과 */
-            animation: ready-blink 1s infinite alternate; /* 깜빡임 애니메이션 */
+            text-shadow: 0 0 12px var(--accent-glow);
+            animation: ready-glow 1s infinite alternate;
         }
-        @keyframes ready-blink {
-            0% { opacity: 1; text-shadow: 0 0 10px var(--accent-glow); }
-            100% { opacity: 0.5; text-shadow: 0 0 2px var(--accent-glow); }
-        }
+        @keyframes ready-glow { 0% { opacity: 1; } 100% { opacity: 0.4; } }
         
         .skill-group-title { font-size: 1rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 15px; margin-bottom: 5px; letter-spacing: 1px; }
         .skill-item { display: flex; flex-direction: column; margin-bottom: 12px; }
@@ -115,37 +106,90 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- 4. 프로젝트 그리드 --- */
+        /* --- 4. 프로젝트 디자인 (Stage Select) --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .project-card { background: var(--card); border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
-        .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-        .card-img-box { width: 100%; height: 200px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .tag { position: absolute; top: 12px; left: 12px; font-size: 0.65rem; color: #000; font-weight: bold; background: var(--accent); padding: 4px 10px; border: 1px solid #fff; z-index: 5; font-family: 'Press Start 2P'; }
-        .card-info-box { padding: 20px; text-align: left; }
-        .card-info-box h3 { font-size: 1.1rem; margin: 0; color: #fff; }
+        .project-card { 
+            background: #000; 
+            border: 2px solid var(--border); 
+            cursor: pointer; 
+            transition: 0.3s; 
+            overflow: hidden; 
+            position: relative;
+        }
+        /* 타겟팅 괄호 효과 */
+        .project-card::before, .project-card::after { 
+            content: ""; position: absolute; width: 20px; height: 20px; 
+            border: 0 solid var(--accent); transition: 0.3s; z-index: 10; opacity: 0;
+        }
+        .project-card::before { top: 10px; left: 10px; border-top-width: 3px; border-left-width: 3px; }
+        .project-card::after { bottom: 10px; right: 10px; border-bottom-width: 3px; border-right-width: 3px; }
+        
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+        .project-card:hover::before, .project-card:hover::after { opacity: 1; transform: scale(1.1); }
 
-        /* --- 5. 프로젝트 모달 --- */
+        .card-img-box { width: 100%; height: 200px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.3s; }
+        .project-card:hover .card-img-box img { opacity: 0.9; }
+
+        /* 프로젝트 태그 복구 */
+        .tag { position: absolute; top: 12px; left: 12px; font-size: 0.65rem; color: #000; font-weight: bold; background: var(--accent); padding: 4px 10px; border: 1px solid #fff; z-index: 5; font-family: 'Press Start 2P'; }
+        
+        .card-info-box { padding: 20px; text-align: left; }
+        .card-info-box h3 { font-size: 1rem; margin: 0; color: #fff; letter-spacing: 1px; }
+
+        /* --- 5. 프로젝트 모달 디자인 정밀 수정 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
         .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
         
-        .project-header-top { width: 100%; height: 100px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; padding: 0 40px; }
+        /* [수정] EXIT 버튼 중앙 정렬 및 여백 대칭 */
+        .project-header-top { 
+            width: 100%; height: 110px; position: relative; overflow: hidden; flex-shrink: 0; 
+            border-bottom: 2px solid var(--accent); 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; /* 좌측 KOKODUGI 시작 위치와 우측 버튼 위치를 40px로 통일 */
+            box-sizing: border-box;
+        }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.4); opacity: 1; transform: scale(1.1); z-index: 1; }
-        .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; width: 100%; justify-content: space-between; }
-        .close-system-btn { background: rgba(0, 0, 0, 0.7); color: var(--accent); border: 2px solid var(--accent); padding: 8px 25px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 60px; top: 25px; }
+        .header-info-content { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; width: 100%; }
+
+        /* [수정] 퀘스트 타입 태그 강조 및 위치 하향 */
+        #modalTag { 
+            font-family: 'Press Start 2P'; 
+            font-size: 0.8rem; 
+            color: #000; 
+            background: var(--accent); 
+            padding: 6px 12px; 
+            display: inline-block; 
+            margin-top: 15px; /* 위치를 살짝 내림 */
+            margin-bottom: 8px;
+            font-weight: bold;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* [수정] EXIT 버튼: 좌우 대칭 여백 및 상하 중앙 */
+        .close-system-btn { 
+            background: rgba(0, 0, 0, 0.8); 
+            color: var(--accent); 
+            border: 2px solid var(--accent); 
+            padding: 10px 25px; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-weight: bold;
+            box-sizing: border-box;
+            display: flex; align-items: center; justify-content: center;
+        }
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 40px 60px; }
 
-        /* EQUIPPED TOOLS 디자인 */
         .tools-equipped-bar { background: rgba(151, 193, 231, 0.1); padding: 15px 25px; border: 1px solid var(--accent-dark); margin-bottom: 30px; display: flex; align-items: center; gap: 20px; }
         .tools-label { font-size: 0.7rem; color: var(--accent); font-family: 'Press Start 2P'; }
         .tools-value { font-size: 1rem; color: #fff; font-weight: bold; }
 
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 25px; margin-bottom: 35px; text-align: left; }
         
-        /* 핵심 성과 섹션 */
         .mission-log { border: 2px solid var(--accent); padding: 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
         .mission-log h4 { color: #fff; margin-bottom: 20px; font-size: 1.2rem; text-shadow: 0 0 10px var(--accent-glow); }
         .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 1rem; }
@@ -164,14 +208,13 @@
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        /* 코코두기 동영상 프레임 최적화 */
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
         .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         .excel-download-card { width: 100%; padding: 40px; background: rgba(22, 27, 34, 0.9); border: 2px dashed var(--accent); text-align: center; }
 
-        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .excel-combined-container { width: 95% !important; } .close-system-btn { right: 10px; top: 10px; } }
+        @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .excel-combined-container { width: 95% !important; } .project-header-top { padding: 0 20px; } }
     </style>
 </head>
 <body onclick="closeModal(event)">
@@ -234,7 +277,7 @@
     </div>
 
     <div class="reveal-section">
-        <h2 class="section-title">SELECT STAGE</h2>
+        <h2 class="section-title">MISSION STAGES</h2>
         <div class="project-container">
             <div class="project-card" onclick="openModal(0, event)"><div class="card-img-box"><div class="tag">SOLO</div><img src="P1.png"></div><div class="card-info-box"><h3>RHYTHM ELEVEN</h3></div></div>
             <div class="project-card" onclick="openModal(1, event)"><div class="card-img-box"><div class="tag">PARTY</div><img src="P2.png"></div><div class="card-info-box"><h3>KOKODUGI (코코두기)</h3></div></div>
@@ -249,7 +292,10 @@
             <div class="project-header-top">
                 <div id="headerBlur" class="header-bg-blur"></div>
                 <div class="header-info-content">
-                    <div class="header-title-box"><span id="modalTag" style="font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--accent);">TYPE</span><h2 id="modalTitle">TITLE</h2></div>
+                    <div class="header-title-box">
+                        <span id="modalTag">TYPE</span>
+                        <h2 id="modalTitle">TITLE</h2>
+                    </div>
                     <button class="close-system-btn" onclick="closeModal(event)">[X] EXIT</button>
                 </div>
             </div>
@@ -365,7 +411,7 @@
             const p = projects[i];
             const modal = document.getElementById('projectModal');
             document.getElementById('headerBlur').style.backgroundImage = `url(${p.img})`;
-            document.getElementById('modalTag').innerText = p.tag;
+            document.getElementById('modalTag').innerText = `[ ${p.tag} ]`;
             document.getElementById('modalTitle').innerText = p.title;
             document.getElementById('modalDesc').innerText = p.desc;
             document.getElementById('modalAchievements').innerHTML = p.achievements;

@@ -38,8 +38,6 @@
 
         /* --- 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
-        
-        /* [수정] 배경 롤링 화면 초기 opacity 0 */
         .hero-bg-marquee { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             pointer-events: none; opacity: 0; transition: opacity 1.5s ease-in-out; 
@@ -55,19 +53,12 @@
         .hero-content h1 { font-size: 2.5rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
         .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; color: var(--accent); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        
-        /* [수정] 슬로건 초기 opacity 0 */
-        .main-slogan-text { 
-            margin-top: 50px; padding: 10px 25px; background: rgba(0, 0, 0, 0.7); 
-            border: 1px solid var(--accent); display: inline-block; 
-            font-size: 1.1rem; color: #fff; opacity: 0; transition: 0.8s; 
-        }
+        .main-slogan-text { margin-top: 50px; padding: 10px 25px; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--accent); display: inline-block; font-size: 1.1rem; color: #fff; opacity: 0; transition: 0.8s; }
 
-        /* [수정] 본문 섹션 초기 opacity 0 */
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 보유 기술 섹션 --- */
+        /* --- 보유 기술 --- */
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -91,7 +82,18 @@
         .card-img-box { width: 100%; height: 200px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.3s; }
         .project-card:hover .card-img-box img { opacity: 0.9; }
-        .tag { position: absolute; top: 12px; left: 12px; font-size: 0.65rem; color: #000; font-weight: bold; background: #ffffff; padding: 5px 12px; border: 1px solid var(--accent); z-index: 5; font-family: 'Press Start 2P'; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+        
+        /* [수정] 태그 투명도 0.7 적용 */
+        .tag { 
+            position: absolute; top: 12px; left: 12px; 
+            font-size: 0.65rem; color: #000; font-weight: bold; 
+            background: rgba(255, 255, 255, 0.7); 
+            padding: 5px 12px; 
+            border: 1px solid var(--accent); 
+            z-index: 5; font-family: 'Press Start 2P'; 
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5); 
+        }
+        
         .card-info-box { padding: 20px; text-align: left; }
         .card-info-box h3 { font-size: 1.3rem; margin: 0; color: #fff; letter-spacing: 1px; line-height: 1.4; } 
 
@@ -109,7 +111,7 @@
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 30px 60px 0; } 
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 20px; margin-bottom: 20px; text-align: left; }
-        .mission-log { border: 2px solid var(--accent); padding: 25px 30px; margin-bottom: 30px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
+        .mission-log { border: 2px solid var(--accent); padding: 20px 30px; margin-bottom: 30px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
         .mission-log h4 { color: #fff; margin-bottom: 15px; font-size: 1.2rem; }
         .mission-log li { margin-bottom: 15px; color: var(--text-sub); position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
         .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; top: 0; }
@@ -186,13 +188,13 @@
         </div>
     </div>
 
-    <div id="stage-section" class="reveal-section">
+    <div class="reveal-section">
         <h2 class="section-title">MISSION STAGES</h2>
         <div class="project-container">
             <div class="project-card" onclick="openModal(0, event)"><div class="card-img-box"><div class="tag">SOLO QUEST</div><img src="P1.png"></div><div class="card-info-box"><h3>자체 기획 및 개발</h3></div></div>
             <div class="project-card" onclick="openModal(1, event)"><div class="card-img-box"><div class="tag">PARTY QUEST</div><img src="P2.png"></div><div class="card-info-box"><h3>다인 협업 프로젝트</h3></div></div>
             <div class="project-card" onclick="openModal(2, event)"><div class="card-img-box"><div class="tag">BALANCE QUEST</div><img src="P3.png"></div><div class="card-info-box"><h3>라이브 서비스 개선</h3></div></div>
-            <div class="project-card" onclick="openModal(3, event)"><div class="card-img-box"><div class="tag">SYSTEM QUEST</div><img src="P4.png"></div><div class="card-info-box"><h3>신규 시스템 설계</h3></div></div>
+            <div class="project-card" onclick="openModal(3, event)"><div class="card-info-box"><div class="tag">SYSTEM QUEST</div><img src="P4.png"></div><div class="card-info-box"><h3>신규 시스템 설계</h3></div></div>
             <div class="project-card" onclick="openModal(4, event)"><div class="card-img-box"><div class="tag">SIMULATION QUEST</div><img src="P6.PNG"></div><div class="card-info-box"><h3>밸런스 시뮬레이터</h3></div></div>
             <div class="project-card" onclick="openModal(5, event)"><div class="card-img-box"><div class="tag">DATA QUEST</div><img src="P5.png"></div><div class="card-info-box"><h3>데이터 기반 분석</h3></div></div>
         </div>
@@ -233,9 +235,7 @@
                     nameTarget.textContent += nameText.charAt(i); i++;
                     setTimeout(type, 100);
                 } else {
-                    // 이름 완료 후 슬로건 서서히 노출
                     sloganTarget.style.opacity = '1';
-                    // 슬로건 노출 시점에 배경과 본문 동시에 활성화
                     setTimeout(() => {
                         marqueeBg.classList.add('visible');
                         document.querySelectorAll('.reveal-section').forEach((sec, idx) => {
@@ -253,22 +253,21 @@
                 desc: "축구 전략과 리듬 액션을 결합한 독창적 하이브리드 게임 기획입니다.", 
                 achievements: "<li><span class='highlight-title'>동적 난이도 조절 시스템 설계</span>선수 행동 데이터와 리듬 판정을 연동한 실시간 난이도 조절 로직 구축</li><li><span class='highlight-title'>GML 기반 판정 및 연출 구현</span>시각 효과와 판정 시스템을 코드로 직접 구현하여 유연한 연출 구조 확보</li><li><span class='highlight-title'>룰 학습형 재미 설계</span>복잡한 축구 규칙을 리듬 패턴으로 치환하여 유저의 직관적 학습 유도</li>", 
                 img: "P1.png", 
-                // [수정] 1번 프로젝트 탭 복구
+                // [수정] 1번 프로젝트 포스트 모템 추가
                 assets: [
                     { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8" }, 
                     { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, 
-                    { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }
+                    { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" },
+                    { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }
                 ] 
             },
             { 
                 title: "다인 협업 프로젝트", tag: "PARTY QUEST", 
                 desc: "사용자 학습 곡선을 고려한 레벨 디자인 및 데이터 자동화 관리 프로젝트입니다.", 
-                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 활용한 스테이지 구성 및 게임 오브젝트 배치 최적화</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저 제작으로 휴먼 에러 차단</li><li><span class='highlight-title'>사용자 중심 학습 곡선 설계</span>플레이 데이터를 분석하여 이탈 방지형 단계별 튜토리얼 및 밸런스 설계</li><li><span class='highlight-title'>Figma를 활용한 UI/UX 설계</span>직관적인 조작감과 정보 전달력을 고려한 게임 HUD 및 인터페이스 기획</li>", 
-                img: "P2.png", 
-                // [수정] 2번 프로젝트 탭 복구
-                assets: [ 
+                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 활용한 스테이지 구성 및 게임 오브젝트 배치 최적화</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저 제작으로 휴먼 에러 차단</li><li><span class='highlight-title'>초심자 최적화 튜토리얼 기획</span>플레이 데이터를 분석하여 이탈 방지형 단계별 튜토리얼 및 밸런스 설계</li><li><span class='highlight-title'>Figma를 활용한 UI/UX 설계</span>직관적인 조작감과 정보 전달력을 고려한 게임 HUD 및 인터페이스 기획</li>", 
+                img: "P2.png", assets: [ 
                     { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" }, 
-                    { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" }, 
+                    { type: "pdf", title: "보고서", url: "P2_1.pdf" }, 
                     { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "./KOKO_Data_Manager.xlsm.xlsm" }, 
                     { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" } 
                 ] 
@@ -287,14 +286,14 @@
             },
             { 
                 title: "밸런스 시뮬레이터", tag: "SIMULATION QUEST", 
-                desc: "정규분포 모델을 통해 RPG 전투의 객관적 밸런스를 검증하는 시뮬레이션 도구입니다.", 
+                desc: "통계적 모델을 통해 RPG 전투 데이터의 객관성을 검증하는 시뮬레이션 도구입니다.", 
                 achievements: "<li><span class='highlight-title'>정규분포 기반 전투 로직 구현</span>통계 모델을 활용하여 크리티컬 및 회피가 적용된 기대 대미지 산출</li><li><span class='highlight-title'>대량 반복 시뮬레이션 수치화</span>전투 자동 반복 테스트를 통해 승률과 기대 턴 수를 데이터로 도출</li><li><span class='highlight-title'>반복 검증 자동화 시스템 구축</span>수치 변경 즉시 결과가 연동되어 밸런싱 검토 시간 70% 절감</li>", 
                 img: "P6.PNG", assets: [ { type: "excel-combined", title: "시뮬레이터 파일", videoUrl: "https://www.youtube.com/embed/1uGaO8PXr3k", downloadUrl: "./Weapon_Balance_Simulator.xlsm.xlsm" }, { type: "pdf", title: "설계 기획서", url: "P6_1.pdf" } ] 
             },
             { 
                 title: "데이터 기반 분석", tag: "DATA QUEST", 
                 desc: "의료 서비스 사각지대 해소를 위해 공공 데이터 분석을 통해 최적의 입지를 선정한 프로젝트입니다.", 
-                achievements: "<li><span class='highlight-title'>대규모 공공 데이터 전처리</span>Python을 활용하여 지역별 인구 및 의료 인프라 통합 데이터셋 구축</li><li><span class='highlight-title'>복합 가중치 입지 모델링</span>인구 밀도와 접근 거리를 변수화한 정교한 최적 입지 우선순위 모델 설계</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 및 전략 도출</li>", 
+                achievements: "<li><span class='highlight-title'>복합 가중치 입지 모델링</span>인구 밀도, 응급실 거리 등 변수를 활용하여 주관을 배제한 최적 입지 우선순위 산출</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 및 최적의 대안 도출</li><li><span class='highlight-title'>지역 밀착형 타겟 홍보 전략</span>데이터 분석 결과를 실무로 연결하여 지역별 특성에 맞춘 타겟 홍보 가이드라인 수립</li>", 
                 img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
             }
         ];
@@ -306,7 +305,7 @@
             document.getElementById('headerBlur').style.backgroundImage = `url(${p.img})`;
             document.getElementById('modalTag').innerText = `[ ${p.tag} ]`;
             document.getElementById('modalTitle').innerText = p.title;
-            document.getElementById('modalDesc').innerText = p.desc;
+            document.getElementById('modalDesc').innerHTML = p.desc;
             document.getElementById('modalAchievements').innerHTML = p.achievements;
 
             let viewersHtml = p.assets.map((as, idx) => {

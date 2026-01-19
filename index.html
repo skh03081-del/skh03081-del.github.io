@@ -39,7 +39,7 @@
         /* --- 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
-        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; filter: blur(2px) brightness(0.6); }
+        .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; }
         .marquee-item { width: 500px; height: 280px; flex-shrink: 0; }
         .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -79,44 +79,48 @@
         .project-card:hover .card-img-box img { opacity: 0.9; }
         .tag { position: absolute; top: 12px; left: 12px; font-size: 0.65rem; color: #000; font-weight: bold; background: #ffffff; padding: 5px 12px; border: 1px solid var(--accent); z-index: 5; font-family: 'Press Start 2P'; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
         .card-info-box { padding: 20px; text-align: left; }
-        .card-info-box h3 { font-size: 0.95rem; margin: 0; color: #fff; letter-spacing: 1px; line-height: 1.4; }
+        /* [수정 1] 메인 카드 제목 크기 대폭 확대 */
+        .card-info-box h3 { font-size: 1.3rem; margin: 0; color: #fff; letter-spacing: 1px; line-height: 1.4; } 
 
         /* --- 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
         .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; }
-        
         .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(4px) brightness(0.4); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
-
         #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--accent); font-weight: bold; text-shadow: 0 0 10px var(--accent-glow); }
-        /* [수정] 제목 폰트 크기 확대 */
-        #modalTitle { margin: 0; font-size: 2.2rem; color: #fff; } 
-
+        #modalTitle { margin: 0; font-size: 2.2rem; color: #fff; }
         .close-system-btn { position: relative; z-index: 3; background: rgba(0, 0, 0, 0.8); color: var(--accent); border: 2px solid var(--accent); padding: 12px 28px; font-size: 0.95rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); }
-        .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
-        /* [수정] 하단 여백 완전 제거 */
         .modal-inner-content { padding: 40px 60px 0; } 
-
         .tools-equipped-bar { background: rgba(151, 193, 231, 0.1); padding: 15px 25px; border: 1px solid var(--accent-dark); margin-bottom: 30px; display: flex; align-items: center; gap: 20px; }
         .tools-label { font-size: 0.7rem; color: var(--accent); font-family: 'Press Start 2P'; }
         .tools-value { font-size: 1rem; color: #fff; font-weight: bold; }
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 25px; margin-bottom: 35px; text-align: left; }
-        .mission-log { border: 2px solid var(--accent); padding: 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
-        .mission-log h4 { color: #fff; margin-bottom: 20px; font-size: 1.2rem; }
-        .mission-log li { margin-bottom: 12px; color: #fff; position: relative; padding-left: 30px; list-style: none; font-size: 1rem; line-height: 1.5; }
-        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; }
         
+        /* 성과 섹션 디자인 */
+        .mission-log { border: 2px solid var(--accent); padding: 30px; margin-bottom: 40px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
+        .mission-log h4 { color: #fff; margin-bottom: 25px; font-size: 1.2rem; }
+        .mission-log li { margin-bottom: 18px; color: var(--text-sub); position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; }
+        .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; top: 0; }
+        
+        /* [수정 2] 성과 내 제목 강조 스타일 */
+        .highlight-title { 
+            color: var(--lv5-color); 
+            font-size: 1.15rem; 
+            font-weight: bold; 
+            display: block; 
+            margin-bottom: 5px; 
+            text-shadow: 0 0 5px rgba(0, 242, 255, 0.3);
+        }
+
         .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 3px solid var(--accent); }
         .asset-btn { padding: 10px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 15px var(--accent); }
 
-        /* [수정] 뷰어 컨테이너 하단 여백 제거 */
         .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0 0; border-top: 2px solid var(--accent-dark); text-align: center; }
         .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); }
-        /* [수정] 워드 영향분석서 폭 확대 (70%) */
         .pdf-viewer.narrow { width: 70% !important; } 
         .pdf-viewer.active { display: block; }
         .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 3px solid var(--accent); }
@@ -125,11 +129,10 @@
 
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        /* [복구] 비디오 프레임 너비 100% 보장 */
         .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin-bottom: 10px; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
-        .data-access-card { width: 100%; padding: 40px; background: #000; border: 2px solid var(--accent); text-align: center; position: relative; overflow: hidden; box-shadow: inset 0 0 15px var(--accent-dark); }
-        .data-access-card::before { content: "SYSTEM LINK ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent); opacity: 0.6; }
+        .data-access-card { width: 100%; padding: 40px; background: #000; border: 2px solid var(--accent); text-align: center; position: relative; overflow: hidden; box-shadow: inset 0 0 20px var(--accent-dark); }
+        .data-access-card::before { content: "SYSTEM DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent); opacity: 0.6; }
         .data-access-card p { margin-bottom: 25px; font-weight: bold; color: var(--accent); font-size: 1.1rem; }
 
         @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 95% !important; } }
@@ -243,38 +246,38 @@
         const projects = [
             { 
                 title: "자체 기획 및 개발", tag: "SOLO QUEST", tools: "GameMaker, PowerPoint, Figma", 
-                desc: "축구 전략과 리듬 액션을 결합한 하이브리드 게임입니다.", 
-                achievements: "<li><b>하이브리드 시스템 기획:</b> 리듬 액션 판정 수치를 축구 전술 결과로 연결하는 핵심 로직 설계</li><li><b>동적 난이도 시스템 설계:</b> 선수들의 인게임 상황에 따른 실시간 노트 밀도 가변 로직 구현</li><li><b>GML 기반 판정 구현:</b> GameMaker 언어를 활용한 유기적인 시각 연출 및 물리 판정 시스템 구축</li><li><b>상세 화면 설계:</b> Figma를 활용한 유저 인지 편의성 중심의 게임 HUD 및 UI 기획</li>", 
+                desc: "축구 전략과 리듬 액션을 결합한 독창적 하이브리드 게임 기획입니다.", 
+                achievements: "<li><span class='highlight-title'>동적 난이도 조절 시스템 설계</span>선수 행동 데이터와 리듬 판정을 연동한 실시간 난이도 조절 로직 구축</li><li><span class='highlight-title'>GML 기반 판정 및 연출 구현</span>시각 효과와 판정 시스템을 코드로 직접 구현하여 유연한 연출 구조 확보</li><li><span class='highlight-title'>룰 학습형 재미 설계</span>복잡한 축구 규칙을 리듬 패턴으로 변환하여 유저의 직관적 학습 유도</li>", 
                 img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] 
             },
             { 
                 title: "다인 협업 프로젝트", tag: "PARTY QUEST", tools: "Unity, Excel, PowerPoint, Notion", 
                 desc: "사용자 학습 곡선을 고려한 레벨 디자인 및 데이터 자동화 관리 프로젝트입니다.", 
-                achievements: "<li><b>에디터를 활용한 레벨 디자인:</b> Unity 툴을 활용한 스테이지 구성 및 오브젝트 배치 최적화</li><li><b>가이드형 튜토리얼 기획:</b> 초심자 유저의 이탈을 방지하기 위한 단계별 체험형 가이드 시스템 설계</li><li><b>Excel VBA 자동화 도구 제작:</b> 기획 데이터 관리 효율을 30% 개선한 데이터 자동 입력기 기획 및 구현</li><li><b>지표 중심 학습 곡선 설계:</b> 실제 테스트 데이터를 분석하여 난이도 상향 곡선을 정교하게 밸런싱</li>", 
-                img: "P2.png", assets: [ { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" }, { type: "pdf", title: "프로젝트 보고서", url: "P2_1.pdf" }, { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "KOKO_Data_Manager.xlsm" }, { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" } ] 
+                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 활용한 스테이지 구성 및 게임 오브젝트 배치 최적화</li><li><span class='highlight-title'>가이드형 튜토리얼 기획</span>초심자 유저의 이탈을 방지하기 위한 단계별 체험형 학습 시스템 설계</li><li><span class='highlight-title'>Excel VBA 데이터 자동화 도구 제작</span>기획 데이터 관리 효율을 30% 개선한 데이터 자동 입력기 기획 및 구현</li><li><span class='highlight-title'>Figma를 활용한 UI/UX 설계</span>직관적인 조작감과 정보 전달력을 고려한 게임 HUD 및 인터페이스 기획</li>", 
+                img: "P2.png", assets: [ { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" }, { type: "pdf", title: "보고서", url: "P2_1.pdf" }, { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "KOKO_Data_Manager.xlsm" }, { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" } ] 
             },
             { 
                 title: "라이브 서비스 개선", tag: "BALANCE QUEST", tools: "내부 개발툴, PowerPoint, Word", 
                 desc: "라이브 지표 분석을 통해 게임 메타 불균형 문제를 정의하고 개선안을 도출한 프로젝트입니다.", 
-                achievements: "<li><b>유저 여론 및 지표 분석:</b> 2,000여 건의 피드백을 분석하여 '수비 메타 고착화' 문제의 핵심 원인 규명</li><li><b>밸런스 개선 로직 설계:</b> 수비 AI의 과효율을 데이터로 증명하고 공격 루트 다양성 확보를 위한 로직 제안</li><li><b>패치 영향도 시뮬레이션:</b> 수치 조정 후 예상되는 메타 변화를 선제 예측하여 밸런스 안정성 확보</li>", 
+                achievements: "<li><span class='highlight-title'>2,000건 이상의 여론 및 지표 분석</span>유저 피드백과 라이브 지표를 정밀 분석하여 전술 고착화 원인 규명</li><li><span class='highlight-title'>공격적 메타 전환 로직 설계</span>수비 AI의 과효율을 데이터로 증명하고 공격 루트 다양화 로직 제안</li><li><span class='highlight-title'>패치 영향도 선제 시뮬레이션</span>수치 조정 후 예상되는 유저 만족도 및 메타 변화를 정교하게 예측</li>", 
                 img: "P3.png", assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] 
             },
             { 
                 title: "신규 시스템 설계", tag: "SYSTEM QUEST", tools: "PowerPoint, Figma", 
                 desc: "유저 잔존율 향상을 위한 신규 코어 루프 및 BM 모델링 제안서입니다.", 
-                achievements: "<li><b>시스템 선순환 구조 설계:</b> 수집-성장-시너지가 유기적으로 결합된 정교한 신규 코어 루프 기획</li><li><b>전략적 BM 모델링:</b> 시즌 패스 보상 체계와 유료 재화 흐름을 시뮬레이션하여 수익성 및 유지율 확보</li><li><b>상위 유저 잔존 전략 수립:</b> 최고 레벨 도달 이후의 목표 의식을 부여하는 엔드 게임 콘텐츠 확장 제안</li>", 
+                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 순환하는 정교한 신규 시스템 구조 기획</li><li><span class='highlight-title'>경제 시뮬레이션 기반 BM 모델링</span>시즌 패스와 유료 재화 흐름을 설계하여 수익성과 유지율의 균형 확보</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획</span>최고 레벨 도달 유저에게 지속적 동기를 부여하는 잔존 전략 수립</li>", 
                 img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
             },
             { 
                 title: "밸런스 시뮬레이터", tag: "SIMULATION QUEST", tools: "Excel (VBA)", 
                 desc: "정규분포 모델을 통해 RPG 전투의 객관적 밸런스를 검증하는 시뮬레이션 도구입니다.", 
-                achievements: "<li><b>통계 기반 대미지 로직 구현:</b> 정규분포를 활용하여 크리티컬 및 회피가 적용된 기댓값 산출 시스템 구축</li><li><b>전투 수치 시각화:</b> 대량 반복 시뮬레이션을 통해 기대 승률 및 전투 턴 수를 객관적 데이터로 도출</li><li><b>반복 검증 자동화:</b> 수치 변경 즉시 시뮬레이션 결과가 연동되는 구조로 밸런싱 검토 시간 70% 절감</li>", 
+                achievements: "<li><span class='highlight-title'>정규분포 기반 전투 로직 구현</span>통계 모델을 활용하여 크리티컬 및 회피가 적용된 기대 대미지 산출</li><li><span class='highlight-title'>대량 반복 시뮬레이션 및 수치화</span>전투 자동 반복 테스트를 통해 승률과 기대 턴 수를 객관적으로 도출</li><li><span class='highlight-title'>반복 검증 자동화 시스템 구축</span>수치 변경 시 결과가 즉시 연동되어 밸런싱 검토 시간을 70% 절감</li>", 
                 img: "P6.PNG", assets: [ { type: "excel-combined", title: "시뮬레이터 파일", videoUrl: "https://www.youtube.com/embed/1uGaO8PXr3k", downloadUrl: "Weapon_Balance_Simulator.xlsm" }, { type: "pdf", title: "설계 기획서", url: "P6_1.pdf" } ] 
             },
             { 
                 title: "데이터 기반 분석", tag: "DATA QUEST", tools: "Python, QGIS, PowerPoint", 
-                desc: "공공 데이터를 정량 분석하여 의료 서비스 최적 입지를 선정한 분석 프로젝트입니다.", 
-                achievements: "<li><b>공공 데이터 가공 및 분석:</b> Python을 활용한 대규모 지역별 인구 및 의료 인프라 데이터 전처리 수행</li><li><b>복합 가중치 입지 모델링:</b> 인구 밀도와 접근 거리를 변수화한 정교한 최적 입지 우선순위 도출 모델 설계</li><li><b>QGIS 공간 데이터 시각화:</b> 분석 결과를 지도상에 가시화하여 논리적인 입지 타당성 및 홍보 전략 도출</li>", 
+                desc: "의료 서비스 사각지대 해소를 위해 최적의 공공 입지를 선정한 분석 프로젝트입니다.", 
+                achievements: "<li><span class='highlight-title'>대규모 공공 데이터 전처리</span>Python을 활용하여 지역별 인구 및 의료 인프라 통합 데이터셋 구축</li><li><span class='highlight-title'>복합 가중치 입지 모델링</span>인구 밀도와 접근 거리를 변수화한 정교한 최적 입지 우선순위 모델 설계</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 및 전략 도출</li>", 
                 img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
             }
         ];
@@ -292,18 +295,19 @@
 
             let viewersHtml = p.assets.map((as, idx) => {
                 const isActive = idx === 0 ? 'active' : '';
-                if(as.type === 'video') return `<div class="video-container ${isActive}" id="view-${as.title}-${idx}"><iframe src="${as.url}" allowfullscreen></iframe></div>`;
-                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${as.title}-${idx}"><div class="data-access-card"><i class="fas fa-file-signature" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>상세 기획 명세서가 포함된 외부 노션 데이터베이스로 연결합니다.</p><a href="${as.url}" target="_blank" class="btn-pixel">ACCESS DATABASE</a></div></div>`;
+                const idSuffix = `${as.title}-${idx}`.replace(/\s+/g, '-');
+                if(as.type === 'video') return `<div class="video-container ${isActive}" id="view-${idSuffix}"><iframe src="${as.url}" allowfullscreen></iframe></div>`;
+                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}"><div class="data-access-card"><i class="fas fa-file-signature" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>상세 기획 명세서가 포함된 외부 노션 데이터베이스로 연결합니다.</p><a href="${as.url}" target="_blank" class="btn-pixel">ACCESS DATABASE</a></div></div>`;
                 if(as.type === 'excel-combined') {
-                    return `<div class="excel-combined-container ${isActive}" id="view-${as.title}-${idx}">
+                    return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}">
                                 <div class="combined-video-frame"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div>
-                                <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>실제 로직이 포함된 엑셀 파일을 다운로드하여 확인하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
+                                <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>실제 로직이 포함된 시뮬레이터 데이터를 확인하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
-                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${as.title}-${idx}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
+                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
             }).join('');
 
-            document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, '${as.title}-${idx}', event)">${as.title}</button>`).join('');
+            document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, '${as.title}-${idx}'.replace(/\\s+/g, '-'), event)">${as.title}</button>`).join('');
             document.getElementById('viewerContainer').innerHTML = viewersHtml;
             modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; document.getElementById('modalBodyScroll').scrollTop = 0;
         }
@@ -316,7 +320,10 @@
             });
             btn.classList.add('active');
             const target = document.getElementById(`view-${idSuffix}`);
-            target.classList.add('active'); if(target.classList.contains('excel-combined-container')) target.style.display = 'flex';
+            if(target) {
+                target.classList.add('active');
+                if(target.classList.contains('excel-combined-container')) target.style.display = 'flex';
+            }
         }
 
         function closeModal(e) {

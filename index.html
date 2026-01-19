@@ -38,10 +38,17 @@
 
         /* --- 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
-        .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.4; }
+        
+        /* [수정] 배경 마키 초기 상태를 숨김으로 설정 */
+        .hero-bg-marquee { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
+            pointer-events: none; opacity: 0; transition: opacity 1.5s ease-in-out; 
+        }
+        .hero-bg-marquee.visible { opacity: 0.4; } /* 어빌리티 등장 시 같이 보이게 함 */
+        
         .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; }
         .marquee-item { width: 500px; height: 280px; flex-shrink: 0; }
-        .marquee-item img { width: 100%; height: 100%; object-fit: cover; }
+        .marquee-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(2px) brightness(0.6); }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
         .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 40px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -53,7 +60,24 @@
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
-        /* --- 프로젝트 스테이지 UI (제목 크기 1.3rem) --- */
+        /* --- 보유 기술 --- */
+        .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-align: left; display: flex; align-items: center; }
+        .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
+        .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .skill-group { background: var(--card); border: 3px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
+        .skill-group::after { content: "READY"; position: absolute; top: 28px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.85rem; color: var(--accent); text-shadow: 0 0 12px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
+        @keyframes ready-glow { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+        .skill-group-title { font-size: 1rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 15px; margin-bottom: 5px; letter-spacing: 1px; }
+        .skill-item { display: flex; flex-direction: column; margin-bottom: 12px; }
+        .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; width: 100%; }
+        .skill-name-box { display: flex; align-items: center; gap: 12px; }
+        .skill-name-box i { font-size: 1.1rem; width: 22px; text-align: center; color: var(--accent); } 
+        .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
+        .skill-lv { font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--lv5-color); }
+        .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
+        .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
+
+        /* --- 프로젝트 스테이지 UI --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: #000; border: 2px solid var(--border); cursor: pointer; transition: 0.3s; overflow: hidden; position: relative; }
         .project-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
@@ -62,7 +86,6 @@
         .project-card:hover .card-img-box img { opacity: 0.9; }
         .tag { position: absolute; top: 12px; left: 12px; font-size: 0.65rem; color: #000; font-weight: bold; background: #ffffff; padding: 5px 12px; border: 1px solid var(--accent); z-index: 5; font-family: 'Press Start 2P'; box-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
         .card-info-box { padding: 20px; text-align: left; }
-        /* [수정 2] 메인 카드 제목 크기 확대 */
         .card-info-box h3 { font-size: 1.3rem; margin: 0; color: #fff; letter-spacing: 1px; line-height: 1.4; } 
 
         /* --- 프로젝트 모달 --- */
@@ -77,16 +100,14 @@
         .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
-        
-        /* [수정 3] 상하 여백 최적화 */
         .modal-inner-content { padding: 30px 60px 0; } 
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 20px; margin-bottom: 20px; text-align: left; }
-        .mission-log { border: 2px solid var(--accent); padding: 20px 30px; margin-bottom: 30px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
+        
+        .mission-log { border: 2px solid var(--accent); padding: 25px 30px; margin-bottom: 30px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
         .mission-log h4 { color: #fff; margin-bottom: 15px; font-size: 1.2rem; }
         .mission-log li { margin-bottom: 15px; color: var(--text-sub); position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; }
         .mission-log li::before { content: "★"; position: absolute; left: 0; color: var(--accent); font-size: 1.1rem; top: 0; }
         
-        /* [성과 제목 강조 스타일] */
         .highlight-title { color: var(--lv5-color); font-size: 1.1rem; font-weight: bold; display: block; margin-bottom: 3px; text-shadow: 0 0 5px rgba(0, 242, 255, 0.3); }
 
         .asset-selector { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 3px solid var(--accent); }
@@ -101,10 +122,10 @@
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        /* [수정] 데이터 터미널 카드 디자인 고도화 */
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
         .combined-video-frame { width: 100%; aspect-ratio: 16/9; border: 3px solid var(--accent); margin-bottom: 10px; }
+        .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         .data-access-card { width: 100%; padding: 40px; background: #000; border: 2px solid var(--accent); text-align: center; position: relative; overflow: hidden; box-shadow: inset 0 0 20px var(--accent-dark); }
         .data-access-card::before { content: "SYSTEM DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent); opacity: 0.6; }
         .data-access-card p { margin-bottom: 25px; font-weight: bold; color: var(--accent); font-size: 1.1rem; }
@@ -115,7 +136,7 @@
 <body>
 
     <header class="hero" onclick="event.stopPropagation()">
-        <div class="hero-bg-marquee">
+        <div id="marquee-bg" class="hero-bg-marquee">
             <div class="marquee-track">
                 <div class="marquee-item"><img src="P1.png"></div>
                 <div class="marquee-item"><img src="P2.png"></div>
@@ -131,6 +152,33 @@
             <div id="profile-box" class="main-slogan-text">"끈기 있는 데이터 기반의 게임 체인저"</div>
         </div>
     </header>
+
+    <div id="ability-section" class="reveal-section">
+        <h2 class="section-title">PLAYER ABILITIES</h2>
+        <div class="skills-wrapper">
+            <div class="skill-group">
+                <div class="skill-group-title">협업 & 관리</div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-jira"></i><span class="skill-name">Jira</span></div><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-slack"></i><span class="skill-name">Slack</span></div><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-confluence"></i><span class="skill-name">Confluence</span></div><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-n"></i><span class="skill-name">Notion</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">기획 & 분석</div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-excel"></i><span class="skill-name">Excel</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-powerpoint"></i><span class="skill-name">PowerPoint</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-word"></i><span class="skill-name">Word</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-figma"></i><span class="skill-name">Figma</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">개발 & 엔진</div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-cubes"></i><span class="skill-name">Gamemaker</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-unity"></i><span class="skill-name">Unity</span></div><span class="skill-lv">LV.3</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 65%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-star-of-life"></i><span class="skill-name">Gemini</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-book-open"></i><span class="skill-name">NotebookLM</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
+            </div>
+        </div>
+    </div>
 
     <div class="reveal-section">
         <h2 class="section-title">MISSION STAGES</h2>
@@ -171,6 +219,7 @@
         function typeWriterEffect() {
             const nameTarget = document.getElementById('typing-text');
             const sloganTarget = document.getElementById('profile-box');
+            const marqueeBg = document.getElementById('marquee-bg');
             const nameText = "LEE JAE YOUNG";
             let i = 0;
             function type() {
@@ -179,7 +228,9 @@
                     setTimeout(type, 100);
                 } else {
                     sloganTarget.style.opacity = '1';
+                    // [연출 변경] 배경 롤링 이미지를 어빌리티 등장 시점에 같이 나타나게 함
                     setTimeout(() => {
+                        marqueeBg.classList.add('visible');
                         document.querySelectorAll('.reveal-section').forEach((sec, idx) => {
                             setTimeout(() => sec.classList.add('active'), idx * 300);
                         });
@@ -192,38 +243,38 @@
         const projects = [
             { 
                 title: "자체 기획 및 개발", tag: "SOLO QUEST", 
-                desc: "축구 전략과 리듬 액션을 융합하여 스포츠 규칙을 게임 메커니즘으로 학습시키는 프로젝트입니다.", 
-                achievements: "<li><span class='highlight-title'>동적 난이도 조절 시스템 설계 [cite: 1013]</span>선수 행동 데이터를 리듬 판정 노트 밀도와 연동하여 실시간 난이도 조절 로직 구축 [cite: 1014]</li><li><span class='highlight-title'>GML 기반 1인 개발 수행 [cite: 898]</span>시각 효과 및 판정 연출을 코드로 직접 구현하여 리소스 관리 효율성 및 확장 구조 확보 [cite: 1023]</li><li><span class='highlight-title'>룰 체득형 UX 기획 [cite: 923]</span>복잡한 축구 전술 규칙을 리듬 패턴으로 치환하여 유저의 직관적 학습 유도 [cite: 924]</li>", 
+                desc: "축구 전략과 리듬 액션을 융합하여 스포츠 규칙을 게임 메커니즘으로 학습시키는 프로젝트입니다. [cite: 905, 924]", 
+                achievements: "<li><span class='highlight-title'>동적 난이도 조절 시스템 설계</span>선수 행동 데이터를 리듬 판정 노트 밀도와 연동하여 실시간 난이도 조절 로직 구축 [cite: 1013, 1014]</li><li><span class='highlight-title'>GML 기반 1인 개발 수행</span>시각 효과 및 판정 연출을 코드로 직접 구현하여 리소스 관리 효율성 및 확장 구조 확보 [cite: 1007, 1023]</li><li><span class='highlight-title'>룰 학습형 재미 설계</span>복잡한 축구 전술 규칙을 리듬 패턴으로 치환하여 유저의 직관적 학습 유도 [cite: 923, 939]</li>", 
                 img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "화면 설계도", url: "P1_3.pdf" }] 
             },
             { 
                 title: "다인 협업 프로젝트", tag: "PARTY QUEST", 
-                desc: "10인 규모 팀에서 기업 미션을 수행하며 상용화 단계를 고려한 레벨/데이터 설계를 담당했습니다.", 
-                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인 [cite: 1064]</span>Unity 툴을 통해 스테이지 구성 및 오브젝트 배치를 최적화하여 맵 제작 공정 단축 [cite: 1052]</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작 </span>업무 효율을 30% 개선한 데이터 매니저를 자체 제작하여 휴먼 에러 0% 달성 [cite: 1102, 1103]</li><li><span class='highlight-title'>사용자 중심 학습 곡선 설계 [cite: 1082]</span>플레이 데이터를 분석하여 초심자 이탈을 방지하는 단계별 튜토리얼 및 밸런스 설계 [cite: 1085, 1086]</li>", 
+                desc: "10인 규모 팀에서 기업 미션을 수행하며 상용화 단계를 고려한 레벨 및 데이터 설계를 담당했습니다. [cite: 1057, 1060]", 
+                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 통해 스테이지 구성 및 오브젝트 배치를 최적화하여 맵 제작 공정 단축 [cite: 1052, 1064]</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저를 자체 제작하여 휴먼 에러 발생 리스크 차단 [cite: 1056, 1105]</li><li><span class='highlight-title'>사용자 중심 학습 곡선 설계</span>플레이 데이터를 분석하여 초심자 이탈을 방지하는 단계별 튜토리얼 및 밸런스 설계 [cite: 1082, 1085]</li><li><span class='highlight-title'>Figma를 활용한 UI/UX 설계</span>직관적인 조작감과 정보 전달력을 고려한 게임 HUD 및 인터페이스 구조 기획 [cite: 1054, 1098]</li>", 
                 img: "P2.png", assets: [ { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" }, { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "./KOKO_Data_Manager.xlsm" }, { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" } ] 
             },
             { 
                 title: "라이브 서비스 개선", tag: "BALANCE QUEST", 
-                desc: "EA Korea 실무 과정에서 라이브 지표를 통해 메타 불균형을 해결한 데이터 기획 프로젝트입니다.", 
-                achievements: "<li><span class='highlight-title'>2,000건 이상의 여론 및 지표 분석 [cite: 1146]</span>유저 피드백을 Excel 지표로 객관화하여 '수비 메타 고착화'의 데이터적 근거 확보 [cite: 1147, 1150]</li><li><span class='highlight-title'>공격적 메타 전환 로직 제안 [cite: 1175]</span>수비 AI 과효율을 수치로 입증하고 공격 루트 다양화를 위한 애니메이션 발동 로직 설계 [cite: 1168]</li><li><span class='highlight-title'>패치 영향도 선제 시뮬레이션 [cite: 1177]</span>수치 조정 후 예상되는 유저 반응 및 나비효과를 예측하여 밸런스 안정성 확보 [cite: 1176]</li>", 
+                desc: "EA Korea 실무 과정에서 라이브 지표를 통해 게임 메타 불균형을 해결한 데이터 기획 프로젝트입니다. [cite: 1111, 1116]", 
+                achievements: "<li><span class='highlight-title'>2,000건 이상의 여론 및 지표 분석</span>유저 피드백을 Excel 지표로 객관화하여 '수비 메타 고착화'의 데이터적 근거 확보 [cite: 1139, 1146]</li><li><span class='highlight-title'>공격적 메타 전환 로직 제안</span>수비 AI 과효율을 수치로 증명하고 공격 루트 다양화를 위한 애니메이션 발동 로직 설계 [cite: 1168, 1175]</li><li><span class='highlight-title'>패치 영향도 선제 시뮬레이션</span>수치 조정 후 예상되는 유저 반응 및 게임 전체 밸런스에 미칠 나비효과를 선제 예측 [cite: 1176, 1177]</li>", 
                 img: "P3.png", assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] 
             },
             { 
                 title: "신규 시스템 설계", tag: "SYSTEM QUEST", 
-                desc: "유저의 전술적 니즈를 성장의 재미로 연결한 코어 루프 및 BM 모델링 제안서입니다.", 
-                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계 [cite: 1217]</span>수집-조합-성장-시너지가 결합되어 유저가 지속적으로 전술을 연구하는 순환 구조 기획 [cite: 1280, 1281]</li><li><span class='highlight-title'>전략적 BM 및 경제 모델링 [cite: 1219]</span>시즌 패스와 확률형 보상의 비중을 시뮬레이션하여 수익성과 유저 만족도의 균형 확보 [cite: 1362, 1363]</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획 [cite: 1388]</span>최고 레벨 유저의 장기 잔존을 유도하는 새로운 성장축(감독 지도력) 제안 [cite: 1376, 1389]</li>", 
+                desc: "유저의 전술적 니즈를 성장의 재미로 연결한 신규 코어 루프 및 BM 모델링 제안서입니다. [cite: 1214, 1225]", 
+                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 결합되어 유저가 지속적으로 전술을 연구하는 순환 구조 기획 [cite: 1279, 1280]</li><li><span class='highlight-title'>전략적 BM 및 경제 모델링</span>시즌 패스와 확률형 보상의 비중을 시뮬레이션하여 수익성과 유저 만족도의 균형 확보 [cite: 1284, 1363]</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획</span>최고 레벨 도달 유저에게 지속적 동기를 부여하는 새로운 성장축(감독 지도력) 제안 [cite: 1376, 1388]</li>", 
                 img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
             },
             { 
                 title: "밸런스 시뮬레이터", tag: "SIMULATION QUEST", 
-                desc: "통계적 모델을 통해 RPG 전투 데이터의 객관성을 검증하는 시뮬레이션 도구입니다.", 
-                achievements: "<li><span class='highlight-title'>정규분포 기반 전투 로직 구현 [cite: 1545]</span>통계 모델을 활용하여 크리티컬 및 회피가 적용된 기대 대미지 산출 시스템 구축 [cite: 1546]</li><li><span class='highlight-title'>대량 자동 반복 시뮬레이션 [cite: 1588]</span>5종 무기의 전 구간 밸런스 검토 작업을 시뮬레이터로 자동화하여 검증 시간 70% 단축 [cite: 1587]</li><li><span class='highlight-title'>데이터 기반 상성 가이드 도출 [cite: 1591]</span>보스 기믹에 따른 최적의 무기 상성을 데이터로 도출하여 정교한 유저 가이드라인 수립 [cite: 1590]</li>", 
+                desc: "통계적 모델을 통해 RPG 전투 데이터의 객관성을 검증하는 시뮬레이션 도구입니다. [cite: 1516, 1519]", 
+                achievements: "<li><span class='highlight-title'>정규분포 기반 전투 로직 구현</span>통계 모델을 활용하여 크리티컬 및 회피가 적용된 기대 대미지 산출 시스템 구축 [cite: 1545, 1546]</li><li><span class='highlight-title'>대량 자동 반복 시뮬레이션</span>5종 무기의 전 구간 밸런스 검토 작업을 자동화하여 검증 및 테스트 시간 70% 단축 [cite: 1587, 1588]</li><li><span class='highlight-title'>데이터 기반 상성 가이드 도출</span>보스 기믹에 따른 최적의 무기 상성을 데이터로 도출하여 정교한 밸런싱 가이드라인 수립 [cite: 1590, 1591]</li>", 
                 img: "P6.PNG", assets: [ { type: "excel-combined", title: "시뮬레이터 파일", videoUrl: "https://www.youtube.com/embed/1uGaO8PXr3k", downloadUrl: "./Weapon_Balance_Simulator.xlsm" }, { type: "pdf", title: "설계 기획서", url: "P6_1.pdf" } ] 
             },
             { 
                 title: "데이터 기반 분석", tag: "DATA QUEST", 
-                desc: "의료 서비스 사각지대 해소를 위해 공공 데이터 분석을 통해 최적의 입지를 선정한 프로젝트입니다.", 
-                achievements: "<li><span class='highlight-title'>복합 가중치 입지 모델링 [cite: 1448]</span>인구 밀도, 응급실 거리 등 변수를 활용하여 주관을 배제한 최적 입지 우선순위 산출 [cite: 1475, 1476]</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화 [cite: 1470]</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 및 최적의 대안 도출 [cite: 1484, 1485]</li><li><span class='highlight-title'>지역 밀착형 타겟 홍보 전략 [cite: 1487]</span>데이터 분석 결과를 실무로 연결하여 지역별 특성에 맞춘 타겟 홍보 가이드라인 수립 [cite: 1488]</li>", 
+                desc: "공공 데이터를 정량 분석하여 의료 서비스 사각지대 해소를 위한 최적 입지를 선정한 프로젝트입니다. [cite: 1405, 1414]", 
+                achievements: "<li><span class='highlight-title'>복합 가중치 입지 모델링</span>인구 밀도, 응급실 거리 등 변수를 활용하여 주관을 배제한 최적 입지 우선순위 산출 [cite: 1474, 1475]</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 및 최적 대안 도출 [cite: 1470, 1485]</li><li><span class='highlight-title'>지역 밀착형 타겟 홍보 전략</span>데이터 분석 결과를 실무로 연결하여 지역별 특성에 맞춘 타겟 홍보 가이드라인 수립 [cite: 1487, 1488]</li>", 
                 img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
             }
         ];
@@ -242,11 +293,11 @@
                 const isActive = idx === 0 ? 'active' : '';
                 const idSuffix = `${as.title}-${idx}`.replace(/\s+/g, '-');
                 if(as.type === 'video') return `<div class="video-container ${isActive}" id="view-${idSuffix}"><iframe src="${as.url}" allowfullscreen></iframe></div>`;
-                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}"><div class="data-access-card"><i class="fas fa-file-signature" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>상세 기획 명세서가 포함된 외부 노션 데이터베이스로 연결합니다.</p><a href="${as.url}" target="_blank" class="btn-pixel">ACCESS DATABASE</a></div></div>`;
+                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}"><div class="data-access-card"><i class="fas fa-file-signature" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>상세 기획 명세서가 포함된 외부 노션 데이터베이스로 연결합니다. [cite: 813]</p><a href="${as.url}" target="_blank" class="btn-pixel">ACCESS DATABASE</a></div></div>`;
                 if(as.type === 'excel-combined') {
                     return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}">
                                 <div class="combined-video-frame"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div>
-                                <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 확인하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
+                                <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>기획 의도가 담긴 실제 엑셀 데이터를 확인하세요. [cite: 1505]</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
                 return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;

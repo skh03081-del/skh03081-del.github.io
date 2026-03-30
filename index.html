@@ -43,6 +43,7 @@
             background-size: 100% 3px, 3px 100%; opacity: 0.3;
         }
 
+        /* --- 히어로 섹션 --- */
         .hero { position: relative; width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 3px solid var(--accent); }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .hero-bg-marquee.visible { opacity: 0.4; }
@@ -54,6 +55,7 @@
         .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 40px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-content h1 { font-size: 2.2rem; color: var(--accent); margin: 0; text-shadow: 3px 3px 0 #000; letter-spacing: 2px; }
         .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; color: var(--accent); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .main-slogan-text { margin-top: 50px; padding: 10px 25px; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--accent); display: inline-block; font-size: 1.1rem; color: #fff; opacity: 0; transition: 0.8s; }
 
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
@@ -62,10 +64,9 @@
         .section-title { max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.4rem; color: var(--accent); letter-spacing: 1px; text-align: left; display: flex; align-items: center; }
         .section-title::before { content: "►"; margin-right: 15px; color: #fff; }
 
+        /* --- 보유 기술 --- */
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { background: var(--card); border: 3px solid var(--border); padding: 25px; display: flex; flex-direction: column; gap: 15px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
-        .skill-group::after { content: "READY"; position: absolute; top: 28px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--accent); text-shadow: 0 0 12px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
-        @keyframes ready-glow { 0% { opacity: 1; } 100% { opacity: 0.4; } }
         .skill-group-title { font-size: 1rem; color: var(--accent); border-bottom: 2px solid var(--accent-dark); padding-bottom: 15px; margin-bottom: 5px; }
         .skill-item { display: flex; flex-direction: column; margin-bottom: 12px; }
         .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; width: 100%; }
@@ -76,16 +77,17 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
+        /* --- 프로젝트 스테이지 UI --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { background: #000; border: 2px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; position: relative; display: flex; flex-direction: column; height: auto; }
         .project-card:hover { transform: scale(1.03) translateY(-5px); border-color: var(--lv5-color); box-shadow: 0 0 25px rgba(0, 242, 255, 0.4); }
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.3s; }
-        .project-card:hover .card-img-box img { opacity: 0.9; }
         .tag { position: absolute; top: 12px; left: 12px; font-size: 0.6rem; color: #000; font-weight: bold; background: rgba(255, 255, 255, 0.7); padding: 5px 12px; border: 1px solid var(--accent); z-index: 5; font-family: 'Press Start 2P'; }
         .card-info-box { padding: 12px 20px; text-align: left; background: #000; display: flex; align-items: center; min-height: 60px; }
         .card-info-box h3 { font-size: 1.1rem; margin: 0; color: #fff; letter-spacing: 0.5px; line-height: 1.2; } 
 
+        /* --- [중요 수정] 프로젝트 모달 여백 제거 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(15px); cursor: pointer; }
         .modal-content { background: var(--bg); border: 2px solid var(--accent); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 50px var(--accent-glow); }
         .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; }
@@ -94,10 +96,14 @@
         #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--accent); font-weight: bold; }
         #modalTitle { margin: 0; font-size: 2rem; color: #fff; } 
         .close-system-btn { position: relative; z-index: 3; background: rgba(0, 0, 0, 0.8); color: var(--accent); border: 2px solid var(--accent); padding: 12px 28px; font-size: 0.95rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); }
-        .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
 
+        /* 모달 본문 여백 제거 */
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        .modal-inner-content { padding: 30px 60px 0; } 
+        .modal-inner-content { padding: 30px 0 0; } /* 좌우 여백 0으로 설정 */
+
+        /* 텍스트 영역에만 개별 여백 부여 */
+        .game-desc-panel, .mission-log, .asset-selector { margin-left: 60px; margin-right: 60px; }
+
         .game-desc-panel { background: rgba(22, 27, 34, 0.8); border-left: 5px solid var(--accent); padding: 20px; margin-bottom: 20px; text-align: left; }
         .mission-log { border: 2px solid var(--accent); padding: 25px 30px; margin-bottom: 30px; background: rgba(151, 193, 231, 0.05); text-align: left; box-shadow: 0 0 15px var(--accent-glow); position: relative; }
         .mission-log h4 { color: #fff; margin-bottom: 15px; font-size: 1.2rem; }
@@ -109,39 +115,40 @@
         .asset-btn { padding: 10px 25px; background: rgba(22, 27, 34, 1); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; }
         .asset-btn.active { background: var(--accent); color: #0d1117; border-color: #fff; box-shadow: 0 0 15px var(--accent); }
 
+        /* [수정] PDF 뷰어 좌우 100% 꽉 채우기 */
         .viewer-container { width: 100%; background: #0a0e14; padding: 40px 0 0; border-top: 2px solid var(--accent-dark); text-align: center; }
-        .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); }
+        .pdf-viewer { width: 100%; height: 850px; display: none; margin: 0 auto; border: none; }
         .pdf-viewer.active { display: block; }
-        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 3px solid var(--accent); }
+        .video-container { width: 100%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border-top: 3px solid var(--accent); border-bottom: 3px solid var(--accent); }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
+        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 100%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
         .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 3px solid var(--accent); margin-bottom: 10px; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         .data-access-card { width: 100%; padding: 40px; background: #000; border: 2px solid var(--accent); text-align: center; position: relative; overflow: hidden; box-shadow: inset 0 0 20px var(--accent-dark); }
-        .data-access-card::before { content: "SYSTEM DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent); opacity: 0.6; }
         .data-access-card p { margin-bottom: 25px; font-weight: bold; color: var(--accent); font-size: 1.1rem; }
 
+        /* [모바일 대응] 텍스트 여백 좁히기 */
         @media (max-width: 950px) {
             .skills-wrapper, .project-container { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .hero-content h1 { font-size: 1.8rem; }
-            .pdf-viewer { width: 100% !important; height: 600px; }
-            .video-container, .excel-combined-container { width: 100%; }
-            .project-header-top { padding: 0 20px; height: 100px; }
-            #modalTitle { font-size: 1.2rem; }
-            .modal-inner-content { padding: 20px 20px 0; }
+            .game-desc-panel, .mission-log, .asset-selector { margin-left: 30px; margin-right: 30px; }
+            .pdf-viewer { height: 600px; }
         }
 
         @media (max-width: 600px) {
             .skills-wrapper, .project-container { grid-template-columns: 1fr; }
             .hero-content h1 { font-size: 1.3rem; }
-            .main-slogan-text { font-size: 0.8rem; margin-top: 30px; }
+            .game-desc-panel, .mission-log, .asset-selector { margin-left: 15px; margin-right: 15px; }
             .pdf-viewer { height: 450px; }
             .asset-btn { flex-grow: 1; text-align: center; padding: 10px; font-size: 0.8rem; }
+            .mission-log { padding: 20px; }
             .mission-log li { font-size: 0.8rem; padding-left: 20px; }
-            .highlight-title { font-size: 0.95rem; }
+            .project-header-top { padding: 0 15px; height: 100px; }
+            #modalTitle { font-size: 1.2rem; }
+            .close-system-btn { padding: 8px 15px; font-size: 0.8rem; right: 15px; }
         }
     </style>
 </head>
@@ -166,33 +173,6 @@
             <div id="profile-box" class="main-slogan-text">"끈기 있는 데이터 기반의 게임 체인저"</div>
         </div>
     </header>
-
-    <div id="ability-section" class="reveal-section">
-        <h2 class="section-title">PLAYER ABILITIES</h2>
-        <div class="skills-wrapper">
-            <div class="skill-group">
-                <div class="skill-group-title">협업 & 관리</div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-jira"></i><span class="skill-name">Jira</span></div><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-slack"></i><span class="skill-name">Slack</span></div><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-confluence"></i><span class="skill-name">Confluence</span></div><span class="skill-lv">LV.5</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 100%; background: var(--lv5-color);"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-n"></i><span class="skill-name">Notion</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">기획 & 분석</div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-excel"></i><span class="skill-name">Excel</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-powerpoint"></i><span class="skill-name">PowerPoint</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-file-word"></i><span class="skill-name">Word</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-figma"></i><span class="skill-name">Figma</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
-            </div>
-            <div class="skill-group">
-                <div class="skill-group-title">개발 & 엔진</div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-cubes"></i><span class="skill-name">Gamemaker</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 85%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fab fa-unity"></i><span class="skill-name">Unity</span></div><span class="skill-lv">LV.3</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 65%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-star-of-life"></i><span class="skill-name">Gemini</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><div class="skill-name-box"><i class="fas fa-book-open"></i><span class="skill-name">NotebookLM</span></div><span class="skill-lv">LV.4</span></div><div class="exp-bar-bg"><div class="exp-fill" style="width: 80%;"></div></div></div>
-            </div>
-        </div>
-    </div>
 
     <div id="stage-section" class="reveal-section">
         <h2 class="section-title">MISSION STAGES</h2>
@@ -257,9 +237,7 @@
 
         const projects = [
             { title: "자체 기획 및 개발", tag: "SOLO QUEST", desc: "축구 전략과 리듬 액션을 융합하여 스포츠 규칙을 게임 메커니즘으로 학습시키는 독창적 프로젝트입니다.", achievements: "<li><span class='highlight-title'>동적 난이도 조절 시스템 설계</span>선수 행동 데이터와 리듬 판정을 연동한 실시간 난이도 조절 로직 구축</li><li><span class='highlight-title'>GML 기반 1인 개발 수행</span>시각 효과 및 판정 연출을 코드로 직접 구현하여 리소스 관리 효율성 확보</li>", img: "P1.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/F5uLaCbsxe8" }, { type: "pdf", title: "컨셉 기획서", url: "P1_2.pdf" }, { type: "pdf", title: "포스트 모템", url: "P1_4.pdf" }] },
-            { title: "다인 협업 프로젝트", tag: "PARTY QUEST", desc: "10인 규모 팀에서 상용화 단계를 고려한 레벨 및 데이터 설계를 담당한 기업 연계 프로젝트입니다.", achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 통해 스테이지 구성 및 오브젝트 배치를 최적화하여 제작 공정 단축</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저 제작으로 데이터 관리 결함 및 휴먼 에러 0% 달성</li>", img: "P2.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" }, { type: "pdf", title: "보고서", url: "P2_1.pdf" }, { type: "pdf", title: "피그마 UX/UI", url: "P2_2.pdf" }, { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "./KOKO_Data_Manager.xlsm.xlsm" }] },
-            
-            // [수정] 패스 아키텍트 : 요청하신 기능(영상, P8_1, P8_2) 반영
+            { title: "다인 협업 프로젝트", tag: "PARTY QUEST", desc: "10인 규모 팀에서 상용화 단계를 고려한 레벨 및 데이터 설계를 담당한 기업 연계 프로젝트입니다.", achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 통해 스테이지 구성 및 오브젝트 배치를 최적화하여 제작 공정 단축</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저 제작으로 데이터 관리 결함 및 휴먼 에러 0% 달성</li>", img: "P2.png", assets: [{ type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/Y4jyfOewBBM" }, { type: "pdf", title: "보고서", url: "P2_1.pdf" }] },
             { 
                 title: "패스 아키텍트 : 클래스 디펜스", 
                 tag: "SOLO QUEST", 
@@ -272,7 +250,6 @@
                     { type: "pdf", title: "포스트 모템", url: "P8_2.pdf" }
                 ] 
             },
-
             { title: "신규 총기 기획 제안", tag: "PLANNING QUEST", desc: "FPS 실력 격차 해소를 위해 실제 총기 메커니즘을 고증하고 엑셀 시뮬레이터로 검증한 AN-94 기획안입니다.", achievements: "<li><span class='highlight-title'>데이터 기반 문제 정의</span>이탈률 지표 분석을 통해 초보자의 '중장거리 교전 무력감'을 핵심 이탈 원인으로 도출</li><li><span class='highlight-title'>하이퍼 버스트 시스템 설계</span>실제 총기 고증을 통한 2점사 로직으로 초보자의 물리적 피지컬 한계 기술적 보완</li>", img: "P7.png", assets: [{ type: "pdf", title: "기획 제안서", url: "P7_1.pdf" }, { type: "excel-combined", title: "엑셀 시뮬레이터", videoUrl: "https://www.youtube.com/embed/-xaOORJoAKg", downloadUrl: "./AN94_Weapon_Simulator.xlsm" }] },
             { title: "라이브 서비스 개선", tag: "BALANCE QUEST", desc: "EA Korea 실무 과정에서 라이브 지표 분석을 통해 게임 메타 불균형을 해결한 프로젝트입니다.", achievements: "<li><span class='highlight-title'>2,000건 이상의 여론 및 지표 분석</span>유저 피드백과 라이브 지표를 분석하여 '수비 메타 고착화' 원인 규명</li><li><span class='highlight-title'>개선 로직 제안 및 설계</span>수비 AI 과효율을 데이터로 증명하고 공격 루트 다양화 로직 설계</li>", img: "P3.png", assets: [{ type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }] },
             { title: "신규 시스템 설계", tag: "SYSTEM QUEST", desc: "유저의 전술적 니즈를 성장의 재미로 연결한 신규 코어 루프 제안서입니다.", achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 순환하는 정교한 신규 시스템 구조 기획</li><li><span class='highlight-title'>경제 시뮬레이션 기반 BM 모델링</span>시즌 패스와 BM 비중 설계를 통해 수익성과 유지율의 균형 확보</li>", img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] },
@@ -300,7 +277,7 @@
                                 <div class="data-access-card"><i class="fas fa-file-excel"></i><p>시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE</a></div>
                             </div>`;
                 }
-                // [수정] FitW 옵션으로 모바일 가로 잘림 방지
+                /* FitW 파라미터로 너비 꽉 차게 호출 */
                 return `<iframe class="pdf-viewer ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitW&toolbar=0"></iframe>`;
             }).join('');
 

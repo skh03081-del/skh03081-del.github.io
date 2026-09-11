@@ -16,17 +16,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* 축구 피치 & 스포츠 세션 스페셜 테마 */
-            --bg: #0b131d; 
-            --card: #131f2d;
-            --accent: #00ff87;          /* 네온 터프 그린 */
-            --accent-glow: rgba(0, 255, 135, 0.4);
-            --accent-gold: #ffb800;      /* 매치 스포트라이트 골드 */
-            --accent-dark: rgba(0, 255, 135, 0.12);
+            /* 맨체스터 시티 시그니처 테마 */
+            --mancity-sky: #6CABDD;        /* 시티 스카이 블루 */
+            --mancity-sky-neon: #00d2ff;   /* 네온 스카이 */
+            --mancity-navy: #1C2C5B;       /* 시티 딥 네이비 */
+            --mancity-gold: #FFC659;       /* 우승 골드 포인트 */
+            
+            --bg: #0a121d; 
+            --card: #121e2c;
+            --card-hover: #182739;
+            --accent: var(--mancity-sky-neon);
+            --accent-glow: rgba(0, 210, 255, 0.4);
             --text-main: #f0f6fc;
-            --text-sub: #91a3b7;
-            --border: #233549;
-            --lv5-color: #00e5ff;
+            --text-sub: #8fa3b8;
+            --border: #203247;
+            --lv5-color: #00ffcc;
         }
 
         /* 폰트 지정 */
@@ -36,135 +40,135 @@
         body { 
             background-color: var(--bg); color: var(--text-main); 
             margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden;
-            /* 피치 잔디 패턴 은은하게 배치 */
+            /* 스카이 블루 피치 그리드 패턴 */
             background-image: 
-                linear-gradient(rgba(0, 255, 135, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 135, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(108, 171, 221, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 171, 221, 0.05) 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
         /* --- 히어로 섹션 --- */
         .hero { 
             position: relative; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden; 
-            border-bottom: 3px solid var(--accent);
-            background: radial-gradient(circle at center, #182838 0%, var(--bg) 80%);
+            border-bottom: 3px solid var(--mancity-sky);
+            background: radial-gradient(circle at center, #182b42 0%, var(--bg) 85%);
         }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .hero-bg-marquee.visible { opacity: 0.35; }
         .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; }
         .marquee-item { width: 500px; height: 300px; flex-shrink: 0; }
-        .marquee-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(1px) brightness(0.7); }
+        .marquee-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(1px) brightness(0.75); }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
         .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 40px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero-content h1 { font-size: 2.2rem; color: #fff; margin: 0; text-shadow: 0 0 15px var(--accent-glow); letter-spacing: 2px; }
-        .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; color: var(--accent); }
+        .hero-content h1 { font-size: 2.2rem; color: #fff; margin: 0; text-shadow: 0 0 20px var(--accent-glow); letter-spacing: 2px; }
+        .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; color: var(--mancity-sky-neon); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .main-slogan-text { 
             margin-top: 40px; padding: 12px 30px; 
-            background: rgba(19, 31, 45, 0.9); 
-            border: 2px solid var(--accent); 
+            background: rgba(28, 44, 91, 0.85); 
+            border: 2px solid var(--mancity-sky); 
             border-radius: 4px;
-            display: inline-block; font-size: 1.15rem; color: var(--accent); 
+            display: inline-block; font-size: 1.15rem; color: #fff; 
             font-weight: bold; opacity: 0; transition: 0.8s;
-            box-shadow: 0 0 20px rgba(0, 255, 135, 0.2);
+            box-shadow: 0 0 20px rgba(108, 171, 221, 0.3);
         }
 
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
         .section-title { 
-            max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.4rem; color: var(--accent-gold); 
-            letter-spacing: 1px; text-align: left; display: flex; align-items: center; text-shadow: 0 0 10px rgba(255, 184, 0, 0.3);
+            max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.4rem; color: var(--mancity-gold); 
+            letter-spacing: 1px; text-align: left; display: flex; align-items: center; text-shadow: 0 0 10px rgba(255, 198, 89, 0.4);
         }
         .section-title::before { content: "⚽"; margin-right: 15px; font-size: 1.2rem; }
 
         /* --- 보유 기술 --- */
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { 
-            background: var(--card); border: 2px solid var(--border); border-top: 4px solid var(--accent); padding: 25px; 
+            background: var(--card); border: 2px solid var(--border); border-top: 4px solid var(--mancity-sky); padding: 25px; 
             display: flex; flex-direction: column; gap: 15px; position: relative; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-        .skill-group::after { content: "READY"; position: absolute; top: 28px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
+        .skill-group::after { content: "READY"; position: absolute; top: 28px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--mancity-sky-neon); text-shadow: 0 0 10px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
         @keyframes ready-glow { 0% { opacity: 1; } 100% { opacity: 0.4; } }
         .skill-group-title { font-size: 1.05rem; color: #fff; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-bottom: 5px; font-weight: bold; }
         .skill-item { display: flex; flex-direction: column; margin-bottom: 12px; }
         .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; width: 100%; }
         .skill-name-box { display: flex; align-items: center; gap: 12px; }
-        .skill-name-box i { font-size: 1.1rem; width: 22px; text-align: center; color: var(--accent); } 
+        .skill-name-box i { font-size: 1.1rem; width: 22px; text-align: center; color: var(--mancity-sky); } 
         .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
         .skill-lv { font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--lv5-color); }
-        .exp-bar-bg { width: 100%; height: 10px; background: #080d14; border: 1px solid var(--border); border-radius: 2px; position: relative; overflow: hidden; }
-        .exp-fill { height: 100%; background: linear-gradient(90deg, #00c868, var(--accent)); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
+        .exp-bar-bg { width: 100%; height: 10px; background: #080f17; border: 1px solid var(--border); border-radius: 2px; position: relative; overflow: hidden; }
+        .exp-fill { height: 100%; background: linear-gradient(90deg, var(--mancity-sky), var(--mancity-sky-neon)); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
         /* --- 프로젝트 스테이지 UI --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { 
-            background: var(--card); border: 2px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; position: relative; display: flex; flex-direction: column; 
+            background: var(--card); border: 2px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; position: relative; display: flex; flex-direction: column; 
             height: auto; 
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-        .project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 12px 30px var(--accent-glow); }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--mancity-sky); box-shadow: 0 12px 30px rgba(108, 171, 221, 0.35); }
         .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.4s; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transition: 0.4s; }
         .project-card:hover .card-img-box img { opacity: 1; transform: scale(1.05); }
         
         .tag { 
-            position: absolute; top: 12px; left: 12px; font-size: 0.6rem; color: #000; font-weight: bold; 
-            background: var(--accent); padding: 5px 12px; border-radius: 2px; z-index: 5; font-family: 'Press Start 2P'; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            position: absolute; top: 12px; left: 12px; font-size: 0.6rem; color: #fff; font-weight: bold; 
+            background: var(--mancity-navy); border: 1px solid var(--mancity-sky); padding: 5px 12px; border-radius: 3px; z-index: 5; font-family: 'Press Start 2P'; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
         
         .card-info-box { padding: 15px 20px; text-align: left; background: var(--card); display: flex; align-items: center; min-height: 45px; border-top: 1px solid rgba(255,255,255,0.05); }
         .card-info-box h3 { font-size: 1.05rem; margin: 0; color: #fff; letter-spacing: 0.5px; line-height: 1.3; font-weight: bold; } 
 
         /* --- 프로젝트 모달 --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 15, 0.92); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
-        .modal-content { background: var(--bg); border: 2px solid var(--accent); border-radius: 6px; width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(0, 255, 135, 0.25); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 18, 0.93); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
+        .modal-content { background: var(--bg); border: 2px solid var(--mancity-sky); border-radius: 8px; width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); }
         
-        .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--accent); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: #0e1824; }
-        .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.3); opacity: 1; transform: scale(1.1); z-index: 1; }
+        .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
+        .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.35); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
-        #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--accent); font-weight: bold; }
+        #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--mancity-sky-neon); font-weight: bold; }
         #modalTitle { margin: 0; font-size: 1.9rem; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); } 
         
         .close-system-btn { 
-            position: relative; z-index: 3; background: var(--card); color: var(--accent); border: 2px solid var(--accent); 
+            position: relative; z-index: 3; background: var(--mancity-navy); color: var(--mancity-sky); border: 2px solid var(--mancity-sky); 
             padding: 10px 24px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); 
             border-radius: 4px;
         }
-        .close-system-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent); }
+        .close-system-btn:hover { background: var(--mancity-sky); color: #000; box-shadow: 0 0 15px var(--mancity-sky); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 30px 60px 0; } 
         
-        .game-desc-panel { background: var(--card); border-left: 5px solid var(--accent-gold); border-radius: 0 4px 4px 0; padding: 20px 25px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--accent); border-radius: 4px; padding: 25px 30px; margin-bottom: 30px; background: var(--card); text-align: left; position: relative; }
-        .mission-log h4 { color: var(--accent-gold); margin-bottom: 15px; font-size: 1.15rem; font-weight: bold; }
+        .game-desc-panel { background: var(--card); border-left: 5px solid var(--mancity-gold); border-radius: 0 4px 4px 0; padding: 20px 25px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--mancity-sky); border-radius: 4px; padding: 25px 30px; margin-bottom: 30px; background: var(--card); text-align: left; position: relative; }
+        .mission-log h4 { color: var(--mancity-gold); margin-bottom: 15px; font-size: 1.15rem; font-weight: bold; }
         .mission-log li { margin-bottom: 15px; color: var(--text-main); position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
         .mission-log li::before { content: "⚽"; position: absolute; left: 0; font-size: 0.9rem; top: 2px; }
-        .highlight-title { color: var(--accent); font-size: 1.05rem; font-weight: bold; display: block; margin-bottom: 4px; }
+        .highlight-title { color: var(--mancity-sky-neon); font-size: 1.05rem; font-weight: bold; display: block; margin-bottom: 4px; }
 
         .asset-selector { display: flex; gap: 10px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 2px solid var(--border); }
         .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
-        .asset-btn.active { background: var(--accent); color: #000; border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(108, 171, 221, 0.4); }
 
-        .viewer-container { width: 100%; background: #060b11; padding: 40px 0 0; border-top: 1px solid var(--border); text-align: center; }
+        .viewer-container { width: 100%; background: #060c14; padding: 40px 0 0; border-top: 1px solid var(--border); text-align: center; }
         .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); border-radius: 4px; }
         .pdf-viewer.narrow { width: 70% !important; } 
         .pdf-viewer.active { display: block; }
-        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--accent); border-radius: 4px; overflow: hidden; }
+        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--accent); margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
+        .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         
-        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--accent-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; }
-        .data-access-card::before { content: "PITCH DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--accent-gold); opacity: 0.8; }
+        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--mancity-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; }
+        .data-access-card::before { content: "CITYIZEN DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--mancity-gold); opacity: 0.85; }
         .data-access-card p { margin-bottom: 25px; font-weight: bold; color: #fff; font-size: 1.05rem; }
 
         @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 95% !important; } }
@@ -376,11 +380,11 @@
                 const isActive = idx === 0 ? 'active' : '';
                 const idSuffix = `${as.title}-${idx}`.replace(/\s+/g, '-');
                 if(as.type === 'video') return `<div class="video-container ${isActive}" id="view-${idSuffix}"><iframe src="${as.url}" allowfullscreen></iframe></div>`;
-                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}"><div class="data-access-card"><i class="fas fa-file-signature" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>상세 기획 명세서가 포함된 외부 노션 데이터베이스로 연결합니다.</p><a href="${as.url}" target="_blank" class="btn-pixel">ACCESS DATABASE</a></div></div>`;
+                if(as.type === 'link') return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}"><div class="data-access-card"><i class="fas fa-file-signature" style="font-size:2rem; margin-bottom:15px; color:var(--mancity-sky-neon);"></i><p>상세 기획 명세서가 포함된 외부 노션 데이터베이스로 연결합니다.</p><a href="${as.url}" target="_blank" class="btn-pixel">ACCESS DATABASE</a></div></div>`;
                 if(as.type === 'excel-combined') {
                     return `<div class="excel-combined-container ${isActive}" id="view-${idSuffix}">
                                 <div class="combined-video-frame"><iframe src="${as.videoUrl}" allowfullscreen></iframe></div>
-                                <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--accent);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
+                                <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--mancity-sky-neon);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
                 return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;

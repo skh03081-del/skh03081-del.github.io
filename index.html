@@ -79,7 +79,7 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #000; border: 1px solid var(--border); position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: var(--accent); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- 프로젝트 스테이지 UI: 칸 크기 최적화 --- */
+        /* --- 프로젝트 스테이지 UI --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { 
             background: #000; border: 2px solid var(--border); cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; position: relative; display: flex; flex-direction: column; 
@@ -145,11 +145,13 @@
             <div class="marquee-track">
                 <div class="marquee-item"><img src="P1.png"></div>
                 <div class="marquee-item"><img src="P8.png"></div>
+                <div class="marquee-item"><img src="P2.png"></div>
                 <div class="marquee-item"><img src="P7.png"></div>
                 <div class="marquee-item"><img src="P3.png"></div>
                 <div class="marquee-item"><img src="P4.png"></div>
                 <div class="marquee-item"><img src="P6_1.PNG"></div>
                 <div class="marquee-item"><img src="P5.png"></div>
+                <div class="marquee-item"><img src="P9.png"></div>
                 <div class="marquee-item"><img src="P1.png"></div>
             </div>
         </div>
@@ -197,6 +199,7 @@
             <div class="project-card" onclick="openModal(5, event)"><div class="card-img-box"><div class="tag">SYSTEM QUEST</div><img src="P4.png"></div><div class="card-info-box"><h3>FCO 신규 시스템 설계</h3></div></div>
             <div class="project-card" onclick="openModal(6, event)"><div class="card-img-box"><div class="tag">SIMULATION QUEST</div><img src="P6_1.PNG"></div><div class="card-info-box"><h3>밸런스 시뮬레이터</h3></div></div>
             <div class="project-card" onclick="openModal(7, event)"><div class="card-img-box"><div class="tag">DATA QUEST</div><img src="P5.png"></div><div class="card-info-box"><h3>데이터 기반 분석</h3></div></div>
+            <div class="project-card" onclick="openModal(8, event)"><div class="card-img-box"><div class="tag">ANALYSIS QUEST</div><img src="P9.png"></div><div class="card-info-box"><h3>아크 레이더스 분석</h3></div></div>
         </div>
     </div>
 
@@ -294,13 +297,11 @@
                 title: "라이브 서비스 개선", tag: "BALANCE QUEST", 
                 desc: "EA Korea 실무 과정에서 라이브 지표 분석을 통해 게임 메타 불균형을 해결한 프로젝트입니다.", 
                 achievements: "<li><span class='highlight-title'>2,000건 이상의 여론 및 지표 분석</span>유저 피드백과 라이브 지표를 분석하여 '수비 메타 고착화' 원인 규명</li><li><span class='highlight-title'>개선 로직 제안 및 설계</span>수비 AI 과효율을 데이터로 증명하고 공격 루트 다양화 로직 설계</li><li><span class='highlight-title'>패치 영향도 선제 시뮬레이션</span>수치 조정 후 예상되는 유저 만족도 및 메타 변화를 정교하게 예측</li>", 
-                img: "P3.png", 
-      
-                assets: [
+                img: "P3.png", assets: [
                     { type: "pdf", title: "밸런스 개선안", url: "P3_1_개선사항.pdf" }, 
-                    { type: "pdf", title: "기획 분석 보고서", url: "P3_3.pdf", isNarrow: true },
-                    { type: "pdf", title: "타인 플레이 분석", url: "P3_4.pdf", isNarrow: true },
-                    { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true }
+                    { type: "pdf", title: "영향 분석서", url: "P3_2_게임분석서.pdf", isNarrow: true },
+                    { type: "pdf", title: "기획 분석 보고서", url: "P3_3.pdf" },
+                    { type: "pdf", title: "타인 플레이 분석", url: "P3_4.pdf" }
                 ] 
             },
             { 
@@ -320,6 +321,12 @@
                 desc: "의료 서비스 사각지대 해소를 위해 공공 데이터 분석을 통해 최적 입지를 선정하고 전략을 도출한 프로젝트입니다.", 
                 achievements: "<li><span class='highlight-title'>복합 가중치 입지 모델링</span>인구 밀도, 응급실 거리 등 변수를 활용하여 주관을 배제한 최적 입지 우선순위 산출</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 전략 도출</li><li><span class='highlight-title'>지역 밀착형 타겟 홍보 전략</span>데이터 분석 결과를 실무로 연결하여 지역별 특성에 맞춘 가이드라인 수립</li>", 
                 img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
+            },
+            { 
+                title: "아크 레이더스 분석", tag: "ANALYSIS QUEST", 
+                desc: "ARC 생태계 및 부위 파괴 메커니즘을 통한 익스트랙션 슈터의 장르적 한계 극복 기획 분석 보고서입니다.", 
+                achievements: "<li><span class='highlight-title'>PVEVP 장르적 한계 극복 분석</span>다크 앤 다커 대비 지표 우상향(+23.8%) 및 리텐션 방어 요인을 도출하여 PVE 레이드형 재미의 중요성 입증</li><li><span class='highlight-title'>체계적 ARC 레이드 생태계 설계 분석</span>개체별 체급·패턴 다변화, 속성별 상태 이상 디버프 및 약점 상성 메커니즘 심층 도식화</li><li><span class='highlight-title'>절차적 물리 파쇄 & RPG 성장 루프 도출</span>실시간 관절/장갑 파열 피드백과 거점 크래프팅이 연동된 유기적 코어 루프 검증</li>", 
+                img: "P9.png", assets: [{ type: "pdf", title: "분석 보고서", url: "P9.pdf" }] 
             }
         ];
 

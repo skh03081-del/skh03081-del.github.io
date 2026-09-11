@@ -16,24 +16,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* 맨시티 & 축구 경기장(Pitch) 테마 */
-            --mancity-sky: #6CABDD;
-            --mancity-sky-neon: #00f0ff;
-            --mancity-navy: #0e1a2b;
-            --pitch-green-dark: #0a1811;
-            --pitch-green-light: #11261b;
-            --pitch-line: rgba(255, 255, 255, 0.15);
-            --stadium-gold: #ffb800;
+            /* 맨체스터 시티 시그니처 테마 */
+            --mancity-sky: #6CABDD;        /* 시티 스카이 블루 */
+            --mancity-sky-neon: #00d2ff;   /* 네온 스카이 */
+            --mancity-navy: #1C2C5B;       /* 시티 딥 네이비 */
+            --mancity-gold: #FFC659;       /* 우승 골드 포인트 */
             
-            --bg: #0b1510; 
-            --card: #122119;
-            --card-border: #1e382b;
+            --bg: #0a121d; 
+            --card: #121e2c;
+            --card-hover: #182739;
             --accent: var(--mancity-sky-neon);
-            --accent-glow: rgba(0, 240, 255, 0.4);
+            --accent-glow: rgba(0, 210, 255, 0.4);
             --text-main: #f0f6fc;
-            --text-sub: #a1b5a9;
-            --border: #234233;
-            --lv5-color: #00ffaa;
+            --text-sub: #8fa3b8;
+            --border: #203247;
+            --lv5-color: #00ffcc;
         }
 
         /* 폰트 지정 */
@@ -43,63 +40,71 @@
         body { 
             background-color: var(--bg); color: var(--text-main); 
             margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden;
-            /* 실제 축구 잔디 스트라이프 & 경기장 규격 라인 패턴 */
+            /* 스카이 블루 피치 그리드 패턴 */
             background-image: 
-                repeating-linear-gradient(0deg, var(--pitch-green-dark), var(--pitch-green-dark) 60px, var(--pitch-green-light) 60px, var(--pitch-green-light) 120px),
-                linear-gradient(90deg, var(--pitch-line) 1px, transparent 1px),
-                linear-gradient(0deg, var(--pitch-line) 1px, transparent 1px);
-            background-size: 100% 100%, 80px 80px, 80px 80px;
-            background-attachment: fixed;
+                linear-gradient(rgba(108, 171, 221, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 171, 221, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* --- 경기장 조명 히어로 섹션 --- */
+        /* --- 히어로 섹션 --- */
         .hero { 
-            position: relative; width: 100%; height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; 
-            border-bottom: 4px solid var(--mancity-sky);
-            background: 
-                radial-gradient(ellipse at top, rgba(108, 171, 221, 0.35) 0%, rgba(11, 21, 16, 0.95) 75%),
-                repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 100px, transparent 100px, transparent 200px);
+            position: relative; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden; 
+            border-bottom: 3px solid var(--mancity-sky);
+            background: radial-gradient(circle at center, #182b42 0%, var(--bg) 85%);
         }
         .hero-bg-marquee { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .hero-bg-marquee.visible { opacity: 0.35; }
         .marquee-track { display: flex; width: max-content; animation: scroll-left 50s linear infinite; }
-        .marquee-item { width: 500px; height: 320px; flex-shrink: 0; }
-        .marquee-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(1px) brightness(0.7); }
+        .marquee-item { width: 500px; height: 300px; flex-shrink: 0; }
+        .marquee-item img { width: 100%; height: 100%; object-fit: cover; filter: blur(1px) brightness(0.75); }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
         .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 40px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero-content h1 { font-size: 2.3rem; color: #fff; margin: 0; text-shadow: 0 0 20px var(--accent-glow), 3px 3px 0 #000; letter-spacing: 2px; }
+        .hero-content h1 { font-size: 2.2rem; color: #fff; margin: 0; text-shadow: 0 0 20px var(--accent-glow); letter-spacing: 2px; }
         .cursor-blink { display: inline-block; width: 15px; animation: blink 0.8s step-end infinite; color: var(--mancity-sky-neon); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        
-        /* 매치 스코어보드 스타일 슬로건 */
         .main-slogan-text { 
-            margin-top: 35px; padding: 12px 35px; 
-            background: rgba(14, 26, 43, 0.9); 
+            margin-top: 40px; padding: 12px 30px; 
+            background: rgba(28, 44, 91, 0.85); 
             border: 2px solid var(--mancity-sky); 
-            box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.3), 0 5px 25px rgba(0,0,0,0.6);
+            border-radius: 4px;
             display: inline-block; font-size: 1.15rem; color: #fff; 
             font-weight: bold; opacity: 0; transition: 0.8s;
-            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(108, 171, 221, 0.3);
         }
 
         .reveal-section { opacity: 0; transform: translateY(30px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; }
         .reveal-section.active { opacity: 1; transform: translateY(0); }
 
+        /* --- [수정] FC 온라인 스타일 섹션 타이틀 --- */
         .section-title { 
-            max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.4rem; color: var(--stadium-gold); 
-            letter-spacing: 1px; text-align: left; display: flex; align-items: center; text-shadow: 0 0 12px rgba(255, 184, 0, 0.5);
+            max-width: 1100px; margin: 70px auto 30px; padding: 0 20px; font-size: 1.35rem;
+            letter-spacing: 1.5px; text-align: left; display: flex; align-items: center;
+            /* FC 온라인 스타일 듀얼 그래디언트 텍스트 */
+            background: linear-gradient(135deg, #00ffcc 0%, #ffea00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 12px rgba(0, 255, 204, 0.5));
         }
-        .section-title::before { content: "⚽"; margin-right: 15px; font-size: 1.3rem; }
+        .section-title::before { 
+            content: "FC"; 
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 900;
+            color: #0d121d; background: #00ffcc;
+            padding: 3px 7px; margin-right: 14px; border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.6);
+            -webkit-text-fill-color: #0d121d;
+        }
 
-        /* --- PLAYER ABILITIES (선수 스탯 패널) --- */
+        /* --- 보유 기술 --- */
         .skills-wrapper { max-width: 1100px; margin: 0 auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .skill-group { 
-            background: rgba(18, 33, 25, 0.9); border: 2px solid var(--border); border-top: 4px solid var(--mancity-sky); padding: 25px; 
+            background: var(--card); border: 2px solid var(--border); border-top: 4px solid var(--mancity-sky); padding: 25px; 
             display: flex; flex-direction: column; gap: 15px; position: relative; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-        .skill-group::after { content: "PITCH READY"; position: absolute; top: 25px; right: 20px; font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--mancity-sky-neon); text-shadow: 0 0 10px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
+        .skill-group::after { content: "READY"; position: absolute; top: 28px; right: 25px; font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--mancity-sky-neon); text-shadow: 0 0 10px var(--accent-glow); animation: ready-glow 1s infinite alternate; }
         @keyframes ready-glow { 0% { opacity: 1; } 100% { opacity: 0.4; } }
         .skill-group-title { font-size: 1.05rem; color: #fff; border-bottom: 2px solid var(--border); padding-bottom: 12px; margin-bottom: 5px; font-weight: bold; }
         .skill-item { display: flex; flex-direction: column; margin-bottom: 12px; }
@@ -108,76 +113,76 @@
         .skill-name-box i { font-size: 1.1rem; width: 22px; text-align: center; color: var(--mancity-sky); } 
         .skill-name { font-size: 0.9rem; color: #fff; font-weight: bold; }
         .skill-lv { font-family: 'Press Start 2P'; font-size: 0.65rem; color: var(--lv5-color); }
-        .exp-bar-bg { width: 100%; height: 10px; background: #07120c; border: 1px solid var(--border); border-radius: 2px; position: relative; overflow: hidden; }
-        .exp-fill { height: 100%; background: linear-gradient(90deg, #00b060, var(--mancity-sky-neon)); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
+        .exp-bar-bg { width: 100%; height: 10px; background: #080f17; border: 1px solid var(--border); border-radius: 2px; position: relative; overflow: hidden; }
+        .exp-fill { height: 100%; background: linear-gradient(90deg, var(--mancity-sky), var(--mancity-sky-neon)); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- MISSION STAGES (축구 카드 형태의 프로젝트 카드) --- */
+        /* --- 프로젝트 스테이지 UI --- */
         .project-container { max-width: 1100px; margin: 0 auto 120px; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .project-card { 
-            background: rgba(18, 33, 25, 0.95); border: 2px solid var(--card-border); cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; position: relative; display: flex; flex-direction: column; 
+            background: var(--card); border: 2px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; position: relative; display: flex; flex-direction: column; 
             height: auto; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
-        .project-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--mancity-sky-neon); box-shadow: 0 15px 35px rgba(0, 240, 255, 0.3); }
-        .card-img-box { width: 100%; height: 185px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--mancity-sky); box-shadow: 0 12px 30px rgba(108, 171, 221, 0.35); }
+        .card-img-box { width: 100%; height: 180px; background: #000; border-bottom: 2px solid var(--border); overflow: hidden; position: relative; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transition: 0.4s; }
-        .project-card:hover .card-img-box img { opacity: 1; transform: scale(1.06); }
+        .project-card:hover .card-img-box img { opacity: 1; transform: scale(1.05); }
         
-        /* 스코어 카드 뱃지 스타일 */
         .tag { 
             position: absolute; top: 12px; left: 12px; font-size: 0.6rem; color: #fff; font-weight: bold; 
-            background: var(--mancity-navy); border: 1.5px solid var(--mancity-sky); padding: 5px 12px; z-index: 5; font-family: 'Press Start 2P'; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+            background: var(--mancity-navy); border: 1px solid var(--mancity-sky); padding: 5px 12px; border-radius: 3px; z-index: 5; font-family: 'Press Start 2P'; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
         
-        .card-info-box { padding: 15px 20px; text-align: left; background: var(--card); display: flex; align-items: center; min-height: 48px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .card-info-box { padding: 15px 20px; text-align: left; background: var(--card); display: flex; align-items: center; min-height: 45px; border-top: 1px solid rgba(255,255,255,0.05); }
         .card-info-box h3 { font-size: 1.05rem; margin: 0; color: #fff; letter-spacing: 0.5px; line-height: 1.3; font-weight: bold; } 
 
-        /* --- 프로젝트 모달 (스타디움 중계 센터 UI) --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 12, 8, 0.94); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
-        .modal-content { background: var(--bg); border: 2px solid var(--mancity-sky); width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(0, 240, 255, 0.3); }
+        /* --- 프로젝트 모달 --- */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 18, 0.93); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
+        .modal-content { background: var(--bg); border: 2px solid var(--mancity-sky); border-radius: 8px; width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); }
         
-        .project-header-top { width: 100%; height: 135px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 3px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
+        .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.35); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
         #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--mancity-sky-neon); font-weight: bold; }
-        #modalTitle { margin: 0; font-size: 1.9rem; color: #fff; text-shadow: 0 0 12px rgba(0,0,0,0.8); } 
+        #modalTitle { margin: 0; font-size: 1.9rem; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); } 
         
         .close-system-btn { 
             position: relative; z-index: 3; background: var(--mancity-navy); color: var(--mancity-sky); border: 2px solid var(--mancity-sky); 
             padding: 10px 24px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); 
+            border-radius: 4px;
         }
         .close-system-btn:hover { background: var(--mancity-sky); color: #000; box-shadow: 0 0 15px var(--mancity-sky); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
         .modal-inner-content { padding: 30px 60px 0; } 
         
-        .game-desc-panel { background: var(--card); border-left: 5px solid var(--stadium-gold); padding: 20px 25px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--mancity-sky); padding: 25px 30px; margin-bottom: 30px; background: var(--card); text-align: left; position: relative; }
-        .mission-log h4 { color: var(--stadium-gold); margin-bottom: 15px; font-size: 1.15rem; font-weight: bold; }
+        .game-desc-panel { background: var(--card); border-left: 5px solid var(--mancity-gold); border-radius: 0 4px 4px 0; padding: 20px 25px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--mancity-sky); border-radius: 4px; padding: 25px 30px; margin-bottom: 30px; background: var(--card); text-align: left; position: relative; }
+        .mission-log h4 { color: var(--mancity-gold); margin-bottom: 15px; font-size: 1.15rem; font-weight: bold; }
         .mission-log li { margin-bottom: 15px; color: var(--text-main); position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
         .mission-log li::before { content: "⚽"; position: absolute; left: 0; font-size: 0.9rem; top: 2px; }
         .highlight-title { color: var(--mancity-sky-neon); font-size: 1.05rem; font-weight: bold; display: block; margin-bottom: 4px; }
 
         .asset-selector { display: flex; gap: 10px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 2px solid var(--border); }
-        .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; }
-        .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+        .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
+        .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(108, 171, 221, 0.4); }
 
-        .viewer-container { width: 100%; background: #050d08; padding: 40px 0 0; border-top: 1px solid var(--border); text-align: center; }
-        .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); }
+        .viewer-container { width: 100%; background: #060c14; padding: 40px 0 0; border-top: 1px solid var(--border); text-align: center; }
+        .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); border-radius: 4px; }
         .pdf-viewer.narrow { width: 70% !important; } 
         .pdf-viewer.active { display: block; }
-        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); overflow: hidden; }
+        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
         .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); margin-bottom: 10px; overflow: hidden; }
+        .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         
-        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--stadium-gold); text-align: center; position: relative; overflow: hidden; }
-        .data-access-card::before { content: "CITYIZEN STADIUM DATA ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--stadium-gold); opacity: 0.85; }
+        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--mancity-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; }
+        .data-access-card::before { content: "CITYIZEN DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--mancity-gold); opacity: 0.85; }
         .data-access-card p { margin-bottom: 25px; font-weight: bold; color: #fff; font-size: 1.05rem; }
 
         @media (max-width: 950px) { .skills-wrapper, .project-container { grid-template-columns: 1fr; } .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 95% !important; } }

@@ -38,7 +38,7 @@
         h1, h2, .pixel-font, .tag, .game-header, .section-title { font-family: 'Press Start 2P', cursive; }
 
         body { 
-            zoom: 65%; /* 페이지 접속 시 자동으로 65% 배율 적용 */
+            zoom: 75%; /* 페이지 접속 시 자동으로 75% 배율 적용 */
             background-color: var(--bg); color: var(--text-main); 
             margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden;
             /* 스카이 블루 피치 그리드 패턴 */
@@ -88,7 +88,7 @@
             filter: drop-shadow(0 0 12px rgba(0, 255, 204, 0.5));
         }
         .section-title::before { 
-            content: ""; 
+            content: "FC"; 
             display: inline-flex; align-items: center; justify-content: center;
             font-size: 0.65rem; font-weight: 900;
             color: #0d121d; background: #00ffcc;
@@ -230,9 +230,9 @@
             gap: 6px;
         }
 
-        /* --- 프로젝트 모달 --- */
+        /* --- 프로젝트 모달 & 뷰어 개선 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 18, 0.93); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
-        .modal-content { background: var(--bg); border: 2px solid var(--mancity-sky); border-radius: 8px; width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); }
+        .modal-content { background: var(--bg); border: 2px solid var(--mancity-sky); border-radius: 8px; width: 95%; max-width: 1450px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); }
         
         .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.35); opacity: 1; transform: scale(1.1); z-index: 1; }
@@ -248,7 +248,7 @@
         .close-system-btn:hover { background: var(--mancity-sky); color: #000; box-shadow: 0 0 15px var(--mancity-sky); }
 
         .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
-        .modal-inner-content { padding: 30px 60px 0; } 
+        .modal-inner-content { padding: 25px 35px 0; } 
         
         .game-desc-panel { background: var(--card); border-left: 5px solid var(--mancity-gold); border-radius: 0 4px 4px 0; padding: 20px 25px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--mancity-sky); border-radius: 4px; padding: 25px 30px; margin-bottom: 30px; background: var(--card); text-align: left; position: relative; }
@@ -261,20 +261,21 @@
         .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
         .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(108, 171, 221, 0.4); }
 
-        .viewer-container { width: 100%; background: #060c14; padding: 40px 0 0; border-top: 1px solid var(--border); text-align: center; }
-        .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); border-radius: 4px; }
-        .pdf-viewer.narrow { width: 70% !important; } 
+        /* 🖼️ PDF 뷰어 짤림 방지 (100% 폭 확대 적용) */
+        .viewer-container { width: 100%; background: #060c14; padding: 30px 0 0; border-top: 1px solid var(--border); text-align: center; box-sizing: border-box; }
+        .pdf-viewer { width: 100%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        .pdf-viewer.narrow { width: 85% !important; } 
         .pdf-viewer.active { display: block; }
-        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
+        .video-container { width: 95%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
+        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 95%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
         .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         
-        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--mancity-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; }
+        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--mancity-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; box-sizing: border-box; }
         .data-access-card::before { content: "CITYIZEN DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--mancity-gold); opacity: 0.85; }
         .data-access-card p { margin-bottom: 25px; font-weight: bold; color: #fff; font-size: 1.05rem; }
 
@@ -284,7 +285,7 @@
             .project-card { flex-direction: column; height: auto; }
             .card-img-box { width: 100%; height: 180px; border-right: none; border-bottom: 2px solid var(--border); }
             .card-info-box { width: 100%; padding: 18px 20px; }
-            .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 95% !important; } 
+            .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 100% !important; } 
         }
     </style>
 </head>
@@ -343,7 +344,7 @@
         <h2 class="section-title">MISSION STAGES</h2>
         <div class="project-container">
             
-            <!-- 1. FCO 라이브 서비스 개선 (인덱스 0) -->
+            <!-- 1. FCO 라이브 서비스 개선 -->
             <div class="project-card" onclick="openModal(0, event)">
                 <div class="card-img-box">
                     <img src="P3.png">
@@ -361,7 +362,7 @@
                 </div>
             </div>
 
-            <!-- 2. FCO 신규 시스템 설계 (인덱스 1) -->
+            <!-- 2. FCO 신규 시스템 설계 -->
             <div class="project-card" onclick="openModal(1, event)">
                 <div class="card-img-box">
                     <img src="P4.png">
@@ -379,7 +380,7 @@
                 </div>
             </div>
 
-            <!-- 3. 데이터 기반 분석 (인덱스 2) -->
+            <!-- 3. 데이터 기반 분석 -->
             <div class="project-card" onclick="openModal(2, event)">
                 <div class="card-img-box">
                     <img src="P5.png">
@@ -397,7 +398,7 @@
                 </div>
             </div>
 
-            <!-- 4. 다인 협업 프로젝트 (인덱스 3) -->
+            <!-- 4. 다인 협업 프로젝트 -->
             <div class="project-card" onclick="openModal(3, event)">
                 <div class="card-img-box">
                     <img src="P2.png">
@@ -415,7 +416,7 @@
                 </div>
             </div>
 
-            <!-- 5. 자체 기획 및 개발 ( 리듬 게임 ) (인덱스 4) -->
+            <!-- 5. 자체 기획 및 개발 ( 리듬 게임 ) -->
             <div class="project-card" onclick="openModal(4, event)">
                 <div class="card-img-box">
                     <img src="P1.png">
@@ -433,7 +434,7 @@
                 </div>
             </div>
 
-            <!-- 6. 자체 기획 및 개발 ( 디펜스 게임 ) (인덱스 5) -->
+            <!-- 6. 자체 기획 및 개발 ( 디펜스 게임 ) -->
             <div class="project-card" onclick="openModal(5, event)">
                 <div class="card-img-box">
                     <img src="P8.png">
@@ -451,7 +452,7 @@
                 </div>
             </div>
 
-            <!-- 7. 던파 라이브 이벤트·BM 분석 (인덱스 6) -->
+            <!-- 7. 던파 라이브 이벤트·BM 분석 -->
             <div class="project-card" onclick="openModal(6, event)">
                 <div class="card-img-box">
                     <img src="P10.png">
@@ -469,7 +470,7 @@
                 </div>
             </div>
 
-            <!-- 8. 아크레이더스 PVPVE 분석 (인덱스 7) -->
+            <!-- 8. 아크레이더스 PVPVE 분석 -->
             <div class="project-card" onclick="openModal(7, event)">
                 <div class="card-img-box">
                     <img src="P9.jpg">
@@ -487,7 +488,7 @@
                 </div>
             </div>
 
-            <!-- 9. 신규 총기 기획 제안 (인덱스 8) -->
+            <!-- 9. 신규 총기 기획 제안 -->
             <div class="project-card" onclick="openModal(8, event)">
                 <div class="card-img-box">
                     <img src="P7.png">
@@ -505,7 +506,7 @@
                 </div>
             </div>
 
-            <!-- 10. 밸런스 시뮬레이터 (인덱스 9) -->
+            <!-- 10. 밸런스 시뮬레이터 -->
             <div class="project-card" onclick="openModal(9, event)">
                 <div class="card-img-box">
                     <img src="P6_1.PNG">
@@ -588,7 +589,7 @@
             { 
                 title: "FCO 신규 시스템 설계", tag: "SYSTEM QUEST", 
                 desc: "유저의 전술적 니즈를 성장의 재미로 연결한 신규 코어 루프 제안서입니다.", 
-                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 순환하는 정교한 신규 시스템 구조 기획</li><li><span class='highlight-title'>경제 시뮬레이션 기반 BM 모델링</span>시즌 패스와 확률형 보상 비중을 설계하여 수익성과 유지율 균형 확보</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획</span>최고 레벨 도달 유저에게 지속적 동기를 부여하는 잔존 전략 수립</li>", 
+                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 순환하는 정교한 신규 시스템 구조 기획</li><li><span class='highlight-title'>경제 시뮬레이션 기반 BM 모델링</span>시즌 패스 및 확률형 보상 비중을 설계하여 수익성과 유지율 균형 확보</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획</span>최고 레벨 도달 유저에게 지속적 동기를 부여하는 잔존 전략 수립</li>", 
                 img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
             },
             { 
@@ -680,7 +681,8 @@
                                 <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--mancity-sky-neon);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
-                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
+                /* view=Fit 옵션을 적용하여 프레임 크기에 맞게 자동으로 PDF 전체 페이지 비율 설정 */
+                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=Fit&toolbar=0"></iframe>`;
             }).join('');
 
             document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, '${as.title}-${idx}'.replace(/\\s+/g, '-'), event)">${as.title}</button>`).join('');

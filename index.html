@@ -16,10 +16,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --mancity-sky: #6CABDD;        
-            --mancity-sky-neon: #00d2ff;   
-            --mancity-navy: #1C2C5B;       
-            --mancity-gold: #FFC659;       
+            /* 맨체스터 시티 시그니처 테마 */
+            --mancity-sky: #6CABDD;        /* 시티 스카이 블루 */
+            --mancity-sky-neon: #00d2ff;   /* 네온 스카이 */
+            --mancity-navy: #1C2C5B;       /* 시티 딥 네이비 */
+            --mancity-gold: #FFC659;       /* 우승 골드 포인트 */
             
             --bg: #0a121d; 
             --card: #121e2c;
@@ -32,13 +33,14 @@
             --lv5-color: #00ffcc;
         }
 
+        /* 폰트 지정 */
         body, button, h3, #modalTitle { font-family: 'Galmuri9', sans-serif; }
         h1, h2, .pixel-font, .tag, .game-header, .section-title { font-family: 'Press Start 2P', cursive; }
 
         body { 
-            zoom: 75%; 
             background-color: var(--bg); color: var(--text-main); 
             margin: 0; padding: 0; line-height: 1.6; overflow-x: hidden;
+            /* 스카이 블루 피치 그리드 패턴 */
             background-image: 
                 linear-gradient(rgba(108, 171, 221, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(108, 171, 221, 0.05) 1px, transparent 1px);
@@ -113,7 +115,7 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #080f17; border: 1px solid var(--border); border-radius: 2px; position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: linear-gradient(90deg, var(--mancity-sky), var(--mancity-sky-neon)); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- 프로젝트 카드 --- */
+        /* --- 프로젝트 스테이지 UI (크기 & 여백 재설계) --- */
         .project-container { 
             max-width: 1100px; 
             margin: 0 auto 120px; 
@@ -133,7 +135,7 @@
             position: relative; 
             display: flex; 
             flex-direction: row; 
-            height: 220px; 
+            height: 220px; /* 높이 상향으로 여백 및 이미지 확보 */
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
@@ -143,6 +145,7 @@
             box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3); 
         }
 
+        /* 🖼️ 이미지 노출 공간 확대 */
         .card-img-box { 
             width: 42%; 
             height: 100%; 
@@ -171,6 +174,7 @@
             transform: scale(1.06); 
         }
         
+        /* 🏷️ 태그 스타일 확장 */
         .tag { 
             display: inline-block;
             font-size: 0.65rem; color: #fff; font-weight: bold; 
@@ -180,6 +184,7 @@
             width: fit-content;
         }
         
+        /* 📝 우측 텍스트 영역 수평·수직 중앙 정렬 배치 */
         .card-info-box { 
             width: 58%; 
             padding: 20px 22px; 
@@ -187,13 +192,13 @@
             background: var(--card); 
             display: flex; 
             flex-direction: column; 
-            justify-content: center; 
-            gap: 10px; 
+            justify-content: center; /* 수직 중앙 정렬로 상·하 여백 균형 확보 */
+            gap: 10px; /* 요소 간 균일한 여백 */
             box-sizing: border-box;
         }
 
         .card-info-box h3 { 
-            font-size: 1.2rem; 
+            font-size: 1.2rem; /* 제목 크기 확대 */
             margin: 0; 
             color: #fff; 
             letter-spacing: 0.5px; 
@@ -203,18 +208,23 @@
             line-height: 1.35;
         }
 
+        /* 카드 표면 요약 리스트 확대 */
         .card-summary-list {
             margin: 0;
             padding-left: 14px;
             color: var(--text-sub);
-            font-size: 0.92rem; 
+            font-size: 0.92rem; /* 글자 크기 확대 */
             line-height: 1.55;
         }
-        .card-summary-list li { margin-bottom: 4px; }
-        .card-summary-list li::marker { color: var(--mancity-sky-neon); }
+        .card-summary-list li {
+            margin-bottom: 4px;
+        }
+        .card-summary-list li::marker {
+            color: var(--mancity-sky-neon);
+        }
 
         .card-more-btn {
-            font-size: 0.75rem; 
+            font-size: 0.75rem; /* 버튼 텍스트 확대 */
             color: var(--mancity-sky-neon);
             font-family: 'Press Start 2P';
             margin-top: 4px;
@@ -223,91 +233,53 @@
             gap: 6px;
         }
 
-        /* --- 프로젝트 팝업 구조 최적화 --- */
+        /* --- 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 18, 0.93); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
+        .modal-content { background: var(--bg); border: 2px solid var(--mancity-sky); border-radius: 8px; width: 98%; max-width: 1400px; height: 95vh; overflow: hidden; position: relative; display: flex; flex-direction: column; cursor: default; box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); }
         
-        /* 팝업 창 세로 크기 95vh로 극대화 */
-        .modal-content { 
-            background: var(--bg); 
-            border: 2px solid var(--mancity-sky); 
-            border-radius: 8px; 
-            width: 95vw; 
-            max-width: 1600px; 
-            height: 95vh; 
-            overflow: hidden; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            cursor: default; 
-            box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); 
-        }
-        
-        .project-header-top { width: 100%; height: 100px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 35px; box-sizing: border-box; background: var(--mancity-navy); }
+        .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.35); opacity: 1; transform: scale(1.1); z-index: 1; }
-        .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 4px; }
-        #modalTag { font-family: 'Press Start 2P'; font-size: 0.75rem; color: var(--mancity-sky-neon); font-weight: bold; }
-        #modalTitle { margin: 0; font-size: 1.7rem; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); } 
+        .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
+        #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--mancity-sky-neon); font-weight: bold; }
+        #modalTitle { margin: 0; font-size: 1.9rem; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); } 
         
         .close-system-btn { 
             position: relative; z-index: 3; background: var(--mancity-navy); color: var(--mancity-sky); border: 2px solid var(--mancity-sky); 
-            padding: 8px 20px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 35px; top: 50%; transform: translateY(-50%); 
+            padding: 10px 24px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; font-weight: bold; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); 
             border-radius: 4px;
         }
         .close-system-btn:hover { background: var(--mancity-sky); color: #000; box-shadow: 0 0 15px var(--mancity-sky); }
 
-        .modal-body-scroll { flex: 1; overflow-y: auto; }
-        .modal-inner-content { padding: 25px 35px 40px; } 
+        .modal-body-scroll { flex-grow: 1; overflow-y: auto; }
+        .modal-inner-content { padding: 30px 60px 0; } 
         
-        .game-desc-panel { background: var(--card); border-left: 5px solid var(--mancity-gold); border-radius: 0 4px 4px 0; padding: 18px 22px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--mancity-sky); border-radius: 4px; padding: 22px 28px; margin-bottom: 25px; background: var(--card); text-align: left; position: relative; }
-        .mission-log h4 { color: var(--mancity-gold); margin-bottom: 12px; font-size: 1.1rem; font-weight: bold; }
-        .mission-log li { margin-bottom: 12px; color: var(--text-main); position: relative; padding-left: 28px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
+        .game-desc-panel { background: var(--card); border-left: 5px solid var(--mancity-gold); border-radius: 0 4px 4px 0; padding: 20px 25px; margin-bottom: 20px; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .mission-log { border: 2px solid var(--border); border-top: 3px solid var(--mancity-sky); border-radius: 4px; padding: 25px 30px; margin-bottom: 30px; background: var(--card); text-align: left; position: relative; }
+        .mission-log h4 { color: var(--mancity-gold); margin-bottom: 15px; font-size: 1.15rem; font-weight: bold; }
+        .mission-log li { margin-bottom: 15px; color: var(--text-main); position: relative; padding-left: 30px; list-style: none; font-size: 0.95rem; line-height: 1.5; }
         .mission-log li::before { content: "⚽"; position: absolute; left: 0; font-size: 0.9rem; top: 2px; }
         .highlight-title { color: var(--mancity-sky-neon); font-size: 1.05rem; font-weight: bold; display: block; margin-bottom: 4px; }
 
-        .asset-selector { display: flex; gap: 10px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 12px 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
-        .asset-btn { padding: 9px 20px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.85rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
+        .asset-selector { display: flex; gap: 10px; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; background: var(--bg); padding: 15px 0; border-bottom: 2px solid var(--border); }
+        .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
         .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(108, 171, 221, 0.4); }
 
-        /* --- PDF & 미디어 뷰어 영역 전면 개편 --- */
-        .viewer-container { width: 100%; background: #060c14; padding: 10px 0 20px; border: 1px solid var(--border); border-radius: 6px; text-align: center; box-sizing: border-box; display: flex; justify-content: center; align-items: center; }
-        
-        /* 가로 슬라이드 PDF (팝업 세로 높이에 맞춰 80vh 확보) */
-        .pdf-viewer { 
-            width: 100%; 
-            max-width: 1350px;
-            height: 80vh; 
-            min-height: 700px;
-            display: none; 
-            margin: 0 auto; 
-            border: none; 
-            border-radius: 4px; 
-            box-sizing: border-box; 
-            background: #0d131d;
-        }
-        
-        /* 세로 보고서 PDF (가로 폭 제한 650px로 확대 잘림 완전 차단) */
-        .pdf-viewer.narrow { 
-            width: 100% !important; 
-            max-width: 650px !important; 
-            height: 85vh !important; 
-            min-height: 800px !important; 
-        } 
-        
+        .viewer-container { width: 100%; background: #060c14; padding: 40px 0 0; border-top: 1px solid var(--border); text-align: center; }
+        .pdf-viewer { width: 85%; height: 850px; display: none; margin: 0 auto; border: 1px solid var(--border); border-radius: 4px; }
+        .pdf-viewer.narrow { width: 70% !important; } 
         .pdf-viewer.active { display: block; }
-        
-        .video-container { width: 100%; max-width: 1200px; aspect-ratio: 16 / 9; display: none; margin: 0 auto; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
+        .video-container { width: 85%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; gap: 20px; }
+        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 85%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
-        .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
+        .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
         
-        .data-access-card { width: 100%; padding: 30px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--mancity-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; box-sizing: border-box; }
+        .data-access-card { width: 100%; padding: 40px; background: var(--card); border: 2px solid var(--border); border-top: 3px solid var(--mancity-gold); border-radius: 4px; text-align: center; position: relative; overflow: hidden; }
         .data-access-card::before { content: "CITYIZEN DATA ACCESS ESTABLISHED"; position: absolute; top: 10px; left: 15px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--mancity-gold); opacity: 0.85; }
-        .data-access-card p { margin-bottom: 20px; font-weight: bold; color: #fff; font-size: 1rem; }
+        .data-access-card p { margin-bottom: 25px; font-weight: bold; color: #fff; font-size: 1.05rem; }
 
         @media (max-width: 850px) { 
             .skills-wrapper { grid-template-columns: 1fr; } 
@@ -315,7 +287,7 @@
             .project-card { flex-direction: column; height: auto; }
             .card-img-box { width: 100%; height: 180px; border-right: none; border-bottom: 2px solid var(--border); }
             .card-info-box { width: 100%; padding: 18px 20px; }
-            .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 100% !important; } 
+            .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 95% !important; } 
         }
     </style>
 </head>
@@ -327,13 +299,13 @@
                 <div class="marquee-item"><img src="P3.png"></div>
                 <div class="marquee-item"><img src="P4.png"></div>
                 <div class="marquee-item"><img src="P5.png"></div>
-                <div class="marquee-item"><img src="P2.png"></div>
                 <div class="marquee-item"><img src="P1.png"></div>
                 <div class="marquee-item"><img src="P8.png"></div>
-                <div class="marquee-item"><img src="P10.png"></div>
-                <div class="marquee-item"><img src="P9.jpg"></div>
+                <div class="marquee-item"><img src="P2.png"></div>
                 <div class="marquee-item"><img src="P7.png"></div>
+                <div class="marquee-item"><img src="P9.jpg"></div>
                 <div class="marquee-item"><img src="P6_1.PNG"></div>
+                <div class="marquee-item"><img src="P10.png"></div>
                 <div class="marquee-item"><img src="P3.png"></div>
             </div>
         </div>
@@ -428,26 +400,8 @@
                 </div>
             </div>
 
-            <!-- 4. 다인 협업 프로젝트 -->
+            <!-- 4. 자체 개발 ( 리듬 게임 ) -->
             <div class="project-card" onclick="openModal(3, event)">
-                <div class="card-img-box">
-                    <img src="P2.png">
-                </div>
-                <div class="card-info-box">
-                    <div>
-                        <div class="tag">PARTY QUEST</div>
-                        <h3>다인 협업 프로젝트</h3>
-                    </div>
-                    <ul class="card-summary-list">
-                        <li>VBA 기반 데이터 매니저 제작으로 관리 결함 0% 달성</li>
-                        <li>Figma 기반 UI/UX 설계 및 Unity 에디터 레벨 디자인</li>
-                    </ul>
-                    <div class="card-more-btn">VIEW DETAILS ▶</div>
-                </div>
-            </div>
-
-            <!-- 5. 자체 기획 및 개발 ( 리듬 게임 ) -->
-            <div class="project-card" onclick="openModal(4, event)">
                 <div class="card-img-box">
                     <img src="P1.png">
                 </div>
@@ -464,8 +418,8 @@
                 </div>
             </div>
 
-            <!-- 6. 자체 기획 및 개발 ( 디펜스 게임 ) -->
-            <div class="project-card" onclick="openModal(5, event)">
+            <!-- 5. 자체 개발 ( 디펜스 게임 ) -->
+            <div class="project-card" onclick="openModal(4, event)">
                 <div class="card-img-box">
                     <img src="P8.png">
                 </div>
@@ -482,44 +436,26 @@
                 </div>
             </div>
 
-            <!-- 7. 던파 라이브 이벤트·BM 분석 -->
+            <!-- 6. 다인 협업 프로젝트 -->
+            <div class="project-card" onclick="openModal(5, event)">
+                <div class="card-img-box">
+                    <img src="P2.png">
+                </div>
+                <div class="card-info-box">
+                    <div>
+                        <div class="tag">PARTY QUEST</div>
+                        <h3>다인 협업 프로젝트</h3>
+                    </div>
+                    <ul class="card-summary-list">
+                        <li>VBA 기반 데이터 매니저 제작으로 관리 결함 0% 달성</li>
+                        <li>Figma 기반 UI/UX 설계 및 Unity 에디터 레벨 디자인</li>
+                    </ul>
+                    <div class="card-more-btn">VIEW DETAILS ▶</div>
+                </div>
+            </div>
+
+            <!-- 7. 신규 총기 기획 제안 -->
             <div class="project-card" onclick="openModal(6, event)">
-                <div class="card-img-box">
-                    <img src="P10.png">
-                </div>
-                <div class="card-info-box">
-                    <div>
-                        <div class="tag">BM QUEST</div>
-                        <h3>던파 라이브 이벤트·BM 분석</h3>
-                    </div>
-                    <ul class="card-summary-list">
-                        <li>Neople Open API 데이터 분석을 통한 이탈 구조 규명</li>
-                        <li>후결제 소급 적용형 신규 패스 BM 및 학습 미션 제안</li>
-                    </ul>
-                    <div class="card-more-btn">VIEW DETAILS ▶</div>
-                </div>
-            </div>
-
-            <!-- 8. 아크레이더스 PVPVE 분석 -->
-            <div class="project-card" onclick="openModal(7, event)">
-                <div class="card-img-box">
-                    <img src="P9.jpg">
-                </div>
-                <div class="card-info-box">
-                    <div>
-                        <div class="tag">ANALYSIS QUEST</div>
-                        <h3>아크레이더스 PVPVE 분석</h3>
-                    </div>
-                    <ul class="card-summary-list">
-                        <li>익스트랙션 슈터 장르의 리텐션 방어 요인 심층 분석</li>
-                        <li>ARC 레이드 생태계 및 절차적 물리 파쇄 코어 루프 도출</li>
-                    </ul>
-                    <div class="card-more-btn">VIEW DETAILS ▶</div>
-                </div>
-            </div>
-
-            <!-- 9. 신규 총기 기획 제안 -->
-            <div class="project-card" onclick="openModal(8, event)">
                 <div class="card-img-box">
                     <img src="P7.png">
                 </div>
@@ -536,8 +472,26 @@
                 </div>
             </div>
 
-            <!-- 10. 밸런스 시뮬레이터 -->
-            <div class="project-card" onclick="openModal(9, event)">
+            <!-- 8. PVPVE 분석 -->
+            <div class="project-card" onclick="openModal(7, event)">
+                <div class="card-img-box">
+                    <img src="P9.jpg">
+                </div>
+                <div class="card-info-box">
+                    <div>
+                        <div class="tag">ANALYSIS QUEST</div>
+                        <h3>PVPVE 분석</h3>
+                    </div>
+                    <ul class="card-summary-list">
+                        <li>익스트랙션 슈터 장르의 리텐션 방어 요인 심층 분석</li>
+                        <li>ARC 레이드 생태계 및 절차적 물리 파쇄 코어 루프 도출</li>
+                    </ul>
+                    <div class="card-more-btn">VIEW DETAILS ▶</div>
+                </div>
+            </div>
+
+            <!-- 9. 밸런스 시뮬레이터 -->
+            <div class="project-card" onclick="openModal(8, event)">
                 <div class="card-img-box">
                     <img src="P6_1.PNG">
                 </div>
@@ -549,6 +503,24 @@
                     <ul class="card-summary-list">
                         <li>정규분포 기반 크리티컬/회피 산출 통계 전투 로직 구현</li>
                         <li>자동 반복 시뮬레이션으로 검토 시간 70% 절감</li>
+                    </ul>
+                    <div class="card-more-btn">VIEW DETAILS ▶</div>
+                </div>
+            </div>
+
+            <!-- 10. 던파 라이브 이벤트·BM 분석 -->
+            <div class="project-card" onclick="openModal(9, event)">
+                <div class="card-img-box">
+                    <img src="P10.png">
+                </div>
+                <div class="card-info-box">
+                    <div>
+                        <div class="tag">BM QUEST</div>
+                        <h3>던파 라이브 이벤트·BM 분석</h3>
+                    </div>
+                    <ul class="card-summary-list">
+                        <li>Neople Open API 데이터 분석을 통한 이탈 구조 규명</li>
+                        <li>후결제 소급 적용형 신규 패스 BM 및 학습 미션 제안</li>
                     </ul>
                     <div class="card-more-btn">VIEW DETAILS ▶</div>
                 </div>
@@ -619,7 +591,7 @@
             { 
                 title: "FCO 신규 시스템 설계", tag: "SYSTEM QUEST", 
                 desc: "유저의 전술적 니즈를 성장의 재미로 연결한 신규 코어 루프 제안서입니다.", 
-                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 순환하는 정교한 신규 시스템 구조 기획</li><li><span class='highlight-title'>경제 시뮬레이션 기반 BM 모델링</span>시즌 패스 및 확률형 보상 비중을 설계하여 수익성과 유지율 균형 확보</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획</span>최고 레벨 도달 유저에게 지속적 동기를 부여하는 잔존 전략 수립</li>", 
+                achievements: "<li><span class='highlight-title'>유기적 선순환 코어 루프 설계</span>수집-조합-성장-시너지가 순환하는 정교한 신규 시스템 구조 기획</li><li><span class='highlight-title'>경제 시뮬레이션 기반 BM 모델링</span>시즌 패스와 확률형 보상 비중을 설계하여 수익성과 유지율 균형 확보</li><li><span class='highlight-title'>엔드 게임 콘텐츠 확장 기획</span>최고 레벨 도달 유저에게 지속적 동기를 부여하는 잔존 전략 수립</li>", 
                 img: "P4.png", assets: [{ type: "pdf", title: "신규 제안서", url: "P4_1_신규 시스템 제안서.pdf" }] 
             },
             { 
@@ -627,18 +599,6 @@
                 desc: "의료 서비스 사각지대 해소를 위해 공공 데이터 분석을 통해 최적 입지를 선정하고 전략을 도출한 프로젝트입니다.", 
                 achievements: "<li><span class='highlight-title'>복합 가중치 입지 모델링</span>인구 밀도, 응급실 거리 등 변수를 활용하여 주관을 배제한 최적 입지 우선순위 산출</li><li><span class='highlight-title'>QGIS 기반 입지 타당성 가시화</span>분석 결과를 지도상에 시각화하여 논리적인 입지 타당성 전략 도출</li><li><span class='highlight-title'>지역 밀착형 타겟 홍보 전략</span>데이터 분석 결과를 실무로 연결하여 지역별 특성에 맞춘 가이드라인 수립</li>", 
                 img: "P5.png", assets: [{ type: "pdf", title: "데이터 분석", url: "P5_데이터분석.pdf" }] 
-            },
-            { 
-                title: "다인 협업 프로젝트", tag: "PARTY QUEST", 
-                desc: "10인 규모 팀에서 상용화 단계를 고려한 레벨 및 데이터 설계를 담당한 기업 연계 프로젝트입니다.", 
-                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 통해 스테이지 구성 및 오브젝트 배치를 최적화하여 제작 공정 단축</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저 제작으로 데이터 관리 결함 및 휴먼 에러 0% 달성</li><li><span class='highlight-title'>사용자 중심 학습 곡선 설계</span>플레이 데이터를 분석하여 이탈을 방지하는 단계별 튜토리얼 및 밸런스 설계</li><li><span class='highlight-title'>Figma 기반 UI/UX 설계</span>직관적인 조작감과 정보 전달력을 고려한 게임 HUD 및 인터페이스 구조 기획</li>", 
-                img: "P2.png", assets: [ 
-                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/vZwONdPPuOw" }, 
-                    { type: "pdf", title: "보고서", url: "P2_1.pdf" }, 
-                    { type: "pdf", title: "피그마 UX/UI", url: "P2_2.pdf" },
-                    { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "./KOKO_Data_Manager.xlsm.xlsm" }, 
-                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" } 
-                ] 
             },
             { 
                 title: "자체 기획 및 개발 ( 리듬 게임 )", tag: "SOLO QUEST", 
@@ -662,16 +622,16 @@
                 ] 
             },
             { 
-                title: "던파 라이브 이벤트·BM 분석", tag: "BM QUEST", 
-                desc: "Neople Open API 기반 표본 데이터 분석을 통해 육성 이벤트의 유저 이탈 원인을 규명하고, 정착률(Day 30 Retention)과 과금 전환(PU)을 극대화하는 신규 패스 BM을 제안한 분석서입니다.", 
-                achievements: "<li><span class='highlight-title'>Open API 기반 세팅 불균형 실증</span>목표 명성 달성률(82.4%) 대비 실질 세팅 완성도(23.1%) 미비로 인한 파티 진입 거부 및 이탈 구조 수치화</li><li><span class='highlight-title'>선순환 차세대 패스 BM 모델링</span>2차 성장 절벽 해소를 위한 후결제 소급 적용 구조 및 인게임 경제(경매장, 마부) 연계 미션 설계</li><li><span class='highlight-title'>사내 DW 기반 데이터 검증 프레임 수립</span>NRU, Retention, 패스 결제 타이밍, 경매장 유통량 정밀 추적 실행 계획 구축</li>", 
-                img: "P10.png", assets: [{ type: "pdf", title: "유료화 분석서", url: "P10_1.pdf", isNarrow: true }] 
-            },
-            { 
-                title: "아크레이더스 PVPVE 분석", tag: "ANALYSIS QUEST", 
-                desc: "ARC 생태계 및 부위 파괴 메커니즘을 통한 익스트랙션 슈터의 장르적 한계 극복 기획 분석 보고서입니다.", 
-                achievements: "<li><span class='highlight-title'>PVEVP 장르적 한계 극복 분석</span>다크 앤 다커 대비 지표 우상향(+23.8%) 및 리텐션 방어 요인을 도출하여 PVE 레이드형 재미의 중요성 입증</li><li><span class='highlight-title'>체계적 ARC 레이드 생태계 설계 분석</span>개체별 체급·패턴 다변화, 속성별 상태 이상 디버프 및 약점 상성 메커니즘 심층 도식화</li><li><span class='highlight-title'>절차적 물리 파쇄 & RPG 성장 루프 도출</span>실시간 관절/장갑 파열 피드백과 거점 크래프팅이 연동된 유기적 코어 루프 검증</li>", 
-                img: "P9.jpg", assets: [{ type: "pdf", title: "분석 보고서", url: "P9.pdf", isNarrow: true }] 
+                title: "다인 협업 프로젝트", tag: "PARTY QUEST", 
+                desc: "10인 규모 팀에서 상용화 단계를 고려한 레벨 및 데이터 설계를 담당한 기업 연계 프로젝트입니다.", 
+                achievements: "<li><span class='highlight-title'>에디터를 활용한 레벨 디자인</span>Unity 툴을 통해 스테이지 구성 및 오브젝트 배치를 최적화하여 제작 공정 단축</li><li><span class='highlight-title'>VBA 기반 데이터 자동화 도구 제작</span>업무 효율을 30% 개선한 데이터 매니저 제작으로 데이터 관리 결함 및 휴먼 에러 0% 달성</li><li><span class='highlight-title'>사용자 중심 학습 곡선 설계</span>플레이 데이터를 분석하여 이탈을 방지하는 단계별 튜토리얼 및 밸런스 설계</li><li><span class='highlight-title'>Figma 기반 UI/UX 설계</span>직관적인 조작감과 정보 전달력을 고려한 게임 HUD 및 인터페이스 구조 기획</li>", 
+                img: "P2.png", assets: [ 
+                    { type: "video", title: "플레이 영상", url: "https://www.youtube.com/embed/vZwONdPPuOw" }, 
+                    { type: "pdf", title: "보고서", url: "P2_1.pdf" }, 
+                    { type: "pdf", title: "피그마 UX/UI", url: "P2_2.pdf" },
+                    { type: "excel-combined", title: "데이터 입력기", videoUrl: "https://www.youtube.com/embed/ZYoy6ipJgSg", downloadUrl: "./KOKO_Data_Manager.xlsm.xlsm" }, 
+                    { type: "link", title: "상세 기획서", url: "https://www.notion.so/2bedfa2a48818195bbcdc00abec311d2" } 
+                ] 
             },
             { 
                 title: "신규 총기 기획 제안", tag: "PLANNING QUEST", 
@@ -683,10 +643,22 @@
                 ] 
             },
             { 
+                title: "PVPVE 분석", tag: "ANALYSIS QUEST", 
+                desc: "ARC 생태계 및 부위 파괴 메커니즘을 통한 익스트랙션 슈터의 장르적 한계 극복 기획 분석 보고서입니다.", 
+                achievements: "<li><span class='highlight-title'>PVEVP 장르적 한계 극복 분석</span>다크 앤 다커 대비 지표 우상향(+23.8%) 및 리텐션 방어 요인을 도출하여 PVE 레이드형 재미의 중요성 입증</li><li><span class='highlight-title'>체계적 ARC 레이드 생태계 설계 분석</span>개체별 체급·패턴 다변화, 속성별 상태 이상 디버프 및 약점 상성 메커니즘 심층 도식화</li><li><span class='highlight-title'>절차적 물리 파쇄 & RPG 성장 루프 도출</span>실시간 관절/장갑 파열 피드백과 거점 크래프팅이 연동된 유기적 코어 루프 검증</li>", 
+                img: "P9.jpg", assets: [{ type: "pdf", title: "분석 보고서", url: "P9.pdf", isNarrow: true }] 
+            },
+            { 
                 title: "밸런스 시뮬레이터", tag: "SIMULATION QUEST", 
                 desc: "통계적 모델을 통해 RPG 전투 데이터의 객관성을 검증하는 시뮬레이션 도구입니다.", 
                 achievements: "<li><span class='highlight-title'>통계 기반 전투 로직 구현</span>정규분포를 활용하여 크리티컬 및 회피가 적용된 기댓값 산출 구현</li><li><span class='highlight-title'>대량 반복 시뮬레이션 수치화</span>자동 반복 테스트를 통해 승률과 기대 턴 수를 데이터로 도출</li><li><span class='highlight-title'>반복 검증 자동화 시스템 구축</span>수치 변경 즉시 결과가 연동되어 검토 시간을 70% 절감</li>", 
                 img: "P6_1.PNG", assets: [ { type: "excel-combined", title: "시뮬레이터 파일", videoUrl: "https://www.youtube.com/embed/1uGaO8PXr3k", downloadUrl: "./Weapon_Balance_Simulator.xlsm.xlsm" }, { type: "pdf", title: "설계 기획서", url: "P6_1_1.pdf" } ] 
+            },
+            { 
+                title: "던파 라이브 이벤트·BM 분석", tag: "BM QUEST", 
+                desc: "Neople Open API 기반 표본 데이터 분석을 통해 육성 이벤트의 유저 이탈 원인을 규명하고, 정착률(Day 30 Retention)과 과금 전환(PU)을 극대화하는 신규 패스 BM을 제안한 분석서입니다.", 
+                achievements: "<li><span class='highlight-title'>Open API 기반 세팅 불균형 실증</span>목표 명성 달성률(82.4%) 대비 실질 세팅 완성도(23.1%) 미비로 인한 파티 진입 거부 및 이탈 구조 수치화</li><li><span class='highlight-title'>선순환 차세대 패스 BM 모델링</span>2차 성장 절벽 해소를 위한 후결제 소급 적용 구조 및 인게임 경제(경매장, 마부) 연계 미션 설계</li><li><span class='highlight-title'>사내 DW 기반 데이터 검증 프레임 수립</span>NRU, Retention, 패스 결제 타이밍, 경매장 유통량 정밀 추적 실행 계획 구축</li>", 
+                img: "P10.png", assets: [{ type: "pdf", title: "유료화 분석서", url: "P10_1.pdf", isNarrow: true }] 
             }
         ];
 
@@ -711,8 +683,7 @@
                                 <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--mancity-sky-neon);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
-                /* view=Fit 옵션으로 일괄 변경하여 짤림 없이 한 화면 전체에 맞춤 */
-                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#toolbar=0&navpanes=0&view=Fit"></iframe>`;
+                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitH&toolbar=0"></iframe>`;
             }).join('');
 
             document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, '${as.title}-${idx}'.replace(/\\s+/g, '-'), event)">${as.title}</button>`).join('');

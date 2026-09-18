@@ -230,17 +230,18 @@
             gap: 6px;
         }
 
-        /* --- 프로젝트 모달 & 뷰어 확장 및 세로형 PDF 최적화 --- */
+        /* --- 프로젝트 모달 & PDF 뷰어 세로 높이/가로 폭 극대화 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 18, 0.93); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
         
-        /* 🖼️ [수정] 모달 창 가로·세로 폭 시원하게 확장 */
+        /* 🖼️ 모달 창 높이 98vh 확대 */
         .modal-content { 
             background: var(--bg); 
             border: 2px solid var(--mancity-sky); 
             border-radius: 8px; 
-            width: 98%; 
-            max-width: 1680px; 
-            height: 96vh; 
+            width: 99%; 
+            max-width: 1750px; 
+            height: 98vh; 
+            max-height: 98vh;
             overflow: hidden; 
             position: relative; 
             display: flex; 
@@ -249,7 +250,7 @@
             box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); 
         }
         
-        .project-header-top { width: 100%; height: 130px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
+        .project-header-top { width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.35); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
         #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--mancity-sky-neon); font-weight: bold; }
@@ -276,15 +277,27 @@
         .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
         .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(108, 171, 221, 0.4); }
 
-        /* 🖼️ [수정] PDF 뷰어 세로형 폭 제한 및 비율 보정 */
-        .viewer-container { width: 100%; background: #060c14; padding: 30px 0 0; border-top: 1px solid var(--border); text-align: center; box-sizing: border-box; }
-        .pdf-viewer { width: 100%; height: 900px; display: none; margin: 0 auto; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        /* 🖼️ PDF 뷰어 세로 길이를 대폭 늘리고 짤림 현상 완전 방지 */
+        .viewer-container { width: 100%; background: #060c14; padding: 20px 0 50px; border-top: 1px solid var(--border); text-align: center; box-sizing: border-box; }
         
-        /* 📄 세로가 긴 PDF 문서 최적화 (가로 폭 680px 제한으로 과도한 확대/짤림 완전 방지) */
+        /* 📄 가로형 일반 PDF 슬라이드 (가로 98%, 높이 920px) */
+        .pdf-viewer { 
+            width: 98%; 
+            height: 920px; 
+            min-height: 850px;
+            display: none; 
+            margin: 0 auto; 
+            border: 1px solid var(--border); 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+            background: #000;
+        }
+        
+        /* 📄 세로형 보고서 PDF (최대폭 780px 제한, 높이 1050px 확대) */
         .pdf-viewer.narrow { 
-            width: 100% !important; 
-            max-width: 680px !important; 
-            height: 900px !important; 
+            width: 95% !important; 
+            max-width: 780px !important; 
+            height: 1050px !important; 
             margin: 0 auto !important; 
         } 
         
@@ -704,8 +717,8 @@
                                 <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--mancity-sky-neon);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
-                /* view=FitV 옵션 적용: 세로 높이 기준으로 맞춰 문서가 크게 짤리지 않게 보정 */
-                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#view=FitV&toolbar=0"></iframe>`;
+                /* view=Fit 옵션 통합: 프레임 폭에 유연하게 반응하여 가로·세로 짤림 방지 */
+                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#toolbar=0&navpanes=0&view=Fit"></iframe>`;
             }).join('');
 
             document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, '${as.title}-${idx}'.replace(/\\s+/g, '-'), event)">${as.title}</button>`).join('');

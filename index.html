@@ -230,18 +230,17 @@
             gap: 6px;
         }
 
-        /* --- 프로젝트 모달 & PDF 뷰어 세로 높이/가로 폭 극대화 --- */
+        /* --- 프로젝트 모달 --- */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 18, 0.93); z-index: 10005; justify-content: center; align-items: center; backdrop-filter: blur(12px); cursor: pointer; }
         
-        /* 🖼️ 모달 창 높이 98vh 확대 */
         .modal-content { 
             background: var(--bg); 
             border: 2px solid var(--mancity-sky); 
             border-radius: 8px; 
-            width: 99%; 
-            max-width: 1750px; 
-            height: 98vh; 
-            max-height: 98vh;
+            width: 96%; 
+            max-width: 1600px; 
+            height: 94vh; 
+            max-height: 94vh;
             overflow: hidden; 
             position: relative; 
             display: flex; 
@@ -250,11 +249,11 @@
             box-shadow: 0 0 60px rgba(108, 171, 221, 0.3); 
         }
         
-        .project-header-top { width: 100%; height: 120px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
+        .project-header-top { width: 100%; height: 110px; position: relative; overflow: hidden; flex-shrink: 0; border-bottom: 2px solid var(--mancity-sky); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; background: var(--mancity-navy); }
         .header-bg-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(6px) brightness(0.35); opacity: 1; transform: scale(1.1); z-index: 1; }
         .header-info-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
         #modalTag { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--mancity-sky-neon); font-weight: bold; }
-        #modalTitle { margin: 0; font-size: 1.9rem; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); } 
+        #modalTitle { margin: 0; font-size: 1.8rem; color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.8); } 
         
         .close-system-btn { 
             position: relative; z-index: 3; background: var(--mancity-navy); color: var(--mancity-sky); border: 2px solid var(--mancity-sky); 
@@ -277,36 +276,35 @@
         .asset-btn { padding: 10px 24px; background: var(--card); border: 2px solid var(--border); color: var(--text-sub); cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; border-radius: 4px; }
         .asset-btn.active { background: var(--mancity-sky); color: #000; border-color: var(--mancity-sky); box-shadow: 0 0 15px rgba(108, 171, 221, 0.4); }
 
-        /* 🖼️ PDF 뷰어 세로 길이를 대폭 늘리고 짤림 현상 완전 방지 */
-        .viewer-container { width: 100%; background: #060c14; padding: 20px 0 50px; border-top: 1px solid var(--border); text-align: center; box-sizing: border-box; }
+        /* 🖼️ PDF 뷰어 여백 및 짤림 완전 차단 규격 */
+        .viewer-container { width: 100%; background: #060c14; padding: 25px 0 40px; border-top: 1px solid var(--border); text-align: center; box-sizing: border-box; }
         
-        /* 📄 가로형 일반 PDF 슬라이드 (가로 98%, 높이 920px) */
+        /* 📄 일반 PPT 가로 슬라이드 PDF (높이 720px, 축소 비율 65% 적용) */
         .pdf-viewer { 
-            width: 98%; 
-            height: 920px; 
-            min-height: 850px;
+            width: 96%; 
+            height: 720px; 
             display: none; 
             margin: 0 auto; 
             border: 1px solid var(--border); 
             border-radius: 4px; 
             box-sizing: border-box; 
-            background: #000;
+            background: #111;
         }
         
-        /* 📄 세로형 보고서 PDF (최대폭 780px 제한, 높이 1050px 확대) */
+        /* 📄 세로 보고서 PDF (최대폭 620px 제한, 높이 780px, 축소 비율 50% 적용) */
         .pdf-viewer.narrow { 
-            width: 95% !important; 
-            max-width: 780px !important; 
-            height: 1050px !important; 
+            width: 90% !important; 
+            max-width: 620px !important; 
+            height: 780px !important; 
             margin: 0 auto !important; 
         } 
         
         .pdf-viewer.active { display: block; }
-        .video-container { width: 95%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 60px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
+        .video-container { width: 95%; aspect-ratio: 16 / 9; display: none; margin: 0 auto; margin-bottom: 40px; border: 2px solid var(--mancity-sky); border-radius: 4px; overflow: hidden; }
         .video-container.active { display: block; }
         .video-container iframe { width: 100%; height: 100%; border: none; }
 
-        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 95%; margin: 0 auto; padding-bottom: 60px; gap: 30px; }
+        .excel-combined-container { display: none; flex-direction: column; align-items: center; width: 95%; margin: 0 auto; padding-bottom: 40px; gap: 30px; }
         .excel-combined-container.active { display: flex !important; }
         .combined-video-frame { width: 100% !important; aspect-ratio: 16/9; border: 2px solid var(--mancity-sky); margin-bottom: 10px; border-radius: 4px; overflow: hidden; }
         .combined-video-frame iframe { width: 100%; height: 100%; border: none; }
@@ -717,8 +715,9 @@
                                 <div class="data-access-card"><i class="fas fa-file-excel" style="font-size:2rem; margin-bottom:15px; color:var(--mancity-sky-neon);"></i><p>기획 의도가 담긴 실제 엑셀 시뮬레이션 데이터를 다운로드하세요.</p><a href="${as.downloadUrl}" download class="btn-pixel">DOWNLOAD FILE (.xlsm)</a></div>
                             </div>`;
                 }
-                /* view=Fit 옵션 통합: 프레임 폭에 유연하게 반응하여 가로·세로 짤림 방지 */
-                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#toolbar=0&navpanes=0&view=Fit"></iframe>`;
+                /* 🔍 명시적 PDF Zoom 파라미터 지정 (가로 65%, 세로 50%) */
+                const zoomLevel = as.isNarrow ? '50' : '65';
+                return `<iframe class="pdf-viewer ${as.isNarrow?'narrow':''} ${isActive}" id="view-${idSuffix}" src="${as.url}#toolbar=0&navpanes=0&zoom=${zoomLevel}"></iframe>`;
             }).join('');
 
             document.getElementById('assetTabs').innerHTML = p.assets.map((as, idx) => `<button class="asset-btn ${idx===0?'active':''}" onclick="switchTab(this, '${as.title}-${idx}'.replace(/\\s+/g, '-'), event)">${as.title}</button>`).join('');

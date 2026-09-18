@@ -115,13 +115,13 @@
         .exp-bar-bg { width: 100%; height: 10px; background: #080f17; border: 1px solid var(--border); border-radius: 2px; position: relative; overflow: hidden; }
         .exp-fill { height: 100%; background: linear-gradient(90deg, var(--mancity-sky), var(--mancity-sky-neon)); position: absolute; left: 0; top: 0; box-shadow: 0 0 10px var(--accent-glow); transition: 1.5s cubic-bezier(0.1, 0, 0.1, 1); }
 
-        /* --- 프로젝트 스테이지 UI (5행 2열 정배열 적용) --- */
+        /* --- 프로젝트 스테이지 UI (5행 2열 구조) --- */
         .project-container { 
             max-width: 1100px; 
             margin: 0 auto 120px; 
             padding: 0 20px; 
             display: grid; 
-            grid-template-columns: repeat(2, 1fr); /* 5행 x 2열 구조 */
+            grid-template-columns: repeat(2, 1fr); 
             gap: 25px; 
         }
 
@@ -134,8 +134,8 @@
             overflow: hidden; 
             position: relative; 
             display: flex; 
-            flex-direction: row; /* 가로형 카드 배치 */
-            height: 190px; 
+            flex-direction: row; 
+            height: 195px; 
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
@@ -145,39 +145,48 @@
             box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3); 
         }
 
+        /* 🖼️ [수정] 카드 이미지 영역 (짤림 방지 및 내추럴 액자 비율 적용) */
         .card-img-box { 
-            width: 42%; 
+            width: 40%; 
             height: 100%; 
-            background: #000; 
-            border-bottom: none; 
+            background: radial-gradient(circle at center, #172637 0%, #091019 100%); 
             border-right: 2px solid var(--border); 
             overflow: hidden; 
             position: relative; 
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            box-sizing: border-box;
         }
 
         .card-img-box img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            opacity: 0.8; 
-            transition: 0.4s; 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; /* 핵심: 이미지 짤림 없이 100% 원본 비율 보존 */
+            border-radius: 3px;
+            transition: transform 0.3s ease; 
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
         }
 
         .project-card:hover .card-img-box img { 
-            opacity: 1; 
-            transform: scale(1.08); 
+            transform: scale(1.05); 
         }
         
+        /* 🏷️ [수정] 태그 인라인 이관 스타일 */
         .tag { 
-            position: absolute; top: 12px; left: 12px; font-size: 0.6rem; color: #fff; font-weight: bold; 
-            background: var(--mancity-navy); border: 1px solid var(--mancity-sky); padding: 5px 12px; border-radius: 3px; z-index: 5; font-family: 'Press Start 2P'; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            display: inline-block;
+            font-size: 0.55rem; color: #fff; font-weight: bold; 
+            background: var(--mancity-navy); border: 1px solid var(--mancity-sky); padding: 3px 8px; border-radius: 3px; font-family: 'Press Start 2P'; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            margin-bottom: 6px;
+            width: fit-content;
         }
         
         .card-info-box { 
-            width: 58%; 
-            padding: 18px 20px; 
+            width: 60%; 
+            padding: 16px 18px; 
             text-align: left; 
             background: var(--card); 
             display: flex; 
@@ -188,7 +197,7 @@
 
         .card-info-box h3 { 
             font-size: 1.05rem; 
-            margin: 0 0 10px 0; 
+            margin: 0 0 8px 0; 
             color: #fff; 
             letter-spacing: 0.5px; 
             font-weight: bold; 
@@ -201,21 +210,21 @@
             margin: 0;
             padding-left: 14px;
             color: var(--text-sub);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             line-height: 1.45;
         }
         .card-summary-list li {
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
         .card-summary-list li::marker {
             color: var(--mancity-sky-neon);
         }
 
         .card-more-btn {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--mancity-sky-neon);
             font-family: 'Press Start 2P';
-            margin-top: 8px;
+            margin-top: 6px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -273,7 +282,7 @@
             .skills-wrapper { grid-template-columns: 1fr; } 
             .project-container { grid-template-columns: 1fr; }
             .project-card { flex-direction: column; height: auto; }
-            .card-img-box { width: 100%; height: 160px; border-right: none; border-bottom: 2px solid var(--border); }
+            .card-img-box { width: 100%; height: 170px; border-right: none; border-bottom: 2px solid var(--border); }
             .card-info-box { width: 100%; padding: 15px 20px; }
             .pdf-viewer, .video-container, .combined-video-frame, .data-access-card { width: 95% !important; } 
         }
@@ -337,11 +346,13 @@
             <!-- 1. FCO 라이브 서비스 개선 -->
             <div class="project-card" onclick="openModal(0, event)">
                 <div class="card-img-box">
-                    <div class="tag">BALANCE QUEST</div>
                     <img src="P3.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>FCO 라이브 서비스 개선</h3>
+                    <div>
+                        <div class="tag">BALANCE QUEST</div>
+                        <h3>FCO 라이브 서비스 개선</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>2,000건 이상의 라이브 지표 분석 및 수비 메타 원인 규명</li>
                         <li>수비 AI 과효율 데이터 증명 및 공격 루트 다양화 로직 설계</li>
@@ -353,11 +364,13 @@
             <!-- 2. FCO 신규 시스템 설계 -->
             <div class="project-card" onclick="openModal(1, event)">
                 <div class="card-img-box">
-                    <div class="tag">SYSTEM QUEST</div>
                     <img src="P4.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>FCO 신규 시스템 설계</h3>
+                    <div>
+                        <div class="tag">SYSTEM QUEST</div>
+                        <h3>FCO 신규 시스템 설계</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>수집-조합-성장-시너지가 순환하는 선순환 코어 루프 기획</li>
                         <li>시즌 패스 및 확률형 보상 경제 시뮬레이션 BM 모델링</li>
@@ -369,11 +382,13 @@
             <!-- 3. 데이터 기반 분석 -->
             <div class="project-card" onclick="openModal(2, event)">
                 <div class="card-img-box">
-                    <div class="tag">DATA QUEST</div>
                     <img src="P5.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>데이터 기반 분석</h3>
+                    <div>
+                        <div class="tag">DATA QUEST</div>
+                        <h3>데이터 기반 분석</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>인구 밀도 및 응급실 거리를 반영한 복합 가중치 입지 모델링</li>
                         <li>QGIS 기반 지도 시각화를 통한 타당성 전략 도출</li>
@@ -385,11 +400,13 @@
             <!-- 4. 자체 개발 ( 리듬 게임 ) -->
             <div class="project-card" onclick="openModal(3, event)">
                 <div class="card-img-box">
-                    <div class="tag">SOLO QUEST</div>
                     <img src="P1.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>자체 개발 ( 리듬 게임 )</h3>
+                    <div>
+                        <div class="tag">SOLO QUEST</div>
+                        <h3>자체 개발 ( 리듬 게임 )</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>선수 행동 데이터 연동 동적 난이도 조절 시스템 구축</li>
                         <li>GML 기반 1인 개발 수행 및 룰 학습형 패턴 설계</li>
@@ -401,11 +418,13 @@
             <!-- 5. 자체 개발 ( 디펜스 게임 ) -->
             <div class="project-card" onclick="openModal(4, event)">
                 <div class="card-img-box">
-                    <div class="tag">SOLO QUEST</div>
                     <img src="P8.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>자체 개발 ( 디펜스 게임 )</h3>
+                    <div>
+                        <div class="tag">SOLO QUEST</div>
+                        <h3>자체 개발 ( 디펜스 게임 )</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>타워 배치가 곧 레벨 디자인이 되는 Mazing 경로 시스템 구축</li>
                         <li>Excel 시뮬레이션 기반 웨이브 체력 & 성장 밸런스 최적화</li>
@@ -417,11 +436,13 @@
             <!-- 6. 다인 협업 프로젝트 -->
             <div class="project-card" onclick="openModal(5, event)">
                 <div class="card-img-box">
-                    <div class="tag">PARTY QUEST</div>
                     <img src="P2.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>다인 협업 프로젝트</h3>
+                    <div>
+                        <div class="tag">PARTY QUEST</div>
+                        <h3>다인 협업 프로젝트</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>VBA 기반 데이터 매니저 제작으로 관리 결함 0% 달성</li>
                         <li>Figma 기반 UI/UX 설계 및 Unity 에디터 레벨 디자인</li>
@@ -433,11 +454,13 @@
             <!-- 7. 신규 총기 기획 제안 -->
             <div class="project-card" onclick="openModal(6, event)">
                 <div class="card-img-box">
-                    <div class="tag">PLANNING QUEST</div>
                     <img src="P7.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>신규 총기 기획 제안</h3>
+                    <div>
+                        <div class="tag">PLANNING QUEST</div>
+                        <h3>신규 총기 기획 제안</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>실제 총기 고증 기반 2점사 하이퍼 버스트 메커니즘 설계</li>
                         <li>자체 제작 엑셀 시뮬레이터 활용 TTK 최적값 도출</li>
@@ -449,11 +472,13 @@
             <!-- 8. PVPVE 분석 -->
             <div class="project-card" onclick="openModal(7, event)">
                 <div class="card-img-box">
-                    <div class="tag">ANALYSIS QUEST</div>
                     <img src="P9.jpg">
                 </div>
                 <div class="card-info-box">
-                    <h3>PVPVE 분석</h3>
+                    <div>
+                        <div class="tag">ANALYSIS QUEST</div>
+                        <h3>PVPVE 분석</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>익스트랙션 슈터 장르의 리텐션 방어 요인 심층 분석</li>
                         <li>ARC 레이드 생태계 및 절차적 물리 파쇄 코어 루프 도출</li>
@@ -465,11 +490,13 @@
             <!-- 9. 밸런스 시뮬레이터 -->
             <div class="project-card" onclick="openModal(8, event)">
                 <div class="card-img-box">
-                    <div class="tag">SIMULATION QUEST</div>
                     <img src="P6_1.PNG">
                 </div>
                 <div class="card-info-box">
-                    <h3>밸런스 시뮬레이터</h3>
+                    <div>
+                        <div class="tag">SIMULATION QUEST</div>
+                        <h3>밸런스 시뮬레이터</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>정규분포 기반 크리티컬/회피 산출 통계 전투 로직 구현</li>
                         <li>자동 반복 시뮬레이션으로 검토 시간 70% 절감</li>
@@ -478,14 +505,16 @@
                 </div>
             </div>
 
-            <!-- 10. 던파 라이브 이벤트·BM 분석 (신규 추가) -->
+            <!-- 10. 던파 라이브 이벤트·BM 분석 -->
             <div class="project-card" onclick="openModal(9, event)">
                 <div class="card-img-box">
-                    <div class="tag">BM QUEST</div>
                     <img src="P10.png">
                 </div>
                 <div class="card-info-box">
-                    <h3>던파 라이브 이벤트·BM 분석</h3>
+                    <div>
+                        <div class="tag">BM QUEST</div>
+                        <h3>던파 라이브 이벤트·BM 분석</h3>
+                    </div>
                     <ul class="card-summary-list">
                         <li>Neople Open API 데이터 분석을 통한 이탈 구조 규명</li>
                         <li>후결제 소급 적용형 신규 패스 BM 및 학습 미션 제안</li>
